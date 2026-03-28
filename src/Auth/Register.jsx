@@ -24,7 +24,6 @@ const Register = () => {
         const form = e.target;
 
         const name = form.name.value;
-
         if (name.length < 5) {
             setNameError("Name should be more than 5 characters");
             toast.error("Name should be more than 5 characters")
@@ -39,8 +38,6 @@ const Register = () => {
             return;
         }
 
-
-        // const photo = form.photo.value;
         const email = form.email.value;
         const password = form.password.value;
 
@@ -62,30 +59,6 @@ const Register = () => {
             return;
         }
 
-        // registerUser(email, password)
-        //     .then((result) => {
-        //         const user = result.user;
-        //         setSuccess(true);
-        //         e.target.reset();
-        //         toast.success("Your SignUp Successful");
-        //         updateUserProfile({
-        //             displayName: name,
-        //             photoURL: photo,
-        //         })
-        //             .then(() => {
-        //                 setUser({ ...user, displayName: name, photoURL: photo });
-        //                 navigate("/");
-        //             })
-        //             .catch((err) => {
-        //                 toast.error(err.message);
-        //                 setUser(user);
-        //             });
-        //     })
-        //     .catch((err) => {
-        //         setError(err.message)
-        //         toast.error(err.message);
-        //     });
-
         setLoading(true)
 
         try {
@@ -101,7 +74,7 @@ const Register = () => {
                 formData.append("image", image);
 
                 const res = await fetch(
-                    `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_photo_host_key}`,
+                    `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`,
                     {
                         method: "POST",
                         body: formData,
@@ -109,10 +82,13 @@ const Register = () => {
                 );
 
                 const data = await res.json();
+                console.log("IMGBB Response:", data);
                 if (!data.success) {
                     throw new Error("Image upload failed");
                 }
                 photoURL = data.data.url;
+
+                console.log(photoURL)
             }
 
             // 3️⃣ update profile
@@ -120,6 +96,8 @@ const Register = () => {
                 displayName: name,
                 photoURL: photoURL,
             });
+
+            console.log("Updated Name:", name)
 
             setUser({ ...user, displayName: name, photoURL });
 
@@ -180,16 +158,12 @@ const Register = () => {
                                 const file = e.target.files[0];
                                 console.log("Selected file:", file);
                                 setImage(file);
-                                // setPreview(URL.createObjectURL(file));
+                                setPreview(URL.createObjectURL(file));
                             }}
                         />
 
-                        {/* Photo URL */}
-                        {/* <input type="url" name='photo'
-                            className="input input-class"
-                            placeholder="Your Photo URL" required /> */}
+                       
                     </div>
-
                     {/* {preview && (
                         <>
                             <img src={preview} className="w-20 h-20 rounded-full mt-2" />
@@ -244,60 +218,6 @@ const Register = () => {
                     </div>
 
                     {/* Google Signin */}
-                    {/* <button
-                        onClick={async () => {
-                            try {
-                                const res = await signInGoogle();
-                                setUser(res.user);
-                                toast.success("Google Sign-in successful");
-                                navigate("/");
-                            } catch (err) {
-                                toast.error(err.message);
-                            }
-                        }}
-                        type='button'
-                        className='google-btn'>
-                        <img
-                            src="https://www.svgrepo.com/show/475656/google-color.svg"
-                            alt="google"
-                            className="w-5 h-5"
-                        />
-                        Continue with Google
-                    </button> */}
-
-                    {/* Google Signin */}
-                    {/* <button
-                        onClick={async () => {
-                            setLoading(true); // 🔹 start loading
-                            try {
-                                const res = await signInGoogle();
-                                console.log("Google SignIn Result:", res);
-                                setUser(res.user);
-                                toast.success("Google Sign-in successful");
-                                navigate("/");
-                            } catch (err) {
-                                console.error("Google Sign-in Error:", err);
-                                if (err.code === "auth/popup-closed-by-user") {
-                                    toast.error("Google sign-in cancelled by user");
-                                } else {
-                                    toast.error(err.message);
-                                }
-                            } finally {
-                                setLoading(false); // 🔹 stop loading
-                            }
-                        }}
-                        type='button'
-                        className={`google-btn ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
-                        disabled={loading} // 🔹 prevent multiple clicks
-                    >
-                        <img
-                            src="https://www.svgrepo.com/show/475656/google-color.svg"
-                            alt="google"
-                            className="w-5 h-5"
-                        />
-                        Continue with Google
-                    </button> */}
-
                     <button
                         onClick={async () => {
                             setLoading(true);

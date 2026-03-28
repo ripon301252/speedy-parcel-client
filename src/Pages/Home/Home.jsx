@@ -15,7 +15,7 @@ const Home = () => {
         <div>
             <Banner></Banner>
             <Brand></Brand>
-            {/* <Reviews1></Reviews1> */}
+            <Reviews1></Reviews1>
             <Reviews2 reviewPromise={reviewPromise}></Reviews2>
         </div>
     );

@@ -79,14 +79,10 @@ const ReviewModal = ({ closeModal }) => {
                 className="bg-white p-6 rounded-3xl w-[440px] shadow-2xl animate-scaleIn"
             >
                 {/* Header */}
-                <div className="flex justify-between items-center mb-4">
-                    <h2 className="text-2xl font-extrabold text-gray-800 ">Add Review</h2>
-                    <button
-                        onClick={closeModal}
-                        className="text-gray-800 hover:text-green-500 text-lg cursor-pointer"
-                    >
-                        <FaRegWindowClose />
-                    </button>
+                <div className=" mb-4">
+                    <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-2 mt-5">Create Review</h2>
+                    <p className='text-gray-800 text-center text-sm mb-6'>Please share your Review</p>
+
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-3">
@@ -141,7 +137,7 @@ const ReviewModal = ({ closeModal }) => {
                                 <span
                                     key={star}
                                     onClick={() => handleRating(star)}
-                                    className={star <= formData.ratings ? "text-yellow-400" : "text-gray-300"}
+                                    className={`${star <= formData.ratings ? "text-yellow-400" : "text-gray-300"} hover:text-yellow-500 transition-colors`}
                                 >
                                     ★
                                 </span>
@@ -159,7 +155,7 @@ const ReviewModal = ({ closeModal }) => {
                         required
                     ></textarea>
 
-                    <div className='flex justify-between items-center gap-3 mt-3'>
+                    <div className='flex justify-between items-center gap-3 mt-3 mb-3'>
                         <div className='flex-1'>
                             {/* Buttons */}
                             <button

@@ -6,12 +6,12 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAPSmk2xD0lGe5HgPHeH-jv_05enUkDCFg",
-  authDomain: "speedy-parcel.firebaseapp.com",
-  projectId: "speedy-parcel",
-  storageBucket: "speedy-parcel.firebasestorage.app",
-  messagingSenderId: "435142935594",
-  appId: "1:435142935594:web:d6d61ecaaaf5b90d47ef53"
+  apiKey: import.meta.env.VITE_apiKey,
+  authDomain: import.meta.env.VITE_authDomain,
+  projectId: import.meta.env.VITE_projectId,
+  storageBucket: import.meta.env.VITE_storageBucket,
+  messagingSenderId:import.meta.env.VITE_messagingSenderId,
+  appId: import.meta.env.VITE_appId
 };
 
 // Initialize Firebase

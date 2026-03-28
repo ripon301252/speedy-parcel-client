@@ -12,22 +12,35 @@ const Register = () => {
     const [success, setSuccess] = useState(false);
     const [nameerror, setNameError] = useState("");
     const [error, setError] = useState("");
+    const [image, setImage] = useState(null);
+    const [loading, setLoading] = useState(false);
+    const [preview, setPreview] = useState(null);
     const navigate = useNavigate();
 
 
-    const handleSignUp = (e) => {
+    const handleSignUp = async (e) => {
         e.preventDefault();
+
         const form = e.target;
+
         const name = form.name.value;
+
         if (name.length < 5) {
             setNameError("Name should be more than 5 characters");
             toast.error("Name should be more than 5 characters")
             return;
-        } else {
+        }
+        else {
             setNameError("");
         }
 
-        const photo = form.photo.value;
+        if (!image) {
+            toast.error("Please select a photo");
+            return;
+        }
+
+
+        // const photo = form.photo.value;
         const email = form.email.value;
         const password = form.password.value;
 
@@ -41,35 +54,87 @@ const Register = () => {
             setError("Password must be 6 characters or longer");
             toast.error("Password must be 6 characters or longer");
             return;
-        } else if (!casePattern.test(password)) {
+        }
+
+        if (!casePattern.test(password)) {
             setError("Password must have at least one uppercase and one lowercase character");
             toast.error("Password must have at least one uppercase and one lowercase character");
             return;
         }
 
-        registerUser(email, password)
-            .then((result) => {
-                const user = result.user;
-                setSuccess(true);
-                e.target.reset();
-                toast.success("Your SignUp Successful");
-                updateUserProfile({
-                    displayName: name,
-                    photoURL: photo,
-                })
-                    .then(() => {
-                        setUser({ ...user, displayName: name, photoURL: photo });
-                        navigate("/");
-                    })
-                    .catch((err) => {
-                        toast.error(err.message);
-                        setUser(user);
-                    });
-            })
-            .catch((err) => {
-                setError(err.message)
-                toast.error(err.message);
+        // registerUser(email, password)
+        //     .then((result) => {
+        //         const user = result.user;
+        //         setSuccess(true);
+        //         e.target.reset();
+        //         toast.success("Your SignUp Successful");
+        //         updateUserProfile({
+        //             displayName: name,
+        //             photoURL: photo,
+        //         })
+        //             .then(() => {
+        //                 setUser({ ...user, displayName: name, photoURL: photo });
+        //                 navigate("/");
+        //             })
+        //             .catch((err) => {
+        //                 toast.error(err.message);
+        //                 setUser(user);
+        //             });
+        //     })
+        //     .catch((err) => {
+        //         setError(err.message)
+        //         toast.error(err.message);
+        //     });
+
+        setLoading(true)
+
+        try {
+            // 1️⃣ register user
+            const result = await registerUser(email, password);
+            const user = result.user;
+
+            // 2️⃣ image upload (fetch diye)
+            let photoURL = "";
+
+            if (image) {
+                const formData = new FormData();
+                formData.append("image", image);
+
+                const res = await fetch(
+                    `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_photo_host_key}`,
+                    {
+                        method: "POST",
+                        body: formData,
+                    }
+                );
+
+                const data = await res.json();
+                if (!data.success) {
+                    throw new Error("Image upload failed");
+                }
+                photoURL = data.data.url;
+            }
+
+            // 3️⃣ update profile
+            await updateUserProfile({
+                displayName: name,
+                photoURL: photoURL,
             });
+
+            setUser({ ...user, displayName: name, photoURL });
+
+            toast.success("Your SignUp Successful");
+            e.target.reset()
+            setImage(null);
+            setSuccess(true);
+            navigate("/");
+
+        } catch (err) {
+            setError(err.message);
+            toast.error(err.message);
+        } finally {
+            setLoading(false);
+        }
     }
 
     const handleTogglePasswordShow = (e) => {
@@ -77,13 +142,15 @@ const Register = () => {
         setShowPassword(!showPassword);
     };
 
+
+
     return (
         <div className='flex justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
 
             <div className='flex-1 flex flex-col justify-center bg-white p-10 rounded-2xl shadow-xl border border-gray-200'>
 
                 <h1 className='text-3xl font-bold text-center mb-3 text-gray-800'>
-                    Create Account 61-7 t-3:43
+                    Create Account
                 </h1>
 
                 <p className='text-center text-gray-600 mb-5'>
@@ -103,16 +170,32 @@ const Register = () => {
                         )}
                     </div>
 
-                    {/* Photo URL */}
+                    {/* Photo  */}
                     <div>
-                        <label className="label text-gray-800 font-semibold">Photo URL</label>
-                        <input type="file" className="file-input file-choose input-class" />
+                        <label className="label text-gray-800 font-semibold">Photo</label>
+                        <input
+                            type="file"
+                            className="file-input file-choose input-class"
+                            onChange={(e) => {
+                                const file = e.target.files[0];
+                                console.log("Selected file:", file);
+                                setImage(file);
+                                // setPreview(URL.createObjectURL(file));
+                            }}
+                        />
 
                         {/* Photo URL */}
                         {/* <input type="url" name='photo'
                             className="input input-class"
                             placeholder="Your Photo URL" required /> */}
                     </div>
+
+                    {/* {preview && (
+                        <>
+                            <img src={preview} className="w-20 h-20 rounded-full mt-2" />
+                            <p className="text-sm text-gray-700">{image.name} ({(image.size / 1024).toFixed(2)} KB)</p>
+                        </>
+                    )} */}
 
                     {/* Email */}
                     <div>
@@ -145,8 +228,12 @@ const Register = () => {
 
 
                     {/* Register Button */}
-                    <button type='submit' className="btn w-full text-gray-800 mt-4 rounded-lg border  font-semibold hover:bg-gray-100 shadow-md bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform">
-                        Register
+                    <button
+                        type='submit'
+                        disabled={loading}
+                        className={`btn w-full text-gray-800 mt-4 rounded-lg border font-semibold hover:bg-gray-100 shadow-md bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                    >
+                        {loading ? "Creating..." : "Register"}
                     </button>
 
                     {/* Divider */}
@@ -157,16 +244,84 @@ const Register = () => {
                     </div>
 
                     {/* Google Signin */}
-                    <button
-                        onClick={() => signInGoogle().then(res => {
-                            setUser(res.user);
-                            toast.success("Google Sign-in successful")
-                            navigate("/");
-                        })
-                            .catch(err => toast.error(err.message))
-                        }
+                    {/* <button
+                        onClick={async () => {
+                            try {
+                                const res = await signInGoogle();
+                                setUser(res.user);
+                                toast.success("Google Sign-in successful");
+                                navigate("/");
+                            } catch (err) {
+                                toast.error(err.message);
+                            }
+                        }}
                         type='button'
                         className='google-btn'>
+                        <img
+                            src="https://www.svgrepo.com/show/475656/google-color.svg"
+                            alt="google"
+                            className="w-5 h-5"
+                        />
+                        Continue with Google
+                    </button> */}
+
+                    {/* Google Signin */}
+                    {/* <button
+                        onClick={async () => {
+                            setLoading(true); // 🔹 start loading
+                            try {
+                                const res = await signInGoogle();
+                                console.log("Google SignIn Result:", res);
+                                setUser(res.user);
+                                toast.success("Google Sign-in successful");
+                                navigate("/");
+                            } catch (err) {
+                                console.error("Google Sign-in Error:", err);
+                                if (err.code === "auth/popup-closed-by-user") {
+                                    toast.error("Google sign-in cancelled by user");
+                                } else {
+                                    toast.error(err.message);
+                                }
+                            } finally {
+                                setLoading(false); // 🔹 stop loading
+                            }
+                        }}
+                        type='button'
+                        className={`google-btn ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                        disabled={loading} // 🔹 prevent multiple clicks
+                    >
+                        <img
+                            src="https://www.svgrepo.com/show/475656/google-color.svg"
+                            alt="google"
+                            className="w-5 h-5"
+                        />
+                        Continue with Google
+                    </button> */}
+
+                    <button
+                        onClick={async () => {
+                            setLoading(true);
+                            try {
+                                const res = await signInGoogle();
+                                console.log("Google SignIn Result:", res); // 🔹 এখানে console log
+                                setUser(res.user);
+                                toast.success("Google Sign-in successful");
+                                navigate("/");
+                            } catch (err) {
+                                console.error("Google Sign-in Error:", err); // 🔹 error log
+                                if (err.code === "auth/popup-closed-by-user") {
+                                    toast.error("Google sign-in cancelled by user");
+                                } else {
+                                    toast.error(err.message);
+                                }
+                            } finally {
+                                setLoading(false);
+                            }
+                        }}
+                        type='button'
+                        className={`google-btn ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+                        disabled={loading}
+                    >
                         <img
                             src="https://www.svgrepo.com/show/475656/google-color.svg"
                             alt="google"
@@ -192,6 +347,8 @@ const Register = () => {
                 {error && (
                     <p className="text-red-500 text-center font-semibold">{error}</p>
                 )}
+
+
             </div>
 
             {/* Lottie */}

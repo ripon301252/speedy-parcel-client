@@ -45,6 +45,7 @@ const Navbar = () => {
         /rider/active-delivery
         /rider/delivery-history
         /rider/earnings */}
+            {/* <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink> */}
             <NavLink to={`/Accept-delivery-request`} className={activeLinks}>Accept delivery request </NavLink>
             <NavLink to={`/Update-delivery-status`} className={activeLinks}>Update delivery status </NavLink>
             <NavLink to={`/View-earnings`} className={activeLinks}>View earnings </NavLink>
@@ -78,7 +79,7 @@ const Navbar = () => {
 
     return (
         <nav className='bg-gray-900-100 py-2  border-b border-gray-800 sticky top-0 z-50 backdrop-blur-lg bg-white/10   '>
-            <div className='flex justify-between items-center max-w-7xl mx-auto px-4'>
+            <div className='flex justify-between items-center max-w-7xl mx-auto '>
                 <div>
                     <Logo></Logo>
                 </div>
@@ -88,7 +89,8 @@ const Navbar = () => {
                         {/* {user && role === "rider" && riderLinks}
                         {user && role === "customer" && customerLinks}
                         {user && role === "admin" && adminLinks} */}
-                        {user && adminLinks}
+                        {/* {user && adminLinks} */}
+                        {user && customerLinks}
                     </div>
                 </div>
                 <div>
@@ -97,7 +99,7 @@ const Navbar = () => {
                         :
                         (<Link to={`/login`} className='btn'>Login</Link>)
                     }
-                    <Link to={`/beARider`} className='btn btn-outline mx-3 hover:bg-green-500'>Be a Rider</Link>
+                    <Link to={`/Rider`} className='btn btn-outline mx-3 hover:bg-green-500'>Be a Rider</Link>
                 </div>
 
             </div>

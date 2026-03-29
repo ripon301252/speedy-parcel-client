@@ -161,7 +161,7 @@ const ReviewModal = ({ closeModal }) => {
                             <button
                                 type="submit"
                                 disabled={loading}
-                                className="btn w-full text-gray-800  bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform shadow-none rounded-lg"
+                                className="btn w-full text-gray-800 bg-linear-to-r from-green-500 via-green-400 to-green-500 border border-green-400 cursor-pointer hover:scale-102 transition-transform shadow-none rounded-lg"
                             >
                                 {loading ? "Submitting..." : "Submit Review"}
                             </button>

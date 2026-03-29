@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Lottie from 'lottie-react';
 import loginLottie from '../assets/Lottie/sign up.json';
-import { Link, useNavigate } from 'react-router';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import { useAuth } from '../Hooks/useAuth';
 import { toast } from 'react-toastify';
@@ -16,6 +16,8 @@ const Register = () => {
     const [loading, setLoading] = useState(false);
     const [preview, setPreview] = useState(null);
     const navigate = useNavigate();
+    const location = useLocation();
+    console.log('inRegister', location)
 
 
     const handleSignUp = async (e) => {
@@ -105,7 +107,7 @@ const Register = () => {
             e.target.reset()
             setImage(null);
             setSuccess(true);
-            navigate("/");
+            navigate(location.state || "/");
 
         } catch (err) {
             setError(err.message);
@@ -203,6 +205,7 @@ const Register = () => {
 
                     {/* Register Button */}
                     <button
+                        
                         type='submit'
                         disabled={loading}
                         className={`btn w-full text-gray-800 mt-4 rounded-lg border font-semibold hover:bg-gray-100 shadow-md bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
@@ -226,7 +229,7 @@ const Register = () => {
                                 console.log("Google SignIn Result:", res); // 🔹 এখানে console log
                                 setUser(res.user);
                                 toast.success("Google Sign-in successful");
-                                navigate("/");
+                                navigate(location.state || "/");
                             } catch (err) {
                                 console.error("Google Sign-in Error:", err); // 🔹 error log
                                 if (err.code === "auth/popup-closed-by-user") {
@@ -254,7 +257,7 @@ const Register = () => {
                 {/* Login Link */}
                 <p className='text-center text-gray-600 mt-4'>
                     Already have an account?
-                    <Link to={`/login`} className='text-green-600 font-semibold hover:underline ml-1'>
+                    <Link state={location.state} to={`/login`} className='text-green-600 font-semibold hover:underline ml-1'>
                         Login
                     </Link>
                 </p>

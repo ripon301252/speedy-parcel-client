@@ -103,7 +103,7 @@ const Login = () => {
                     </div>
 
                     {/* Login Button */}
-                    <button type='submit' className="btn w-full text-gray-800 mt-4 rounded-lg border  font-semibold hover:bg-gray-100 shadow-md bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform">
+                    <button  type='submit' className="btn w-full text-gray-800 mt-4 rounded-lg border  font-semibold hover:bg-gray-100 shadow-md bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform">
                         Login
                     </button>
 
@@ -138,7 +138,7 @@ const Login = () => {
                 {/* Register Link */}
                 <p className='text-center text-gray-600 mt-4'>
                     Already have an account?
-                    <Link to={`/register`} className='text-green-600 font-semibold hover:underline ml-1'>
+                    <Link state={location.state} to={`/register`} className='text-green-600 font-semibold hover:underline ml-1'>
                         Register
                     </Link>
                 </p>

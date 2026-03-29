@@ -13,6 +13,8 @@ import Register from "../Auth/Register";
 import ForgotPassword from "../Auth/ForgotPassword";
 import Coverage from "../Pages/Admin/Coverage";
 import AuthLayout from "../LayOut/AuthLayout";
+import PrivateRoute from "./PrivateRoute";
+import Rider from "../Pages/Rider/Rider";
 
 
 export const router = createBrowserRouter([
@@ -34,7 +36,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/place-order",
-                element: <PlaceOrder></PlaceOrder>
+                element: <PrivateRoute><PlaceOrder></PlaceOrder></PrivateRoute>,
+                loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
             {
                 path: "/track-delivery",
@@ -43,6 +46,10 @@ export const router = createBrowserRouter([
             {
                 path: "/payment",
                 element: <Payment></Payment>
+            },
+            {
+                path: "/Rider",
+                element: <PrivateRoute><Rider></Rider></PrivateRoute>
             },
             {
                 path: "/Accept-delivery-request",
@@ -85,15 +92,15 @@ export const router = createBrowserRouter([
                 element: <Coverage></Coverage>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
-           
-            
+
+
         ]
     },
     {
         path: '/',
         Component: AuthLayout,
         children: [
-             {
+            {
                 path: "/login",
                 element: <Login></Login>
             },

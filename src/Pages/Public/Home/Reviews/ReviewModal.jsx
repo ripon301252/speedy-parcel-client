@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
-import { FaRegWindowClose } from 'react-icons/fa';
+import React, { useState, useEffect } from 'react';
+// import { FaRegWindowClose } from 'react-icons/fa';
 import { toast } from 'react-toastify';
+import { useAuth } from '../../../../Hooks/useAuth';
 
 const ReviewModal = ({ closeModal }) => {
+    const { user } = useAuth();
 
     const [formData, setFormData] = useState({
         userName: '',
@@ -14,6 +16,18 @@ const ReviewModal = ({ closeModal }) => {
     });
 
     const [loading, setLoading] = useState(false);
+
+    // ⭐ যদি user লগইন থাকে, তার ডেটা default set করা
+    useEffect(() => {
+        if (user) {
+            setFormData((prev) => ({
+                ...prev,
+                userName: user.displayName || '',
+                user_email: user.email || '',
+                user_photoURL: user.photoURL || ''
+            }));
+        }
+    }, [user]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -38,7 +52,7 @@ const ReviewModal = ({ closeModal }) => {
         };
 
         try {
-            const res = await fetch('http://localhost:5000/reviews', {
+            const res = await fetch('http://localhost:3000/reviews', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -51,12 +65,12 @@ const ReviewModal = ({ closeModal }) => {
             toast.success("Review Added Successfully");
 
             setFormData({
-                userName: '',
-                user_email: '',
+                userName: user?.displayName || '',
+                user_email: user?.email || '',
                 designation: '',
                 review: '',
                 ratings: 0,
-                user_photoURL: ''
+                user_photoURL: user?.photoURL || ''
             });
 
             closeModal();
@@ -78,11 +92,9 @@ const ReviewModal = ({ closeModal }) => {
                 onClick={(e) => e.stopPropagation()}
                 className="bg-white p-6 rounded-3xl w-[440px] shadow-2xl animate-scaleIn"
             >
-                {/* Header */}
                 <div className=" mb-4">
                     <h2 className="text-3xl font-extrabold text-gray-800 text-center mb-2 mt-5">Create Review</h2>
                     <p className='text-gray-800 text-center text-sm mb-6'>Please share your Review</p>
-
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-3">
@@ -96,6 +108,7 @@ const ReviewModal = ({ closeModal }) => {
                         onChange={handleChange}
                         className="input input-bordered input-class"
                         required
+                        disabled={!!user} // লগইন থাকলে editable না
                     />
 
                     {/* Email */}
@@ -107,6 +120,7 @@ const ReviewModal = ({ closeModal }) => {
                         onChange={handleChange}
                         className="input input-bordered input-class"
                         required
+                        disabled={!!user}
                     />
 
                     {/* Designation */}
@@ -119,7 +133,7 @@ const ReviewModal = ({ closeModal }) => {
                         className="input input-bordered input-class"
                     />
 
-                    {/* Photo */}
+                    {/* Photo URL */}
                     <input
                         type="text"
                         name="user_photoURL"
@@ -127,6 +141,7 @@ const ReviewModal = ({ closeModal }) => {
                         value={formData.user_photoURL}
                         onChange={handleChange}
                         className="input input-bordered input-class"
+                        disabled={!!user} // লগইন থাকলে edit disabled
                     />
 
                     {/* ⭐ Rating */}
@@ -157,7 +172,6 @@ const ReviewModal = ({ closeModal }) => {
 
                     <div className='flex justify-between items-center gap-3 mt-3 mb-3'>
                         <div className='flex-1'>
-                            {/* Buttons */}
                             <button
                                 type="submit"
                                 disabled={loading}

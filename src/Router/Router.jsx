@@ -1,13 +1,13 @@
 import { createBrowserRouter } from "react-router";
 import Root from "../LayOut/Root";
-import Home from "../Pages/Home/Home";
-import About from "../Pages/About/About";
-import Contact from "../Pages/Contact/Contact";
-import PlaceOrder from "../Pages/PlaceOrder/PlaceOrder";
-import TrackDelivery from "../Pages/TrackDelivery/TrackDelivery";
-import Payment from "../Pages/Payment/Payment";
-import AcceptDeliveryRequest from "../Pages/AcceptDeliveryRequest/AcceptDeliveryRequest";
-import DeliveryStatus from "../Pages/DeliveryStatus/DeliveryStatus";
+import Home from "../Pages/Public/Home/Home";
+import About from "../Pages/Public/About/About";
+import Contact from "../Pages/Public/Contact/Contact";
+import PlaceOrder from "../Pages/Customer/PlaceOrder/ParcelOrder";
+import TrackDelivery from "../Pages/Rider/TrackDelivery/TrackDelivery";
+import Payment from "../Pages/Customer/Payment/Payment";
+import AcceptDeliveryRequest from "../Pages/Admin/AcceptDeliveryRequest/AcceptDeliveryRequest";
+import DeliveryStatus from "../Pages/Admin/DeliveryStatus/DeliveryStatus";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import ForgotPassword from "../Auth/ForgotPassword";
@@ -15,6 +15,7 @@ import Coverage from "../Pages/Admin/Coverage";
 import AuthLayout from "../LayOut/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../Pages/Rider/Rider";
+import DashboardLayout from "../LayOut/DashboardLayout";
 
 
 export const router = createBrowserRouter([
@@ -35,7 +36,7 @@ export const router = createBrowserRouter([
                 element: <Contact></Contact>
             },
             {
-                path: "/place-order",
+                path: "/parcel-order",
                 element: <PrivateRoute><PlaceOrder></PlaceOrder></PrivateRoute>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
@@ -113,5 +114,15 @@ export const router = createBrowserRouter([
                 element: <ForgotPassword></ForgotPassword>
             },
         ]
+    },
+    {
+        path: 'dashboard',
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        children: [
+            {
+
+            }
+        ]
     }
+
 ])

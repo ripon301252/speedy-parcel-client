@@ -1,11 +1,17 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { data, useLoaderData } from 'react-router';
+import { useLoaderData } from 'react-router';
 import Swal from 'sweetalert2';
+import useAxiosSecure from '../../../Hooks/useAxiosSecure';
+import { useAuth } from '../../../Hooks/useAuth';
 
 
-const PlaceOrder = () => {
-    const { register, handleSubmit, watch, formState: { errors } } = useForm();
+const ParcelOrder = () => {
+    const { register, handleSubmit, watch,
+        // formState: { errors } 
+    } = useForm();
+    const { user } = useAuth();
+    const axiosHook = useAxiosSecure();
     const serviceCenter = useLoaderData();
     const regionsDuplicate = serviceCenter.map(c => c.region)
     const regions = [...new Set(regionsDuplicate)];
@@ -37,24 +43,90 @@ const PlaceOrder = () => {
         console.log(data)
         const parcelWeight = parseFloat(data.parcelWeight);
         const isDocument = data.parcelType === "document";
+        const isSameDistrict = data.senderDistrict === data.receiverDistrict;
         const isSameArea = data.senderArea === data.receiverArea;
 
         let cost = 0;
-        if (isDocument) {
-            cost = isSameArea ? 60 : 80;
-        }
-        else {
-            if (parcelWeight <= 3) {
-                cost = isSameArea ? 110 : 150;
-            }
-            else {
-                const minCharge = isSameArea ? 110 : 150;
-                const extraWeight = parcelWeight - 3;
-                const extraCharge = isSameArea ? extraWeight * 40 : extraWeight * 40 + 40;
 
-                cost = minCharge + extraCharge;
+        if (!isDocument && (!parcelWeight || parcelWeight <= 0)) {
+            Swal.fire("Error", "Please enter valid weight", "error");
+            return;
+        }
+
+        if (isDocument) {
+            // Document parcel
+            cost = isSameArea ? 40 : isSameDistrict ? 60 : 100; // 80 + 20 for different district
+        } else {
+            // Non-document parcel
+            if (parcelWeight <= 3) {
+                cost = isSameArea ? 70 : isSameDistrict ? 110 : 190; // 150 + 40 surcharge
+            } else {
+                const extraWeight = parcelWeight - 3;
+                if (isSameArea) {
+                    cost = 70 + extraWeight * 40;
+                } else if (isSameDistrict) {
+                    cost = 110 + extraWeight * 40;
+                } else {
+                    cost = 150 + extraWeight * 40 + 40; // surcharge
+                }
             }
         }
+        // =============================================================================
+        // if (isDocument) {
+        //     if (isSameDistrict) {
+        //         cost = isSameArea ? 40 : 60;
+        //     } else {
+        //         cost = 80 + 20;
+        //     }
+        // } else {
+        //     if (parcelWeight <= 3) {
+        //         if (isSameDistrict) {
+        //             cost = isSameArea ? 70 : 110;
+        //         } else {
+        //             cost = 150 + 40; // surcharge added
+        //         }
+        //     } else {
+        //         const extraWeight = parcelWeight - 3;
+
+        //         if (isSameDistrict) {
+        //             const minCharge = isSameArea ? 70 : 110;
+        //             cost = minCharge + extraWeight * 40;
+        //         } else {
+        //             cost = 150 + extraWeight * 40 + 40;
+        //         }
+        //     }
+        // }
+        // ===================================================================================
+        // if (isDocument) {
+        //     if (isSameArea) {
+        //         cost = 40;
+        //     } else if (isSameDistrict) {
+        //         cost = 60;
+        //     } else {
+        //         cost = 80 + 20;
+        //     }
+        // } else {
+        //     if (parcelWeight <= 3) {
+        //         if (isSameArea) {
+        //             cost = 70;
+        //         } else if (isSameDistrict) {
+        //             cost = 110;
+        //         } else {
+        //             cost = 150 + 40;
+        //         }
+        //     } else {
+        //         const extraWeight = parcelWeight - 3;
+
+        //         if (isSameArea) {
+        //             cost = 70 + extraWeight * 40;
+        //         } else if (isSameDistrict) {
+        //             cost = 110 + extraWeight * 40;
+        //         } else {
+        //             cost = 150 + extraWeight * 40 + 40;
+        //         }
+        //     }
+        // }
+
         console.log("cost", cost)
 
         Swal.fire({
@@ -66,17 +138,24 @@ const PlaceOrder = () => {
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, Take it!"
         }).then((result) => {
-            if (result.isConfirmed) Swal.fire({
-                title: "Deleted!",
-                text: "Your file has been deleted.",
-                icon: "success"
-            });
+            if (result.isConfirmed)
+                // save order to database
+                axiosHook.post('/parcels', data).then(res => {
+                    console.log("after saving data", res.data)
+                })
+
+
+            //     Swal.fire({
+            //     title: "Deleted!",
+            //     text: "Your file has been deleted.",
+            //     icon: "success"
+            // });
         });
     }
 
 
     return (
-        <div className='py-20 '>
+        <div className='py-20 bg-gray-500'>
             <h1 className='text-5xl font-bold ml-8 '>Send A Parcel</h1>
             <p className='my-5 ml-8'>Enter your parcel details</p>
             <form onSubmit={handleSubmit(handleParcelOrder)} className=' max-w-7xl mx-auto'>
@@ -128,11 +207,13 @@ const PlaceOrder = () => {
                         <fieldset className="fieldset mb-3">
                             <label className="label">Sender Name</label>
                             <input type="text" {...register('senderName')}
+                                defaultValue={user?.displayName}
                                 className="input input-class" placeholder="Sender Name" />
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Sender Email</label>
                             <input type="text" {...register('senderEmail')}
+                                defaultValue={user?.email}
                                 className="input input-class" placeholder="Sender Email" />
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -246,4 +327,4 @@ const PlaceOrder = () => {
     );
 };
 
-export default PlaceOrder;
+export default ParcelOrder;

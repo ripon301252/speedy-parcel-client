@@ -1,24 +1,50 @@
-import React, { use, useState } from 'react';
-import reviewImg from '../../../assets/reviewQuote.png';
+import React, { useEffect, useState } from 'react';
+import reviewImg from '../../../../assets/reviewQuote.png';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { FaStar } from "react-icons/fa";
 import ReviewModal from './ReviewModal';
+import { UserStar } from 'lucide-react';
 
-const Reviews2 = ({ reviewPromise }) => {
-    const reviews = use(reviewPromise)
-    console.log(reviews)
 
+const Reviews1 = () => {
+    const [reviews, setReviews] = useState([])
     const [isOpen, setIsOpen] = useState(false)
+
+    useEffect(() => {
+        const loadReviews = async () => {
+            try {
+                const res = await fetch('http://localhost:3000/reviews');
+                const data = await res.json();
+                setReviews(data);
+                // console.log(data)
+            } catch (err) {
+                console.log(err.massage)
+            }
+        }
+
+        loadReviews()
+
+    }, [])
 
     return (
         <div className='w-[960px] mx-auto py-10'>
-            <div className='flex justify-between gap-5 mb-5 '>
+
+            <div className='flex justify-between items-center mx-12 mb-5'>
                 <h1 className='text-4xl font-bold '>Customer Reviews</h1>
-                <button onClick={() => setIsOpen(true)} className='btn text-gray-800 bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform shadow-none rounded-lg'>Write a Review</button>
+                <button
+                    onClick={() => setIsOpen(true)} 
+                    className='btn text-gray-800 bg-gradient-to-r border-green-500 from-green-500 to-green-300 
+                    cursor-pointer hover:scale-102 transition-transform shadow-none rounded-lg'
+                    >
+                         <span><UserStar /></span>
+                        Write a Review 
+                    </button>
                 {isOpen && <ReviewModal closeModal={() => setIsOpen(false)} />}
             </div>
-            <hr className=' mb-8' />
+
+            <hr className=' mb-8 mx-12' />
+
             <Swiper
                 loop={true}
                 effect={'coverflow'}
@@ -26,9 +52,9 @@ const Reviews2 = ({ reviewPromise }) => {
                 centeredSlides={true}
                 slidesPerView={3}
                 coverflowEffect={{
-                    rotate: 30,
-                    stretch: '30%',
-                    depth: 130,
+                    rotate: 50,
+                    stretch: 0,
+                    depth: 100,
                     modifier: 1,
                     slideShadows: true,
                 }}
@@ -65,6 +91,7 @@ const Reviews2 = ({ reviewPromise }) => {
                                 </div>
                             </div>
                         </SwiperSlide>
+
                     ))
                 }
             </Swiper>
@@ -72,4 +99,4 @@ const Reviews2 = ({ reviewPromise }) => {
     );
 };
 
-export default Reviews2;
+export default Reviews1;

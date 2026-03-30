@@ -39,19 +39,19 @@ const AuthProvider = ({ children }) => {
     // signOut/LogOut
     const logOut = () => {
         setLoading(true)
-        return signOut(auth).finally(()=> setLoading(false))
+        return signOut(auth).finally(() => setLoading(false))
     }
 
 
     // reset password
     const passwordReset = (email) => {
         setLoading(true)
-        return sendPasswordResetEmail(auth, email).finally(()=> setLoading(false))
+        return sendPasswordResetEmail(auth, email).finally(() => setLoading(false))
     }
 
     // observer
     useEffect(() => {
-        const unsubscribe = onAuthStateChanged(auth, (currentUser) =>{
+        const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
             setUser(currentUser)
             setLoading(false)
         })
@@ -61,7 +61,7 @@ const AuthProvider = ({ children }) => {
 
 
     // show loader while user data is loading
-    if(loading){
+    if (loading) {
         return (
             <div className='flex justify-center items-center h-screen'>
                 <span className="loading loading-bars loading-xl"></span>

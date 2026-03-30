@@ -22,6 +22,7 @@ const Navbar = () => {
             <NavLink to={`/`} className={activeLinks}>Home</NavLink>
             <NavLink to={`/about`} className={activeLinks}>About</NavLink>
             <NavLink to={`/contact`} className={activeLinks}>Contact</NavLink>
+            <NavLink to={`/parcel-order`} className={activeLinks}>Parcel order</NavLink>
         </>
     )
 
@@ -32,7 +33,7 @@ const Navbar = () => {
         /dashboard/track-order/:id
         /dashboard/payment
         /dashboard/profile */}
-            <NavLink to={`/place-order`} className={activeLinks}>Place order</NavLink>
+            <NavLink to={`/parcel-order`} className={activeLinks}>Parcel order</NavLink>
             <NavLink to={`/track-delivery`} className={activeLinks}>Track delivery</NavLink>
             <NavLink to={`/payment`} className={activeLinks}>Payment</NavLink>
         </>

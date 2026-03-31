@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Power } from 'lucide-react';
 
-const VideoGuide = () => {
+const VideoGuide = ({ toggle }) => {
     const [activeTab, setActiveTab] = useState('user');
 
     return (
@@ -35,6 +36,9 @@ const VideoGuide = () => {
                         }`}
                 >
                     🚴 Rider Guide
+                </button>
+                <button onClick={toggle} className='cursor-pointer bg-green-500 text-gray-800 p-2 rounded-lg'>
+                    <Power />
                 </button>
             </div>
 

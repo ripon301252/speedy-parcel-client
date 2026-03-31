@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { Power } from 'lucide-react';
 
-const VideoGuide = () => {
+const VideoGuide = ({ toggle }) => {
     const [activeTab, setActiveTab] = useState('user');
 
     return (
@@ -20,8 +21,8 @@ const VideoGuide = () => {
                 <button
                     onClick={() => setActiveTab('user')}
                     className={`px-6 py-2 rounded-full font-semibold transition ${activeTab === 'user'
-                            ? 'bg-green-500 text-white shadow-lg'
-                            : 'bg-gray-200 text-gray-700'
+                        ? 'bg-green-500 text-white shadow-lg'
+                        : 'bg-gray-200 text-gray-700'
                         }`}
                 >
                     👤 User Guide
@@ -30,11 +31,14 @@ const VideoGuide = () => {
                 <button
                     onClick={() => setActiveTab('rider')}
                     className={`px-6 py-2 rounded-full font-semibold transition ${activeTab === 'rider'
-                            ? 'bg-green-500 text-white shadow-lg'
-                            : 'bg-gray-200 text-gray-700'
+                        ? 'bg-green-500 text-white shadow-lg'
+                        : 'bg-gray-200 text-gray-700'
                         }`}
                 >
                     🚴 Rider Guide
+                </button>
+                <button onClick={toggle} className='cursor-pointer bg-green-500 text-gray-800 p-2 rounded-lg'>
+                    <Power />
                 </button>
             </div>
 
@@ -49,7 +53,7 @@ const VideoGuide = () => {
                             title="User Guide"
                             allowFullScreen
                         ></iframe>
-                       
+
                     ) : (
                         <iframe
                             className="w-full h-[400px]"

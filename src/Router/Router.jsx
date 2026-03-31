@@ -16,6 +16,7 @@ import AuthLayout from "../LayOut/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../Pages/Rider/Rider";
 import DashboardLayout from "../LayOut/DashboardLayout";
+import MyParcels from "../Pages/Customer/MyParcel/MyParcels";
 
 
 export const router = createBrowserRouter([
@@ -39,6 +40,10 @@ export const router = createBrowserRouter([
                 path: "/parcel-order",
                 element: <PrivateRoute><PlaceOrder></PlaceOrder></PrivateRoute>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
+            },
+            {
+                path: "my-parcels",
+                element: <MyParcels></MyParcels>
             },
             {
                 path: "/track-delivery",
@@ -119,9 +124,10 @@ export const router = createBrowserRouter([
         path: 'dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
-            {
-
-            }
+            // {
+            //     path: "my-parcels",
+            //     element: <MyParcels></MyParcels>
+            // }
         ]
     }
 

@@ -4,24 +4,30 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, EffectCoverflow, Pagination } from 'swiper/modules';
 import { FaStar } from "react-icons/fa";
 import ReviewModal from './ReviewModal';
-import { UserStar } from 'lucide-react';
+import { UserStar, Power } from 'lucide-react';
 
-const Reviews2 = ({ reviewPromise }) => {
+const Reviews2 = ({ reviewPromise, toggle }) => {
     const reviews = use(reviewPromise)
     const [isOpen, setIsOpen] = useState(false);
 
     return (
         <div className='w-[960px] mx-auto py-10'>
-            <div className='flex justify-between gap-5 mb-5 '>
+            <div className='flex justify-between items-center mx-12 mb-5'>
                 <h1 className='text-4xl font-bold '>Customer Reviews</h1>
-                <button onClick={() => setIsOpen(true)} 
-                className='btn text-gray-800 bg-gradient-to-r border-green-500 from-green-500 to-green-300 
-                cursor-pointer hover:scale-102 transition-transform shadow-none rounded-lg'
-                >
-                    <UserStar />
-                    Write a Review
-                </button>
-                {isOpen && <ReviewModal closeModal={() => setIsOpen(false)} />}
+                <div className='flex items-center gap-2'>
+                    <button onClick={toggle} className='cursor-pointer bg-green-500 text-gray-800 hover:scale-102 transition-transform p-2 rounded-lg'>
+                        <Power />
+                    </button>
+                    <button
+                        onClick={() => setIsOpen(true)}
+                        className='btn text-gray-800 bg-gradient-to-r border-green-500 from-green-500 to-green-300 
+                    cursor-pointer hover:scale-102 transition-transform shadow-none rounded-lg'
+                    >
+                        <span><UserStar /></span>
+                        Write a Review
+                    </button>
+                    {isOpen && <ReviewModal closeModal={() => setIsOpen(false)} />}
+                </div>
             </div>
             <hr className=' mb-8' />
             <Swiper

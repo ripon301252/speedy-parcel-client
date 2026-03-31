@@ -12,31 +12,54 @@ const Banner = () => {
     ];
 
     return (
-        <Carousel
-            autoPlay={true}
-            infiniteLoop={true}
-            interval={5000}
-            showThumbs={false}
-            showStatus={false}
-            stopOnHover={false}
-            className='mb-10'
-        >
-            {
-                videos.map((video, index) => (
-                    <div key={index}>
-                        <video
-                            className="w-full h-[480px] object-cover"
-                            autoPlay
-                            muted
-                            loop
-                            playsInline
-                        >
-                            <source src={video} type="video/mp4" />
-                        </video>
-                    </div>
-                ))
-            }
-        </Carousel>
+        <div className="mb-10">
+            <Carousel
+                autoPlay
+                infiniteLoop
+                interval={5000}
+                showThumbs={false}
+                showStatus={false}
+                stopOnHover={false}
+                swipeable
+            >
+                {
+                    videos.map((video, index) => (
+                        <div key={index} className="relative group">
+
+                            {/* 🎥 Video */}
+                            <video
+                                className="w-full h-[250px] sm:h-[350px] md:h-[450px] lg:h-[550px] object-cover transition-transform duration-700 group-hover:scale-105"
+                                autoPlay
+                                muted
+                                loop
+                                playsInline
+                            >
+                                <source src={video} type="video/mp4" />
+                            </video>
+
+                            {/* 🌑 Overlay */}
+                            <div className="absolute inset-0 bg-black/40"></div>
+
+                            {/* 📝 Content */}
+                            {/* <div className="absolute inset-0 flex flex-col justify-center items-center text-center text-white px-4">
+                                <h1 className="text-xl sm:text-3xl md:text-5xl font-bold mb-3">
+                                    Fast & Reliable Delivery
+                                </h1>
+
+                                <p className="text-sm sm:text-base md:text-lg mb-4 max-w-xl">
+                                    We deliver your parcels quickly and safely across the country.
+                                </p>
+
+                                <button className="px-5 py-2 sm:px-6 sm:py-3 bg-green-500 hover:bg-green-600 transition rounded-full font-semibold shadow-lg">
+                                    Get Started
+                                </button>
+                            </div> */}
+
+                        </div>
+                    ))
+                }
+            </Carousel>
+        </div>
     );
 };
 

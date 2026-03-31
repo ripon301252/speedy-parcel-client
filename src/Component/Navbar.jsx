@@ -23,6 +23,8 @@ const Navbar = () => {
             <NavLink to={`/about`} className={activeLinks}>About</NavLink>
             <NavLink to={`/contact`} className={activeLinks}>Contact</NavLink>
             <NavLink to={`/parcel-order`} className={activeLinks}>Parcel order</NavLink>
+            <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink>
+            <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink>
         </>
     )
 
@@ -36,6 +38,7 @@ const Navbar = () => {
             <NavLink to={`/parcel-order`} className={activeLinks}>Parcel order</NavLink>
             <NavLink to={`/track-delivery`} className={activeLinks}>Track delivery</NavLink>
             <NavLink to={`/payment`} className={activeLinks}>Payment</NavLink>
+            <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink>
         </>
     )
 
@@ -46,7 +49,7 @@ const Navbar = () => {
         /rider/active-delivery
         /rider/delivery-history
         /rider/earnings */}
-            {/* <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink> */}
+            <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink>
             <NavLink to={`/Accept-delivery-request`} className={activeLinks}>Accept delivery request </NavLink>
             <NavLink to={`/Update-delivery-status`} className={activeLinks}>Update delivery status </NavLink>
             <NavLink to={`/View-earnings`} className={activeLinks}>View earnings </NavLink>
@@ -100,7 +103,7 @@ const Navbar = () => {
                         :
                         (<Link to={`/login`} className='btn'>Login</Link>)
                     }
-                    <Link to={`/Rider`} className='btn btn-outline mx-3 hover:bg-green-500'>Be a Rider</Link>
+                    {/* <Link to={`/Rider`} className='btn btn-outline mx-3 hover:bg-green-500'>Be a Rider</Link> */}
                 </div>
 
             </div>

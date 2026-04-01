@@ -6,12 +6,12 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useAuth } from '../../../Hooks/useAuth';
 
 
-const ParcelOrder = () => {
+const SendParcel = () => {
     const { register, handleSubmit, watch,
         // formState: { errors } 
     } = useForm();
     const { user } = useAuth();
-    const axiosHook = useAxiosSecure();
+    const axiosSendParcel = useAxiosSecure();
     const serviceCenter = useLoaderData();
     const regionsDuplicate = serviceCenter.map(c => c.region)
     const regions = [...new Set(regionsDuplicate)];
@@ -39,7 +39,7 @@ const ParcelOrder = () => {
 
 
 
-    const handleParcelOrder = (data) => {
+    const handleSendParcel = (data) => {
         console.log(data)
         const parcelWeight = parseFloat(data.parcelWeight);
         const isDocument = data.parcelType === "document";
@@ -128,6 +128,7 @@ const ParcelOrder = () => {
         // }
 
         console.log("cost", cost)
+        data.cost = cost;
 
         Swal.fire({
             title: "Agree with the cost",
@@ -140,7 +141,7 @@ const ParcelOrder = () => {
         }).then((result) => {
             if (result.isConfirmed)
                 // save order to database
-                axiosHook.post('/parcels', data).then(res => {
+                axiosSendParcel.post('/parcels', data).then(res => {
                     console.log("after saving data", res.data)
                 })
 
@@ -158,7 +159,7 @@ const ParcelOrder = () => {
         <div className='py-20 bg-gray-500'>
             <h1 className='text-5xl font-bold ml-8 '>Send A Parcel</h1>
             <p className='my-5 ml-8'>Enter your parcel details</p>
-            <form onSubmit={handleSubmit(handleParcelOrder)} className=' max-w-7xl mx-auto'>
+            <form onSubmit={handleSubmit(handleSendParcel)} className=' max-w-7xl mx-auto'>
                 {/* document */}
                 <div className='my-5'>
 
@@ -327,4 +328,4 @@ const ParcelOrder = () => {
     );
 };
 
-export default ParcelOrder;
+export default SendParcel;

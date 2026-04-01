@@ -5,6 +5,8 @@ import { Link, useLocation, useNavigate } from 'react-router';
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import { useAuth } from '../Hooks/useAuth';
 import { toast } from 'react-toastify';
+import useAxiosPublic from '../Hooks/useAxiosPublic';
+
 
 const Register = () => {
     const { registerUser, setUser, updateUserProfile, signInGoogle } = useAuth();
@@ -17,6 +19,7 @@ const Register = () => {
     const [preview, setPreview] = useState(null);
     const navigate = useNavigate();
     const location = useLocation();
+    const axiosPublic = useAxiosPublic();
     console.log('inRegister', location)
 
 
@@ -71,26 +74,46 @@ const Register = () => {
             // 2️⃣ image upload (fetch diye)
             let photoURL = "";
 
+            // if (image) {
+            //     const formData = new FormData();
+            //     formData.append("image", image);
+
+            //     const res = await fetch(
+            //         `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`,
+            //         {
+            //             method: "POST",
+            //             body: formData,
+            //         }
+            //     );
+
+            //     const data = await res.json();
+            //     console.log("IMGBB Response:", data);
+            //     if (!data.success) {
+            //         throw new Error("Image upload failed");
+            //     }
+            //     photoURL = data.data.url;
+
+            //     console.log(photoURL)
+            // }
+
             if (image) {
                 const formData = new FormData();
                 formData.append("image", image);
 
-                const res = await fetch(
+                const res = await axiosPublic.post(
                     `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`,
-                    {
-                        method: "POST",
-                        body: formData,
-                    }
+                    formData
                 );
 
-                const data = await res.json();
+                const data = res.data;
+
                 console.log("IMGBB Response:", data);
+
                 if (!data.success) {
                     throw new Error("Image upload failed");
                 }
-                photoURL = data.data.url;
 
-                console.log(photoURL)
+                photoURL = data.data.url;
             }
 
             // 3️⃣ update profile
@@ -164,7 +187,7 @@ const Register = () => {
                             }}
                         />
 
-                       
+
                     </div>
                     {/* {preview && (
                         <>
@@ -205,7 +228,7 @@ const Register = () => {
 
                     {/* Register Button */}
                     <button
-                        
+
                         type='submit'
                         disabled={loading}
                         className={`btn w-full text-gray-800 mt-4 rounded-lg border font-semibold hover:bg-gray-100 shadow-md bg-gradient-to-r border-green-500 from-green-500 to-green-300 cursor-pointer hover:scale-102 transition-transform ${loading ? "opacity-50 cursor-not-allowed" : ""}`}

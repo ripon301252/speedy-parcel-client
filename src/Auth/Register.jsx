@@ -150,6 +150,15 @@ const Register = () => {
     return (
         <div className='flex justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
 
+            {/* Lottie */}
+            <div className="flex-1 text-center">
+                <Lottie
+                    style={{ width: "520px" }}
+                    animationData={loginLottie}
+                    loop={true}
+                />
+            </div>
+
             <div className='flex-1 flex flex-col justify-center bg-white p-10 rounded-2xl shadow-xl border border-gray-200'>
 
                 <h1 className='text-3xl font-bold text-center mb-3 text-gray-800'>
@@ -297,14 +306,7 @@ const Register = () => {
 
             </div>
 
-            {/* Lottie */}
-            <div className="flex-1 text-center">
-                <Lottie
-                    style={{ width: "520px" }}
-                    animationData={loginLottie}
-                    loop={true}
-                />
-            </div>
+            
 
         </div>
     );

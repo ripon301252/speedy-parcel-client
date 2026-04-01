@@ -1,7 +1,8 @@
 import React, { useRef } from 'react';
 import { useAuth } from '../Hooks/useAuth';
 import Lottie from 'lottie-react';
-import loginLottie from '../assets/Lottie/New Password.json';
+import loginLottie from '../assets/Lottie/Login.json';
+import resetLottie from '../assets/Lottie/New Password.json';
 import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
@@ -30,11 +31,24 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className='flex justify-center items-center min-h-screen px-4 py-6'>
+        <div className='flex justify-center items-center gap-12 min-h-screen px-4 py-6'>
             <title>SpeedyParcel - Reset Password</title>
+            <div>
+                <Lottie style={{ width: "360px" }}
+                    animationData={loginLottie}
+                    loop={true}>
+                </Lottie>
+            </div>
+
             <div className='bg-white p-5 space-y-3 rounded-lg'>
-                <h2 className='text-2xl font-bold  mb-3 text-gray-800 text-center'>Reset Your Password</h2>
-                <p className='text-sm mb-6 text-gray-800 text-center'>Enter your email address below and we’ll send you a password reset link.</p>
+                <div className='flex justify-center '>
+                    <Lottie className='border border-gray-300 rounded-full shadow-2xl' style={{ width: "150px", height: "150px" }}
+                        animationData={resetLottie}
+                        loop={true}>
+                    </Lottie>
+                </div>
+                <h2 className='text-3xl font-bold  mb-3 text-gray-800 text-center'>Reset Your Password</h2>
+                <p className='text-sm mb-6 text-gray-800 text-center'>Enter your email address below and we’ll send you a  password <br /> reset link.</p>
                 {/* Email */}
                 <div>
                     <label className="label text-gray-800 font-semibold">Email</label>
@@ -59,13 +73,10 @@ const ForgotPassword = () => {
                         </button>
                     </p>
                 </div>
+
+
             </div>
-            <div>
-                <Lottie style={{ width: "360px" }}
-                    animationData={loginLottie}
-                    loop={true}>
-                </Lottie>
-            </div>
+            
         </div>
     );
 };

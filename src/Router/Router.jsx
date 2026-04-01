@@ -56,7 +56,7 @@ export const router = createBrowserRouter([
                 element: <PaymentSuccess></PaymentSuccess>
             },
             {
-                path: "/payment-cancelled",
+                path: "/payment-cancel",
                 element: <PaymentCancel></PaymentCancel>
             },
             {
@@ -113,19 +113,19 @@ export const router = createBrowserRouter([
         ]
     },
     {
-        path: '/auth',
+        path: '/',
         element: <AuthLayout></AuthLayout>,
         children: [
             {
-                path: "login",
+                path: "/login",
                 element: <Login></Login>
             },
             {
-                path: "register",
+                path: "/register",
                 element: <Register></Register>
             },
             {
-                path: "forgot-password",
+                path: "/forgot-password",
                 element: <ForgotPassword></ForgotPassword>
             },
         ]

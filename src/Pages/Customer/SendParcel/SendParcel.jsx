@@ -1,6 +1,6 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { useLoaderData } from 'react-router';
+import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useAuth } from '../../../Hooks/useAuth';
@@ -19,6 +19,7 @@ const SendParcel = () => {
     const senderDistrict = watch("senderDistrict");
     const receiverRegion = watch("receiverRegion");
     const receiverDistrict = watch("receiverDistrict");
+    const navigate = useNavigate();
 
 
     const districtsByRegion = region => {
@@ -137,20 +138,22 @@ const SendParcel = () => {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Take it!"
+            confirmButtonText: "Confirm and Continue to Payment"
         }).then((result) => {
             if (result.isConfirmed)
                 // save order to database
                 axiosSendParcel.post('/parcels', data).then(res => {
                     console.log("after saving data", res.data)
+                    if (res.data.insertedId) {
+                        navigate('/my-parcels');
+                        Swal.fire(
+                            "Success!",
+                            "Your parcel has been sent. Please proceed to payment.",
+                            "success"
+                        );
+                    }
                 })
 
-
-            //     Swal.fire({
-            //     title: "Deleted!",
-            //     text: "Your file has been deleted.",
-            //     icon: "success"
-            // });
         });
     }
 

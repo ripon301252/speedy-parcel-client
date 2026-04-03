@@ -37,8 +37,8 @@ const Navbar = () => {
         /dashboard/payment
         /dashboard/profile */}
             <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink>
-            <NavLink to={`/my-parcels`} className={activeLinks}>My-Parcels</NavLink>
-            <NavLink to={`/track-delivery`} className={activeLinks}>Track delivery</NavLink>
+            <NavLink to={`/my-parcels`} className={activeLinks}>My Parcels & payment</NavLink>
+            <NavLink to={`/payment-history`} className={activeLinks}>My Payment History</NavLink>
         </>
     )
 

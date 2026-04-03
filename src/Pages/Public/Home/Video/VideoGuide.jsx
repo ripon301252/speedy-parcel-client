@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Power } from 'lucide-react';
+import Marquee from "react-fast-marquee";
 
 const VideoGuide = ({ toggle }) => {
     const [activeTab, setActiveTab] = useState('user');
@@ -86,6 +87,8 @@ const VideoGuide = ({ toggle }) => {
                     </>
                 )}
             </div>
+
+            
         </section>
     );
 };

@@ -4,11 +4,12 @@ import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useAuth } from '../../../Hooks/useAuth';
+import { toast } from 'react-toastify';
 
 
 const SendParcel = () => {
     const { register, handleSubmit, watch,
-        // formState: { errors } 
+        formState: { errors }
     } = useForm();
     const { user } = useAuth();
     const axiosSendParcel = useAxiosSecure();
@@ -159,7 +160,7 @@ const SendParcel = () => {
 
 
     return (
-        <div className='py-20 bg-gray-500'>
+        <div className='py-20 '>
             <h1 className='text-5xl font-bold ml-8 '>Send A Parcel</h1>
             <p className='my-5 ml-8'>Enter your parcel details</p>
             <form onSubmit={handleSubmit(handleSendParcel)} className=' max-w-7xl mx-auto'>
@@ -193,13 +194,23 @@ const SendParcel = () => {
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 mb-14'>
                     <fieldset className="fieldset">
                         <label className="label">Parcel Name</label>
-                        <input type="text" {...register('parcelName')}
+                        <input type="text" {...register('parcelName', { required: "parcel name is required" })}
                             className="input input-class" placeholder="Parcel Name" />
+                        {errors.parcelName && (
+                            <span>{toast(errors.parcelName.message)}</span>
+                        )}
                     </fieldset>
                     <fieldset className="fieldset">
                         <label className="label">Parcel Weight (kg)</label>
-                        <input type="number" {...register('parcelWeight')}
+                        <input type="number" {...register('parcelWeight', {
+                            required: "Parcel weight is required",
+                            min: { value: 0.1, message: "Weight must be greater than 0" }
+                        })}
                             className="input input-class" placeholder="Parcel Weight" />
+
+                        {errors.parcelWeight && (
+                            <span>{toast(errors.parcelWeight.message)}</span>
+                        )}
                     </fieldset>
                 </div>
 
@@ -212,25 +223,34 @@ const SendParcel = () => {
                             <label className="label">Sender Name</label>
                             <input type="text" {...register('senderName')}
                                 defaultValue={user?.displayName}
+                                readOnly
                                 className="input input-class" placeholder="Sender Name" />
+
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Sender Email</label>
                             <input type="text" {...register('senderEmail')}
                                 defaultValue={user?.email}
+                                readOnly
                                 className="input input-class" placeholder="Sender Email" />
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Sender Address</label>
-                            <input type="text" {...register('senderAddress')}
+                            <input type="text" {...register('senderAddress', { required: "Sender Address is required" })}
                                 className="input input-class" placeholder="Sender Address" />
+                            {errors.senderAddress && (
+                                <span>{toast(errors.senderAddress.message)}</span>
+                            )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Sender Phone Number</label>
-                            <input type="text" {...register('senderPhoneNumber')}
+                            <input type="text" {...register('senderPhoneNumber', { required: "Sender Phone Number is required" })}
                                 className="input input-class" placeholder="Sender Phone Number " />
+                            {errors.senderPhoneNumber && (
+                                <span>{toast(errors.senderPhoneNumber.message)}</span>
+                            )}
                         </fieldset>
-                        <fieldset className="fieldset mb-3">
+                        {/* <fieldset className="fieldset mb-3">
                             <label className="label">Sender Region</label>
                             <select {...register('senderRegion')} defaultValue="Pick a Region" className="select input-class">
                                 <option disabled={true} className='bg-white text-gray-800'>Pick a Region</option>
@@ -256,12 +276,61 @@ const SendParcel = () => {
                                     (senderAreas || []).map((s, i) => (<option className='bg-white text-gray-800' key={i} value={s}>{s}</option>))
                                 }
                             </select>
+                        </fieldset> */}
+                        <fieldset className="fieldset mb-3">
+                            <label className="label">Sender Region</label>
+                            <select
+                                {...register('senderRegion', { required: "Sender Region is required" })}
+                                defaultValue=""
+                                className="select input-class"
+                            >
+                                <option value="" disabled className='bg-white text-gray-800'>Pick a Region</option>
+                                {regions.map((r, i) => (
+                                    <option className='bg-white text-gray-800' key={i} value={r}>{r}</option>
+                                ))}
+                            </select>
+                            {errors.senderRegion && (
+                                <span>{toast(errors.senderRegion.message)}</span>
+                            )}
+                        </fieldset>
+
+                        <fieldset className="fieldset mb-3">
+                            <label className="label">Sender District</label>
+                            <select
+                                {...register('senderDistrict', { required: "Sender District is required" })}
+                                defaultValue=""
+                                className="select input-class"
+                            >
+                                <option value="" disabled className='bg-white text-gray-800'>Pick a District</option>
+                                {districtsByRegion(senderRegion).map((d, i) => (
+                                    <option className='bg-white text-gray-800' key={i} value={d}>{d}</option>
+                                ))}
+                            </select>
+                            {errors.senderDistrict && (
+                                <span>{toast(errors.senderDistrict.message)}</span>
+                            )}
+                        </fieldset>
+                        <fieldset className="fieldset mb-3">
+                            <label className="label">Sender Area</label>
+                            <select
+                                {...register('senderArea', { required: "Sender Area is required" })}
+                                defaultValue=""
+                                className="select input-class"
+                            >
+                                <option value="" disabled className='bg-white text-gray-800'>Pick an Area</option>
+                                {(senderAreas || []).map((s, i) => (
+                                    <option className='bg-white text-gray-800' key={i} value={s}>{s}</option>
+                                ))}
+                            </select>
+                            {errors.senderArea && (
+                                <span>{toast(errors.senderArea.message)}</span>
+                            )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Text Area</label>
                             <textarea {...register('senderText')} cols="30" rows="5"
                                 className='input-class p-3 text-base'
-                                placeholder='Please Write Your Text...' />
+                                placeholder='Please Write Your Extra Instruction...' />
                         </fieldset>
                     </div>
 
@@ -270,25 +339,37 @@ const SendParcel = () => {
                         <h4 className='text-2xl font-semibold mb-5'>Receiver Details</h4>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Receiver Name</label>
-                            <input type="text" {...register('receiverName')}
+                            <input type="text" {...register('receiverName', { required: "Receiver Name is Required" })}
                                 className="input input-class" placeholder="Receiver Name" />
+                            {errors.receiverName && (
+                                <span>{toast(errors.receiverName.message)}</span>
+                            )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Receiver Email</label>
-                            <input type="text" {...register('receiverEmail')}
+                            <input type="text" {...register('receiverEmail', { required: "Receiver Email is Required" })}
                                 className="input input-class" placeholder="Receiver Email" />
+                            {errors.receiverEmail && (
+                                <span>{toast(errors.receiverEmail.message)}</span>
+                            )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Receiver Address</label>
-                            <input type="text" {...register('receiverAddress')}
+                            <input type="text" {...register('receiverAddress', { required: "Receiver Address is Required" })}
                                 className="input input-class" placeholder="Receiver Address" />
+                            {errors.receiverAddress && (
+                                <span>{toast(errors.receiverAddress.message)}</span>
+                            )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Receiver Phone Number</label>
-                            <input type="text" {...register('receiverPhoneNumber')}
+                            <input type="text" {...register('receiverPhoneNumber', { required: "Receiver Phone Number is Required" })}
                                 className="input input-class" placeholder="Receiver Phone Number " />
+                            {errors.receiverPhoneNumber && (
+                                <span>{toast(errors.receiverPhoneNumber.message)}</span>
+                            )}
                         </fieldset>
-                        <fieldset className="fieldset mb-3">
+                        {/* <fieldset className="fieldset mb-3">
                             <label className="label">Receiver Region</label>
                             <select {...register('receiverRegion')} defaultValue="Pick a Region" className="select input-class">
                                 <option disabled={true} className='bg-white text-gray-800'>Pick a Region</option>
@@ -315,17 +396,68 @@ const SendParcel = () => {
                                     (receiverAreas || []).map((a, i) => (<option className='bg-white text-gray-800' key={i} value={a}>{a}</option>))
                                 }
                             </select>
+                        </fieldset> */}
+
+                        <fieldset className="fieldset mb-3">
+                            <label className="label">Receiver Region</label>
+                            <select
+                                {...register('receiverRegion', { required: "Receiver Region is required" })}
+                                defaultValue=""
+                                className="select input-class"
+                            >
+                                <option value="" disabled className='bg-white text-gray-800'>Pick a Region</option>
+                                {regions.map((r, i) => (
+                                    <option className='bg-white text-gray-800' key={i} value={r}>{r}</option>
+                                ))}
+                            </select>
+                            {errors.receiverRegion && (
+                                <span>{toast(errors.receiverRegion.message)}</span>
+                            )}
+                        </fieldset>
+
+                        <fieldset className="fieldset mb-3">
+                            <label className="label">Receiver District</label>
+                            <select
+                                {...register('receiverDistrict', { required: "Receiver District is required" })}
+                                defaultValue=""
+                                className="select input-class"
+                            >
+                                <option value="" disabled className='bg-white text-gray-800'>Pick a District</option>
+                                {districtsByRegion(senderRegion).map((d, i) => (
+                                    <option className='bg-white text-gray-800' key={i} value={d}>{d}</option>
+                                ))}
+                            </select>
+                            {errors.receiverDistrict && (
+                                <span>{toast(errors.receiverDistrict.message)}</span>
+                            )}
+                        </fieldset>
+                        <fieldset className="fieldset mb-3">
+                            <label className="label">Receiver Area</label>
+                            <select
+                                {...register('receiverArea', { required: "Receiver Area is required" })}
+                                defaultValue=""
+                                className="select input-class"
+                            >
+                                <option value="" disabled className='bg-white text-gray-800'>Pick an Area</option>
+                                {(receiverAreas || []).map((a, i) => (
+                                    <option className='bg-white text-gray-800' key={i} value={a}>{a}</option>
+                                ))}
+                            </select>
+                            {errors.receiverArea && (
+                                <span>{toast(errors.receiverArea.message)}</span>
+                            )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Text Area</label>
                             <textarea {...register('receiverText')} cols="30" rows="5"
                                 className='input-class p-3 text-base'
-                                placeholder='Please Write Your Text...' />
+                                placeholder='Please Write Your Extra Instruction...' />
                         </fieldset>
                     </div>
                 </div>
-
-                <input type="submit" className='btn text-base text-gray-800 rounded-lg bg-linear-to-r from-green-500 via-green-400  to-green-500 w-full hover:scale-[1.02] transition-all duration-200' value="send parcel" />
+                <div className='flex justify-center my-5'>
+                    <input type="submit" className='btn text-base text-gray-800 rounded-lg bg-linear-to-r from-green-500 via-green-400  to-green-500  hover:scale-[1.02] transition-all duration-200' value="send parcel" />
+                </div>
             </form>
         </div>
     );

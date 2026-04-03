@@ -5,7 +5,7 @@ import About from "../Pages/Public/About/About";
 import Contact from "../Pages/Public/Contact/Contact";
 import PlaceOrder from "../Pages/Customer/SendParcel/SendParcel";
 import TrackDelivery from "../Pages/Rider/TrackDelivery/TrackDelivery";
-import Payment from "../Pages/Customer/Payment/Payment";
+// import Payment from "../Pages/Customer/Payment/Payment";
 import AcceptDeliveryRequest from "../Pages/Admin/AcceptDeliveryRequest/AcceptDeliveryRequest";
 import DeliveryStatus from "../Pages/Admin/DeliveryStatus/DeliveryStatus";
 import Login from "../Auth/Login";
@@ -16,9 +16,10 @@ import AuthLayout from "../LayOut/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../Pages/Rider/Rider";
 import DashboardLayout from "../LayOut/DashboardLayout";
-import MyParcels from "../Pages/Customer/MyParcel/MyParcels";
+import MyParcels from "../Pages/Customer/MyParcel/MyParcelsAndPayment";
 import PaymentSuccess from "../Pages/Customer/Payment/PaymentSuccess";
 import PaymentCancel from "../Pages/Customer/Payment/PaymentCancel";
+import PaymentHistory from "../Pages/Customer/Payment/MyPaymentHistory";
 
 
 export const router = createBrowserRouter([
@@ -47,10 +48,10 @@ export const router = createBrowserRouter([
                 path: "/my-parcels",
                 element: <MyParcels></MyParcels>
             },
-            {
-                path: "/payment/:parcelId",
-                element: <PrivateRoute><Payment></Payment></PrivateRoute>
-            },
+            // {
+            //     path: "/payment/:parcelId",
+            //     element: <PrivateRoute><Payment></Payment></PrivateRoute>
+            // },
             {
                 path: "/payment-success",
                 element: <PaymentSuccess></PaymentSuccess>
@@ -58,6 +59,10 @@ export const router = createBrowserRouter([
             {
                 path: "/payment-cancelled",
                 element: <PaymentCancel></PaymentCancel>
+            },
+            {
+                path: "/payment-history",
+                element: <PaymentHistory></PaymentHistory>
             },
             {
                 path: "/track-delivery",

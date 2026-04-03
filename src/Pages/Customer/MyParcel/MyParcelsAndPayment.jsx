@@ -5,7 +5,7 @@ import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
 // import { Link } from 'react-router';
 
-const MyParcels = () => {
+const MyParcelsAndPayment = () => {
     const { user } = useAuth();
     const axiosMyParcels = useAxiosPublic();
 
@@ -59,7 +59,9 @@ const MyParcels = () => {
             cost: parcel.cost,
             parcelId: parcel._id,
             senderEmail: parcel.senderEmail,
-            parcelName: parcel.parcelName
+            parcelName: parcel.parcelName,
+            senderName: parcel.senderName,
+            senderAddress: parcel.senderAddress
         }
         const res = await axiosMyParcels.post('/stripe-payment', paymentInfo);
         console.log(res.data)
@@ -82,9 +84,7 @@ const MyParcels = () => {
                             <th>Parcel Weight</th>
                             <th>Cost</th>
                             <th>Payment</th>
-                            <th>Payment Status</th>
                             <th>Actions</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -111,7 +111,7 @@ const MyParcels = () => {
                                                 )
                                             }
                                         </td>
-                                        <td></td>
+                                        
 
                                         <td>
                                             <div className='flex gap-3'>
@@ -138,4 +138,4 @@ const MyParcels = () => {
     );
 };
 
-export default MyParcels;
+export default MyParcelsAndPayment;

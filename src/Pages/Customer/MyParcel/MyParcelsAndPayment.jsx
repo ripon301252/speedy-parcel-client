@@ -10,6 +10,7 @@ import { toast } from 'react-toastify';
 
 const MyParcelsAndPayment = () => {
     const { user } = useAuth();
+    console.log(user)
     const axiosMyParcels = useAxiosPublic();
     const [modalType, setModalType] = useState(null)
     const [selectedParcel, setSelectedParcel] = useState(null);
@@ -103,7 +104,9 @@ const MyParcelsAndPayment = () => {
             await axiosMyParcels.post("/send-otp", { email: user.email });
             setModalType("OTP"); // Open Modal
         } catch (err) {
-            toast("Failed to send OTP");
+            console.error("OTP Error:", err);
+            const message = err.response?.data?.message || err.message || "Failed to send OTP";
+            toast.error(message);
         }
     };
 

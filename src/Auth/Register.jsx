@@ -71,6 +71,7 @@ const Register = () => {
             const result = await registerUser(email, password);
             const user = result.user;
 
+
             // 2️⃣ image upload (fetch diye)
             let photoURL = "";
 
@@ -114,6 +115,20 @@ const Register = () => {
                 }
 
                 photoURL = data.data.url;
+            }
+
+            // create user in the database
+            const userInfo = {
+                email: user.email,
+                name: name,
+                photoURL: photoURL,
+                createdAt: new Date()
+            }
+            const dbRes = await axiosPublic.post('/users', userInfo);
+            if (dbRes.data.insertedId) {
+                console.log(' user created in the database');
+            } else {
+                console.log(dbRes.data.message);
             }
 
             // 3️⃣ update profile
@@ -258,12 +273,35 @@ const Register = () => {
                             setLoading(true);
                             try {
                                 const res = await signInGoogle();
-                                console.log("Google SignIn Result:", res); // 🔹 এখানে console log
-                                setUser(res.user);
+                                const user = res.user;
+
+                                console.log("Google SignIn Result:", user);
+
+                                // create user in DB
+                                const userInfo = {
+                                    email: user.email,
+                                    name: user.displayName,
+                                    photoURL: user.photoURL,
+                                    createdAt: new Date()
+                                };
+
+                                const dbRes = await axiosPublic.post('/users', userInfo);
+
+                                if (dbRes.data.insertedId) {
+                                    console.log('user created in DB');
+                                }
+
+                                // set user
+                                setUser(user);
+
                                 toast.success("Google Sign-in successful");
+
+                                // navigate AFTER everything done ✅
                                 navigate(location.state || "/");
+
                             } catch (err) {
-                                console.error("Google Sign-in Error:", err); // 🔹 error log
+                                console.error("Google Sign-in Error:", err);
+
                                 if (err.code === "auth/popup-closed-by-user") {
                                     toast.error("Google sign-in cancelled by user");
                                 } else {
@@ -306,7 +344,7 @@ const Register = () => {
 
             </div>
 
-            
+
 
         </div>
     );

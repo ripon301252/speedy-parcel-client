@@ -25,7 +25,7 @@ const Navbar = () => {
             <NavLink to={`/coverage`} className={activeLinks}>Coverage </NavLink>
             <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink>
             <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink>
-            <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink>
+            {/* <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink> */}
         </>
     )
 
@@ -91,7 +91,7 @@ const Navbar = () => {
                     <div className='hidden md:flex items-center gap-6'>
                         {!user && publicLinks}
                         {/* {user && role === "rider" && riderLinks}
-                        {user && role === "customer" && customerLinks}
+                        {user && role === "user" && customerLinks}
                         {user && role === "admin" && adminLinks} */}
                         {/* {user && adminLinks} */}
                         {user && customerLinks}

@@ -11,15 +11,16 @@ import DeliveryStatus from "../Pages/Admin/DeliveryStatus/DeliveryStatus";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import ForgotPassword from "../Auth/ForgotPassword";
-import Coverage from "../Pages/Admin/Coverage";
+import Coverage from "../Pages/Public/Coverage";
 import AuthLayout from "../LayOut/AuthLayout";
 import PrivateRoute from "./PrivateRoute";
 import Rider from "../Pages/Rider/Rider";
 import DashboardLayout from "../LayOut/DashboardLayout";
-import MyParcels from "../Pages/Customer/MyParcel/MyParcelsAndPayment";
-import PaymentSuccess from "../Pages/Customer/Payment/PaymentSuccess";
-import PaymentCancel from "../Pages/Customer/Payment/PaymentCancel";
+import MyParcelsAndPayment from "../Pages/Customer/MyParcel/MyParcelsAndPayment";
+import PaymentSuccessModal from "../Pages/Customer/Payment/PaymentSuccessModal";
+import PaymentCancelModal from "../Pages/Customer/Payment/PaymentCancelModal";
 import PaymentHistory from "../Pages/Customer/Payment/MyPaymentHistory";
+import ModalOTP from "../Pages/Customer/Payment/ModalOTP";
 
 
 export const router = createBrowserRouter([
@@ -40,13 +41,22 @@ export const router = createBrowserRouter([
                 element: <Contact></Contact>
             },
             {
+                path: "/coverage",
+                element: <Coverage></Coverage>,
+                loader: () => fetch('/serviceCenter.json').then(res => res.json())
+            },
+            {
                 path: "/send-parcel",
                 element: <PrivateRoute><PlaceOrder></PlaceOrder></PrivateRoute>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
             {
+                path: "/modal-otp",
+                element: <ModalOTP></ModalOTP>,
+            },
+            {
                 path: "/my-parcels",
-                element: <MyParcels></MyParcels>
+                element: <MyParcelsAndPayment></MyParcelsAndPayment>
             },
             // {
             //     path: "/payment/:parcelId",
@@ -54,11 +64,11 @@ export const router = createBrowserRouter([
             // },
             {
                 path: "/payment-success",
-                element: <PaymentSuccess></PaymentSuccess>
+                element: <PaymentSuccessModal></PaymentSuccessModal>
             },
             {
                 path: "/payment-cancelled",
-                element: <PaymentCancel></PaymentCancel>
+                element: <PaymentCancelModal></PaymentCancelModal>
             },
             {
                 path: "/payment-history",
@@ -108,11 +118,7 @@ export const router = createBrowserRouter([
                 path: "/View-reports",
                 element: <Contact></Contact>
             },
-            {
-                path: "/coverage",
-                element: <Coverage></Coverage>,
-                loader: () => fetch('/serviceCenter.json').then(res => res.json())
-            },
+            
 
 
         ]

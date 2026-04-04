@@ -3,7 +3,7 @@ import { Link, useSearchParams } from 'react-router';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { CheckCircleIcon } from '@heroicons/react/24/solid';
 
-const PaymentSuccess = () => {
+const PaymentSuccessModal = () => {
     const [paymentInfo, setPaymentInfo] = useState({}); 
     const [searchParams] = useSearchParams();
     const sessionId = searchParams.get('session_id');
@@ -48,4 +48,4 @@ const PaymentSuccess = () => {
     );
 };
 
-export default PaymentSuccess;
+export default PaymentSuccessModal;

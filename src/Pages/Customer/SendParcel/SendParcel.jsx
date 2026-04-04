@@ -455,8 +455,8 @@ const SendParcel = () => {
                         </fieldset>
                     </div>
                 </div>
-                <div className='flex justify-center my-5'>
-                    <input type="submit" className='btn text-base text-gray-800 rounded-lg bg-linear-to-r from-green-500 via-green-400  to-green-500  hover:scale-[1.02] transition-all duration-200' value="send parcel" />
+                <div className='flex my-5'>
+                    <input type="submit" className='btn px-8  text-lg text-gray-800 rounded-lg bg-linear-to-r from-green-500 via-green-400  to-green-500  hover:scale-[1.02] transition-all duration-200' value="send parcel" />
                 </div>
             </form>
         </div>

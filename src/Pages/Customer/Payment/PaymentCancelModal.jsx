@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import { XCircleIcon } from '@heroicons/react/24/solid';
 
-const PaymentCancel = () => {
+const PaymentCancelModal = () => {
     return (
         <div className="min-h-screen flex items-center justify-center bg-gray-100 p-4">
             <div className="bg-white shadow-lg rounded-xl max-w-md w-full p-6 sm:p-10 text-center">
@@ -22,4 +22,4 @@ const PaymentCancel = () => {
     );
 };
 
-export default PaymentCancel;
+export default PaymentCancelModal;

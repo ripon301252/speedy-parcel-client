@@ -1,13 +1,18 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../../Hooks/useAuth';
 import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import Swal from 'sweetalert2';
-// import { Link } from 'react-router';
+import ModalOTP from '../Payment/ModalOTP';
+import { toast } from 'react-toastify';
+
+
 
 const MyParcelsAndPayment = () => {
     const { user } = useAuth();
     const axiosMyParcels = useAxiosPublic();
+    const [modalType, setModalType] = useState(null)
+    const [selectedParcel, setSelectedParcel] = useState(null);
 
     const { data: parcels = [], refetch } = useQuery({
         queryKey: ['myParcels', user?.email],
@@ -16,6 +21,7 @@ const MyParcelsAndPayment = () => {
             return res.data;
         }
     })
+
 
     const handleParcelDelete = (id) => {
         console.log("delete parcel with id:", id);
@@ -54,7 +60,8 @@ const MyParcelsAndPayment = () => {
         });
     }
 
-    const handlePayment = async(parcel) => {
+
+    const handlePayment = async (parcel) => {
         const paymentInfo = {
             cost: parcel.cost,
             parcelId: parcel._id,
@@ -62,12 +69,43 @@ const MyParcelsAndPayment = () => {
             parcelName: parcel.parcelName,
             senderName: parcel.senderName,
             senderAddress: parcel.senderAddress
-        }
+        };
+
         const res = await axiosMyParcels.post('/stripe-payment', paymentInfo);
-        console.log(res.data)
-        // window.location.href = res.data.url; // Redirect to the Stripe checkout page
-        window.location.assign(res.data.url) ; 
-    }
+
+        window.location.assign(res.data.url);
+    };
+
+
+    const handleOtpVerify = async (enteredOtp) => {
+        try {
+            const res = await axiosMyParcels.post("/verify-otp", {
+                email: user.email,
+                otp: Number(enteredOtp), // ✅ must convert to number
+            });
+
+            if (res.data.success) {
+                toast("OTP Verified");
+                handlePayment(selectedParcel);
+                setModalType(null);
+            }
+        } catch (err) {
+            toast(err.response?.data?.message || "OTP verification failed");
+        }
+    };
+
+
+    const handlePayClick = async (parcel) => {
+        setSelectedParcel(parcel);
+
+        try {
+            // Send OTP
+            await axiosMyParcels.post("/send-otp", { email: user.email });
+            setModalType("OTP"); // Open Modal
+        } catch (err) {
+            toast("Failed to send OTP");
+        }
+    };
 
     return (
         <div>
@@ -106,13 +144,11 @@ const MyParcelsAndPayment = () => {
                                                     <span className='text-green-500 font-semibold'>Paid</span>
                                                 ) : (
                                                     // <Link to={`/payment/${parcel._id}`} className='btn btn-sm btn-accent rounded-lg'>Pay Now</Link>
-                                                    <button onClick={() => handlePayment(parcel)}  
-                                                    className='btn btn-sm btn-accent rounded-lg'>Pay Now</button>
+                                                    <button onClick={() => handlePayClick(parcel)}
+                                                        className='btn btn-sm btn-accent rounded-lg'>Pay Now</button>
                                                 )
                                             }
                                         </td>
-                                        
-
                                         <td>
                                             <div className='flex gap-3'>
                                                 <button className='btn btn-sm btn-primary'>View Details</button>
@@ -129,11 +165,16 @@ const MyParcelsAndPayment = () => {
                                 )
                             })
                         }
-
-
                     </tbody>
                 </table>
             </div>
+
+            {modalType === "OTP" && (
+                <ModalOTP
+                    onClose={() => setModalType(null)}
+                    onVerify={handleOtpVerify}
+                />
+            )}
         </div>
     );
 };

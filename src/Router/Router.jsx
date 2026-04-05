@@ -21,6 +21,7 @@ import PaymentSuccessModal from "../Pages/Customer/Payment/PaymentSuccessModal";
 import PaymentCancelModal from "../Pages/Customer/Payment/PaymentCancelModal";
 import PaymentHistory from "../Pages/Customer/Payment/MyPaymentHistory";
 import ModalOTP from "../Pages/Customer/Payment/ModalOTP";
+import ApproveRider from "../Pages/Admin/ApproveRider/ApproveRider";
 
 
 export const router = createBrowserRouter([
@@ -80,7 +81,8 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/Rider",
-                element: <PrivateRoute><Rider></Rider></PrivateRoute>
+                element: <PrivateRoute><Rider></Rider></PrivateRoute>,
+                loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
             {
                 path: "/Accept-delivery-request",
@@ -145,10 +147,10 @@ export const router = createBrowserRouter([
         path: 'dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
-            // {
-            //     path: "my-parcels",
-            //     element: <MyParcels></MyParcels>
-            // }
+            {
+                path: "approve-rider",
+                element: <ApproveRider></ApproveRider>
+            }
         ]
     }
 

@@ -52,7 +52,10 @@ const Navbar = () => {
             <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink>
             <NavLink to={`/Accept-delivery-request`} className={activeLinks}>Accept delivery request </NavLink>
             <NavLink to={`/Update-delivery-status`} className={activeLinks}>Update delivery status </NavLink>
-            <NavLink to={`/View-earnings`} className={activeLinks}>View earnings </NavLink>
+            <NavLink to={`/dashboard`} className={activeLinks}>Dashboard </NavLink>
+            <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink>
+             <NavLink to={`/my-parcels`} className={activeLinks}>My Parcels & payment</NavLink>
+            <NavLink to={`/payment-history`} className={activeLinks}>My Payment History</NavLink>
         </>
     )
 
@@ -94,7 +97,7 @@ const Navbar = () => {
                         {user && role === "user" && customerLinks}
                         {user && role === "admin" && adminLinks} */}
                         {/* {user && adminLinks} */}
-                        {user && customerLinks}
+                        {user && riderLinks}
                     </div>
                 </div>
                 <div>

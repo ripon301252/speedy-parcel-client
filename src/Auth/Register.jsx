@@ -75,34 +75,13 @@ const Register = () => {
             // 2️⃣ image upload (fetch diye)
             let photoURL = "";
 
-            // if (image) {
-            //     const formData = new FormData();
-            //     formData.append("image", image);
-
-            //     const res = await fetch(
-            //         `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`,
-            //         {
-            //             method: "POST",
-            //             body: formData,
-            //         }
-            //     );
-
-            //     const data = await res.json();
-            //     console.log("IMGBB Response:", data);
-            //     if (!data.success) {
-            //         throw new Error("Image upload failed");
-            //     }
-            //     photoURL = data.data.url;
-
-            //     console.log(photoURL)
-            // }
-
             if (image) {
                 const formData = new FormData();
                 formData.append("image", image);
 
+                const image_hosting_url = `${import.meta.env.VITE_img_url}=${import.meta.env.VITE_image_host_key}`;
                 const res = await axiosPublic.post(
-                    `https://api.imgbb.com/1/upload?key=${import.meta.env.VITE_image_host_key}`,
+                    image_hosting_url ,
                     formData
                 );
 
@@ -186,6 +165,20 @@ const Register = () => {
 
                 <form onSubmit={handleSignUp} className='space-y-3'>
 
+                    <div className='flex justify-center'>
+                        {preview && (
+                            <>
+                            <div className='flex flex-col'>
+                                <div>
+                                    <img src={preview} className="w-20 h-20 bg-white border border-gray-300 p-2 shadow-2xl rounded-full mt-2" />
+                                </div>
+                                {/* <p className="text-sm text-gray-700">{image.name} ({(image.size / 1024).toFixed(2)} KB)</p> */}
+                            </div>
+
+                            </>
+                        )}
+                    </div>
+
                     {/* Name */}
                     <div>
                         <label className="label text-gray-800 font-semibold">Name</label>
@@ -210,15 +203,7 @@ const Register = () => {
                                 setPreview(URL.createObjectURL(file));
                             }}
                         />
-
-
                     </div>
-                    {/* {preview && (
-                        <>
-                            <img src={preview} className="w-20 h-20 rounded-full mt-2" />
-                            <p className="text-sm text-gray-700">{image.name} ({(image.size / 1024).toFixed(2)} KB)</p>
-                        </>
-                    )} */}
 
                     {/* Email */}
                     <div>
@@ -340,12 +325,7 @@ const Register = () => {
                 {error && (
                     <p className="text-red-500 text-center font-semibold">{error}</p>
                 )}
-
-
             </div>
-
-
-
         </div>
     );
 };

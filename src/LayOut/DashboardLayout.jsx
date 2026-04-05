@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import logoImg from "../assets/delivery4.png";
-import { Cuboid } from 'lucide-react';
+import { Motorbike} from 'lucide-react';
 import { IoIosNotifications } from "react-icons/io";
 
 const SideBar = () => {
@@ -76,14 +76,14 @@ const getTitle = () => {
               </li>
               
               <li>
-                <Link to={"/dashboard/my-parcels"}
+                <Link to={"/dashboard/approve-rider"}
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="My-Parcels"
+                  data-tip="Approve-Rider"
                 >
                   {/* Admin Dashboard icon */}
-                  <Cuboid className="text-green-500 my-1.5 inline-block size-5"/>  
-
-                  <span className="is-drawer-close:hidden">My-Parcels</span>
+                  <Motorbike className="text-green-500 my-1.5 inline-block size-5"/>  
+                  
+                  <span className="is-drawer-close:hidden">ApproveRider</span>
                 </Link>
               </li>
 

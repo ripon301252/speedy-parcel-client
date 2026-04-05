@@ -39,7 +39,6 @@ const MyParcelsAndPayment = () => {
             confirmButtonText: "Yes, delete it!"
         }).then((result) => {
             if (result.isConfirmed) {
-
                 axiosMyParcels.delete(`/parcels/${id}`)
                     .then(res => {
                         if (res.data.deletedCount) {
@@ -93,6 +92,7 @@ const MyParcelsAndPayment = () => {
             parcelName: parcel.parcelName,
             senderName: parcel.senderName,
             senderAddress: parcel.senderAddress,
+            senderPhoto: parcel.senderPhoto,
         };
 
         try {

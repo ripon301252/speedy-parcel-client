@@ -235,6 +235,13 @@ const SendParcel = () => {
                                 className="input input-class" placeholder="Sender Email" />
                         </fieldset>
                         <fieldset className="fieldset mb-3">
+                            <label className="label">Sender photo</label>
+                            <input type="text" {...register('senderPhoto')}
+                                defaultValue={user?.photoURL}
+                                readOnly
+                                className="input input-class" placeholder="Sender Email" />
+                        </fieldset>
+                        <fieldset className="fieldset mb-3">
                             <label className="label">Sender Address</label>
                             <input type="text" {...register('senderAddress', { required: "Sender Address is required" })}
                                 className="input input-class" placeholder="Sender Address" />
@@ -453,11 +460,12 @@ const SendParcel = () => {
                                 className='input-class p-3 text-base'
                                 placeholder='Please Write Your Extra Instruction...' />
                         </fieldset>
+                        <div className='flex my-9'>
+                            <input type="submit" className='btn px-8 w-full  text-lg text-gray-800 rounded-lg bg-linear-to-r from-green-500 via-green-400  to-green-500  hover:scale-[1.02] transition-all duration-200' value="send parcel" />
+                        </div>
                     </div>
                 </div>
-                <div className='flex my-5'>
-                    <input type="submit" className='btn px-8  text-lg text-gray-800 rounded-lg bg-linear-to-r from-green-500 via-green-400  to-green-500  hover:scale-[1.02] transition-all duration-200' value="send parcel" />
-                </div>
+
             </form>
         </div>
     );

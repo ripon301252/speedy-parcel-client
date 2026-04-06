@@ -22,6 +22,7 @@ import PaymentCancelModal from "../Pages/Customer/Payment/PaymentCancelModal";
 import PaymentHistory from "../Pages/Customer/Payment/MyPaymentHistory";
 import ModalOTP from "../Pages/Customer/Payment/ModalOTP";
 import ApproveRider from "../Pages/Admin/ApproveRider/ApproveRider";
+import UserManagement from "../Pages/Admin/UserManagement/UserManagement";
 
 
 export const router = createBrowserRouter([
@@ -150,7 +151,11 @@ export const router = createBrowserRouter([
             {
                 path: "approve-rider",
                 element: <ApproveRider></ApproveRider>
-            }
+            },
+            {
+                path: "user-management",
+                element: <UserManagement></UserManagement>
+            },
         ]
     }
 

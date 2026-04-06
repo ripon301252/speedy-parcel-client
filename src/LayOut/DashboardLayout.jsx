@@ -1,8 +1,8 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import logoImg from "../assets/delivery4.png";
-import { Motorbike} from 'lucide-react';
-import { IoIosNotifications } from "react-icons/io";
+import { Motorbike, Users} from 'lucide-react';
+
 
 const SideBar = () => {
 
@@ -81,7 +81,7 @@ const getTitle = () => {
                   data-tip="Approve-Rider"
                 >
                   {/* Admin Dashboard icon */}
-                  <Motorbike className="text-green-500 my-1.5 inline-block size-5"/>  
+                  <Motorbike className="text-green-300 my-1.5 inline-block size-5"/>  
                   
                   <span className="is-drawer-close:hidden">ApproveRider</span>
                 </Link>
@@ -89,12 +89,13 @@ const getTitle = () => {
 
               <li>
                 <Link
-                  to={"notification"}
+                  to={"/dashboard/user-management"}
                   className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Notification"
+                  data-tip="User Management"
                 >
-                  <IoIosNotifications className="text-green-300 my-1.5 inline-block size-5" />
-                  <span className="is-drawer-close:hidden">Notification</span>
+                  <Users className="text-green-300 my-1.5 inline-block size-5" />
+                 
+                  <span className="is-drawer-close:hidden">User Management</span>
                 </Link>
               </li>
 

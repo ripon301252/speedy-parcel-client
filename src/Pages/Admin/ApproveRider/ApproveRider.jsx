@@ -2,6 +2,9 @@ import React from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
+import { Eye, UserRoundPlus, UserRoundX } from 'lucide-react';
+import { IoTrashOutline } from "react-icons/io5";
+
 
 const ApproveRider = () => {
     const axiosApproveRider = useAxiosSecure();
@@ -44,7 +47,7 @@ const ApproveRider = () => {
                             "error"
                         );
                     })
-                    
+
         })
     }
 
@@ -88,6 +91,7 @@ const ApproveRider = () => {
                             </th>
                             <th>Name</th>
                             <th>Email</th>
+                            <th>Date</th>
                             <th>status</th>
                             <th>Actions</th>
                         </tr>
@@ -109,7 +113,7 @@ const ApproveRider = () => {
                                             <div className="font-bold">{rider.riderName}</div>
                                             <span className='opacity-90'>{rider.riderRegion}</span>
                                             <div>
-                                                <span className="font-bold opacity-50 mr-2">{rider.riderDistrict}</span>,
+                                                <span className="font-bold opacity-50 mr-2">{rider.riderDistrict} ,</span>
                                                 <span className="text-sm opacity-50"> {rider.riderArea}</span>
                                             </div>
                                         </div>
@@ -118,6 +122,11 @@ const ApproveRider = () => {
                                 <td>
                                     {rider.riderEmail}
                                 </td>
+
+                                <td>
+                                    {new Date(rider.createdAt).toLocaleDateString()}
+                                </td>
+
                                 <td>
                                     {/* <p className={`${rider.status === "approved"
                                         ? "bg-green-200 text-green-600 text-center py-1 rounded-lg"
@@ -126,10 +135,10 @@ const ApproveRider = () => {
                                         {rider.status}
                                     </p> */}
                                     <p className={`text-center py-1 rounded-lg ${rider.status === "approved"
-                                            ? "bg-green-200 text-green-600"
-                                            : rider.status === "rejected"
-                                                ? "bg-red-200 text-red-600"
-                                                : "bg-yellow-200 text-yellow-600"  // ✅ pending
+                                        ? "bg-green-200 text-green-600"
+                                        : rider.status === "rejected"
+                                            ? "bg-red-200 text-red-600"
+                                            : "bg-yellow-200 text-yellow-600"  // ✅ pending
                                         }`}>
                                         {rider.status || "pending"}
                                     </p>
@@ -137,11 +146,54 @@ const ApproveRider = () => {
                                 </td>
 
                                 <th>
-                                    <div className='flex gap-2'>
-                                        <button className="btn btn-sm">View</button>
-                                        <button onClick={() => handleApproveRider(rider)} className="btn btn-sm">Accept</button>
-                                        <button onClick={() => handleRejectRider(rider)} className="btn btn-sm">Reject</button>
-                                        <button onClick={() => handleRiderDelete(rider._id)} className="btn btn-sm">Delete</button>
+                                    <div className='flex justify-start items-center gap-3 whitespace-nowrap'>
+                                        {/* <button className="btn btn-sm">View</button> */}
+                                        <div
+                                            className="relative overflow-visible tooltip tooltip-bottom"
+                                            data-tip="View Details"
+                                        >
+                                            <button
+                                                to={`/editAsset/${rider._id}`}
+                                                className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-black"
+                                            >
+                                                <Eye className="text-xs" />
+                                               
+                                            </button>
+                                        </div>
+                                        {/* <button onClick={() => handleApproveRider(rider)} className="btn btn-sm">Accept</button>
+                                        <button onClick={() => handleRejectRider(rider)} className="btn btn-sm">Reject</button> */}
+
+                                        {rider.status === 'approved'
+                                            ? <div className="tooltip tooltip-bottom" data-tip="Make Admin">
+                                                <button
+                                                    onClick={() => handleRejectRider(rider)}
+                                                    className=" btn btn-square btn-outline text-[#00d390] hover:text-gray-800 hover:bg-[#00d390] "
+                                                >
+                                                    <UserRoundPlus className='text-xs ' />
+
+                                                </button>
+                                            </div>
+                                            : <div className="tooltip tooltip-bottom" data-tip="Remove Admin">
+                                                <button
+                                                    onClick={() => handleApproveRider(rider)}
+                                                    className=" btn btn-square btn-outline  text-[#fcb700] hover:text-gray-800 hover:bg-[#fcb700]"
+                                                >
+                                                    <UserRoundX className='text-xs' />
+
+                                                </button>
+                                            </div>
+
+                                        }
+                                        {/* <button onClick={() => handleRiderDelete(rider._id)} className="btn btn-sm">Delete</button> */}
+                                        <div className="relative overflow-visible tooltip tooltip-bottom "
+                                            data-tip="Remove">
+                                            <button
+                                                onClick={() => handleRiderDelete(rider._id)}
+                                                className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black"
+                                            >
+                                                <IoTrashOutline className="text-lg" />
+                                            </button>
+                                        </div>
                                     </div>
                                 </th>
                             </tr>)

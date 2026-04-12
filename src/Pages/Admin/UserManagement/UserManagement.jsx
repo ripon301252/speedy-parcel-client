@@ -27,39 +27,75 @@ const UserManagement = () => {
 
     const handleMakeAdmin = (user) => {
         const roleInfo = { role: 'admin' }
-        axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
-            .then(res => {
-                console.log(res.data)
-                if (res.data.modifiedCount) {
-                    refetch();
-                    Swal.fire({
-                        position: "top-center",
-                        icon: "success",
-                        title: `${user.name} User Marked as an Admin`,
-                        showConfirmButton: false,
-                        timer: 2000
+        Swal.fire({
+            title: `Make ${user.name} Admin?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Make Admin"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+                    .then(res => {
+                        if (res.data.modifiedCount) {
+                            refetch();
+                            Swal.fire("Success!", `${user.name} is now Admin`, "success");
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        Swal.fire("Error!", "Something went wrong", "error");
                     });
-                }
-            })
-    }
+            }
+        });
+
+        // =============================================================
+
+        // axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+        // Swal.fire({
+        //     position: "top-center",
+        //     icon: "success",
+        //     title: `${user.name} User Marked as an Admin`,
+        //     showConfirmButton: false,
+        //     timer: 2000
+        // });
+    };
+
+    
 
     const handleRemoveAdmin = (user) => {
         const roleInfo = { role: 'user' }
-        axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
-            .then(res => {
-                console.log(res.data)
-                if (res.data.modifiedCount) {
-                    refetch();
-                    Swal.fire({
-                        position: "top-center",
-                        icon: "success",
-                        title: `${user.name} User Removed from Admin`,
-                        showConfirmButton: false,
-                        timer: 2000
+        Swal.fire({
+            title: `Remove ${user.name} from Admin?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Remove"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+                    .then(res => {
+                        if (res.data.modifiedCount) {
+                            refetch();
+                            Swal.fire("Removed!", `${user.name} is now User`, "success");
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err);
+                        Swal.fire("Error!", "Something went wrong", "error");
                     });
-                }
-            })
-    }
+            }
+        });
+
+        // =============================================================
+
+        // axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+        // Swal.fire({
+        //     position: "top-center",
+        //     icon: "success",
+        //     title: `${user.name} User Removed from Admin`,
+        //     showConfirmButton: false,
+        //     timer: 2000
+        // });
+    };
 
 
     return (

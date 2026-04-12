@@ -2,8 +2,8 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
-import { Eye, Send, ShieldOff, ShieldPlus } from 'lucide-react';
-import { Link } from 'react-router';
+import { Eye, UserRoundPlus, UserRoundX } from 'lucide-react';
+// import { Link } from 'react-router';
 import { IoTrashOutline } from 'react-icons/io5';
 import ViewUser from '../ViewUser';
 
@@ -221,7 +221,7 @@ const UserManagement = () => {
                                                         onClick={() => handleRemoveAdmin(user)}
                                                         className="btn btn-square btn-outline text-[#fcb700] hover:text-gray-800 hover:bg-[#fcb700]"
                                                     >
-                                                        <ShieldOff className='text-xs' />
+                                                        <UserRoundX className='text-xs' />
                                                     </button>
                                                 </div>
                                                 : <div className="tooltip tooltip-bottom" data-tip="Make Admin">
@@ -229,7 +229,7 @@ const UserManagement = () => {
                                                         onClick={() => handleMakeAdmin(user)}
                                                         className="btn btn-square btn-outline  text-[#00d390] hover:text-gray-800 hover:bg-[#00d390]"
                                                     >
-                                                        <ShieldPlus className='text-xs' />
+                                                        <UserRoundPlus className='text-xs' />
                                                     </button>
                                                 </div>
                                             }

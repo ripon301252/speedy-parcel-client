@@ -117,8 +117,8 @@ const ApproveRider = () => {
     return (
         <div>
             <h2 className='text-4xl'>All Riders: {riders.length}</h2>
-            <div className="overflow-x-auto">
-                <table className="table">
+            <div className="overflow-x-auto w-full">
+                <table className="table min-w-[700px]">
                     {/* head */}
                     <thead>
                         <tr>
@@ -139,18 +139,27 @@ const ApproveRider = () => {
                                 <td>
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
-                                            <div className="mask mask-squircle h-12 w-12">
-                                                <img
-                                                    src={rider.riderPhoto}
-                                                    alt="PhotoURL" />
+                                            <div className="mask mask-squircle h-10 w-10 md:h-12 md:w-12">
+                                                <img src={rider.riderPhoto} alt="PhotoURL" />
                                             </div>
                                         </div>
+
                                         <div>
-                                            <div className="font-bold">{rider.riderName}</div>
-                                            <span className='opacity-90'>{rider.riderRegion}</span>
-                                            <div>
-                                                <span className="font-bold opacity-50 mr-2">{rider.riderDistrict} ,</span>
-                                                <span className="text-sm opacity-50"> {rider.riderArea}</span>
+                                            <div className="font-bold text-sm md:text-base">
+                                                {rider.riderName}
+                                            </div>
+
+                                            <span className='text-xs md:text-sm opacity-80'>
+                                                {rider.riderRegion}
+                                            </span>
+
+                                            <div className="hidden sm:block">
+                                                <span className="font-bold opacity-50 mr-2 text-xs">
+                                                    {rider.riderDistrict},
+                                                </span>
+                                                <span className="text-xs opacity-50">
+                                                    {rider.riderArea}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -173,11 +182,11 @@ const ApproveRider = () => {
                                     >
                                         {rider.status}
                                     </p> */}
-                                    <p className={`text-center py-1 rounded-lg ${rider.status === "approved"
+                                    <p className={`text-center py-1 rounded-lg w-20 ${rider.status === "approved"
                                         ? "bg-green-200 text-green-600"
                                         : rider.status === "rejected"
                                             ? "bg-red-200 text-red-600"
-                                            : "bg-yellow-200 text-yellow-600"  // ✅ pending
+                                            : "bg-yellow-200 text-yellow-600"  
                                         }`}>
                                         {rider.status || "pending"}
                                     </p>
@@ -245,10 +254,10 @@ const ApproveRider = () => {
             </div>
 
             {modalType === "view" && (
-                <ViewRider 
-                    riderView = {viewRider}
-                    onClose={()=>{
-                         setModalType(null)
+                <ViewRider
+                    riderView={viewRider}
+                    onClose={() => {
+                        setModalType(null)
                     }}
                 />
             )}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {} from 'react';
 
 import { Link, NavLink } from 'react-router';
 import Logo from './Logo';
@@ -106,8 +106,6 @@ const Navbar = () => {
                         {user && role === "rider" && riderLinks}
                         {user && role === "user" && customerLinks}
                         {user && role === "admin" && adminLinks}
-                        {/* {user && adminLinks} */}
-                        {/* {user && riderLinks} */}
                     </div>
                 </div>
                 <div>

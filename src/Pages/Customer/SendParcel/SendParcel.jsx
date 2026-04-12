@@ -24,15 +24,15 @@ const SendParcel = () => {
     const parcelType = watch("parcelType");
 
     useEffect(() => {
-    if (parcelType === "document") {
-        setValue("parcelWeight", 0);
-    }
-}, [parcelType, setValue]);
+        if (parcelType === "document") {
+            setValue("parcelWeight", 0);
+        }
+    }, [parcelType, setValue]);
 
     const districtsByRegion = region => {
         const regionDistricts = serviceCenter.filter(c => c.region === region);
-        const districts = regionDistricts.map(d => d.district)
-        return districts;
+        const districts = regionDistricts.map(d => d.district);
+        return districts;              
     }
 
     const areaByDistrict = (region, district) => {
@@ -441,7 +441,7 @@ const SendParcel = () => {
                                 className="select input-class"
                             >
                                 <option value="" disabled className='bg-white text-gray-800'>Pick a District</option>
-                                {districtsByRegion(senderRegion).map((d, i) => (
+                                {districtsByRegion(receiverRegion).map((d, i) => (
                                     <option className='bg-white text-gray-800' key={i} value={d}>{d}</option>
                                 ))}
                             </select>

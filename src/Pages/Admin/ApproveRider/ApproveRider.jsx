@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { Eye, UserRoundPlus, UserRoundX } from 'lucide-react';
 import { IoTrashOutline } from "react-icons/io5";
+// import { set } from 'react-hook-form';
+
+import ViewRider from '../../Rider/ViewRider';
 
 
 const ApproveRider = () => {
+    const [modalType, setModalType] = useState(null);
+    const [viewRider, setViewRider] = useState(null);
     const axiosApproveRider = useAxiosSecure();
     const { data: riders = [], refetch } = useQuery({
         queryKey: ['riders', 'pending'],
@@ -104,6 +109,11 @@ const ApproveRider = () => {
         });
     }
 
+    const handleViewRider = (rider) => {
+        setViewRider(rider);
+        setModalType("view");
+    }
+
     return (
         <div>
             <h2 className='text-4xl'>All Riders: {riders.length}</h2>
@@ -182,7 +192,8 @@ const ApproveRider = () => {
                                             data-tip="View Details"
                                         >
                                             <button
-                                                to={`/editAsset/${rider._id}`}
+                                                // to={`/editAsset/${rider._id}`}
+                                                onClick={() => handleViewRider(rider)}
                                                 className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800"
                                             >
                                                 <Eye className="text-xs" />
@@ -232,6 +243,15 @@ const ApproveRider = () => {
 
                 </table>
             </div>
+
+            {modalType === "view" && (
+                <ViewRider 
+                    riderView = {viewRider}
+                    onClose={()=>{
+                         setModalType(null)
+                    }}
+                />
+            )}
 
         </div>
     );

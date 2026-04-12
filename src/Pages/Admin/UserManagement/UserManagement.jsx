@@ -1,10 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useState } from 'react';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
-import { ShieldOff, ShieldPlus } from 'lucide-react';
+import { Eye, Send, ShieldOff, ShieldPlus } from 'lucide-react';
+import { Link } from 'react-router';
+import { IoTrashOutline } from 'react-icons/io5';
+import ViewUser from '../ViewUser';
 
 const UserManagement = () => {
+    const [modalType, setModalType] = useState(null)
+    const [viewUser, setViewUser] = useState(null);
     const axiosUserManagement = useAxiosSecure();
     const { data: users = [], refetch } = useQuery({
         queryKey: ["users"],
@@ -60,7 +65,7 @@ const UserManagement = () => {
         // });
     };
 
-    
+
 
     const handleRemoveAdmin = (user) => {
         const roleInfo = { role: 'user' }
@@ -98,6 +103,48 @@ const UserManagement = () => {
     };
 
 
+    const handleUserDelete = (id) => {
+        console.log('user delete', id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosUserManagement.delete(`/users/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount) {
+                            // refetch the data in the UI after deletion
+                            refetch();
+                            Swal.fire(
+                                "Deleted!",
+                                "Your parcel has been deleted.",
+                                "success"
+                            );
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err.message);
+                        Swal.fire(
+                            "Error!",
+                            "Failed to delete the parcel.",
+                            "error"
+                        );
+                    })
+            }
+        });
+    }
+
+
+    const handleViewUserDetails = (user) => {
+        setViewUser(user);
+        setModalType("view")
+    }
+
     return (
         <div>
             <h1 className='text-4xl'>Manage Users: {users.length}</h1>
@@ -111,9 +158,14 @@ const UserManagement = () => {
                             </th>
                             <th>User</th>
                             <th>Email</th>
+                            <th>DAte & Time</th>
                             <th>Role</th>
-                            <th>Admin / User</th>
-                            <th>Others Action</th>
+                            <th>
+                                <div className='flex gap-8'>
+                                    <span>Admin / User</span>
+                                    <span>Action</span>
+                                </div>
+                            </th>
                         </tr>
                     </thead>
                     <tbody>
@@ -140,6 +192,12 @@ const UserManagement = () => {
                                 <td>
                                     {user.email}
                                 </td>
+                                <td className="text-xs">
+                                    {new Date(user.createdAt).toLocaleString("en-BD", {
+                                        dateStyle: "medium",
+                                        timeStyle: "short",
+                                    })}
+                                </td>
                                 <td>
                                     <span
                                         className={`badge ${getRoleBadge(user.role)}`}
@@ -155,38 +213,67 @@ const UserManagement = () => {
                                     </span>
                                 </td>
                                 <th>
-                                    {user.role === 'admin'
-                                        ? <div className="tooltip tooltip-bottom" data-tip="Remove Admin">
+                                    <div className='flex gap-3'>
+                                        <div className='ml-10 mr-6'>
+                                            {user.role === 'admin'
+                                                ? <div className="tooltip tooltip-bottom" data-tip="Remove Admin">
+                                                    <button
+                                                        onClick={() => handleRemoveAdmin(user)}
+                                                        className="btn btn-square btn-outline text-[#fcb700] hover:text-gray-800 hover:bg-[#fcb700]"
+                                                    >
+                                                        <ShieldOff className='text-xs' />
+                                                    </button>
+                                                </div>
+                                                : <div className="tooltip tooltip-bottom" data-tip="Make Admin">
+                                                    <button
+                                                        onClick={() => handleMakeAdmin(user)}
+                                                        className="btn btn-square btn-outline  text-[#00d390] hover:text-gray-800 hover:bg-[#00d390]"
+                                                    >
+                                                        <ShieldPlus className='text-xs' />
+                                                    </button>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div
+                                            className="relative overflow-visible tooltip tooltip-bottom"
+                                            data-tip="View Details"
+                                        >
                                             <button
-                                                onClick={() => handleRemoveAdmin(user)}
-                                                className="btn btn-square btn-outline text-[#fcb700] hover:text-gray-800 hover:bg-[#fcb700]"
+                                                onClick={() => handleViewUserDetails(user)}
+                                                className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-black"
                                             >
-                                                <ShieldOff className='text-xs' />
+                                                <Eye className="text-xs" />
+
                                             </button>
                                         </div>
-                                        : <div className="tooltip tooltip-bottom" data-tip="Make Admin">
+
+                                        <div className="relative overflow-visible tooltip tooltip-bottom "
+                                            data-tip="Remove">
                                             <button
-                                                onClick={() => handleMakeAdmin(user)}
-                                                className="btn btn-square btn-outline  text-[#00d390] hover:text-gray-800 hover:bg-[#00d390]"
+                                                onClick={() => handleUserDelete(user._id)}
+                                                className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black"
                                             >
-                                                <ShieldPlus className='text-xs' />
+                                                <IoTrashOutline className="text-lg" />
                                             </button>
                                         </div>
-                                    }
-                                </th>
-                                <th>
-                                    <button className='btn btn-sm mr-3'>View</button>
-                                    <button className='btn btn-sm'>Delate</button>
+
+                                    </div>
                                 </th>
                             </tr>)
-
                         }
-
-
                     </tbody>
 
                 </table>
             </div>
+            {modalType === "view" && (
+                <ViewUser
+                    userView={viewUser}
+                    onClose={() => {
+                        setModalType(null);
+                        setViewUser(null);
+                    }}
+                />
+            )}
         </div>
     );
 };

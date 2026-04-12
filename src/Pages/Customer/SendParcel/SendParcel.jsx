@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 import { useLoaderData, useNavigate } from 'react-router';
 import Swal from 'sweetalert2';
@@ -8,7 +8,7 @@ import { toast } from 'react-toastify';
 
 
 const SendParcel = () => {
-    const { register, handleSubmit, watch,
+    const { register, handleSubmit, watch, setValue,
         formState: { errors }
     } = useForm();
     const { user } = useAuth();
@@ -21,7 +21,13 @@ const SendParcel = () => {
     const receiverRegion = watch("receiverRegion");
     const receiverDistrict = watch("receiverDistrict");
     const navigate = useNavigate();
+    const parcelType = watch("parcelType");
 
+    useEffect(() => {
+    if (parcelType === "document") {
+        setValue("parcelWeight", 0);
+    }
+}, [parcelType, setValue]);
 
     const districtsByRegion = region => {
         const regionDistricts = serviceCenter.filter(c => c.region === region);
@@ -202,15 +208,20 @@ const SendParcel = () => {
                     </fieldset>
                     <fieldset className="fieldset">
                         <label className="label">Parcel Weight (kg)</label>
-                        <input type="number" {...register('parcelWeight', {
-                            required: "Parcel weight is required",
-                            min: { value: 0.1, message: "Weight must be greater than 0" }
-                        })}
-                            className="input input-class" placeholder="Parcel Weight" />
-
-                        {errors.parcelWeight && (
-                            <span>{toast(errors.parcelWeight.message)}</span>
-                        )}
+                        <input
+                            type="number"
+                            disabled={parcelType === "document"}
+                            {...register('parcelWeight', {
+                                required: parcelType !== "document" ? "Parcel weight is required" : false,
+                            })}
+                            className="input input-class"
+                            placeholder="Parcel Weight"
+                        />
+                        {
+                            parcelType === "document" && (
+                                <p className="text-xs text-gray-400">Weight not required for documents</p>
+                            )
+                        }
                     </fieldset>
                 </div>
 

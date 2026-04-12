@@ -1,22 +1,27 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import logoImg from "../assets/delivery4.png";
-import { Motorbike, Users} from 'lucide-react';
+import { Motorbike, Users } from 'lucide-react';
+import useRole from "../Hooks/useRole";
 
 
-const SideBar = () => {
+const DashboardLayout = () => {
 
+  const { role } = useRole();
   const location = useLocation();
 
-const getTitle = () => {
-  if (location.pathname.includes("admin-dashboard")) {
-    return "Admin dashboard";
-  }
-  if (location.pathname.includes("notification")) {
-    return "Notification";
-  }
-  return "Dashboard";
-};
+  const getTitle = () => {
+    if (location.pathname.includes("approve-rider")) {
+      return "Approve Rider";
+    }
+    if (location.pathname.includes("user-management")) {
+      return "User Management";
+    }
+    if (location.pathname.includes("dashboard")) {
+      return "Dashboard";
+    }
+    return "Dashboard";
+  };
 
   return (
     <div>
@@ -50,7 +55,7 @@ const getTitle = () => {
           </nav>
           {/* Page content here */}
           <Outlet></Outlet>
-          
+
         </div>
 
         <div className="drawer-side is-drawer-close:overflow-visible">
@@ -74,30 +79,34 @@ const getTitle = () => {
                   <span className="is-drawer-close:hidden">Homepage</span>
                 </Link>
               </li>
-              
-              <li>
-                <Link to={"/dashboard/approve-rider"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="Approve-Rider"
-                >
-                  {/* Admin Dashboard icon */}
-                  <Motorbike className="text-green-300 my-1.5 inline-block size-5"/>  
-                  
-                  <span className="is-drawer-close:hidden">ApproveRider</span>
-                </Link>
-              </li>
 
-              <li>
-                <Link
-                  to={"/dashboard/user-management"}
-                  className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                  data-tip="User Management"
-                >
-                  <Users className="text-green-300 my-1.5 inline-block size-5" />
-                 
-                  <span className="is-drawer-close:hidden">User Management</span>
-                </Link>
-              </li>
+              {
+                role === 'admin' && <>
+                  <li>
+                    <Link to={"/dashboard/approve-rider"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Approve-Rider"
+                    >
+                      {/* Admin Dashboard icon */}
+                      <Motorbike className="text-green-300 my-1.5 inline-block size-5" />
+
+                      <span className="is-drawer-close:hidden">ApproveRider</span>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to={"/dashboard/user-management"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="User Management"
+                    >
+                      <Users className="text-green-300 my-1.5 inline-block size-5" />
+
+                      <span className="is-drawer-close:hidden">User Management</span>
+                    </Link>
+                  </li>
+                </>
+              }
 
               {/* List item */}
               <li>
@@ -132,4 +141,4 @@ const getTitle = () => {
   );
 };
 
-export default SideBar;
+export default DashboardLayout;

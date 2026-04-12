@@ -5,18 +5,22 @@ import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 import ModalOTP from '../Payment/ModalOTP';
 import { toast } from 'react-toastify';
+import { Link } from 'react-router';
+import ViewDetails from './ViewDetails';
+import { Eye, Send } from 'lucide-react';
+import { IoTrashOutline } from "react-icons/io5";
 
 
 
 const MyParcelsAndPayment = () => {
     const { user } = useAuth();
-    console.log(user)
-   
-    const [payingParcelId, setPayingParcelId] = useState(null);
-
+    // console.log(user)
     const axiosMyParcels = useAxiosSecure()
+
+    const [payingParcelId, setPayingParcelId] = useState(null);
     const [modalType, setModalType] = useState(null)
     const [selectedParcel, setSelectedParcel] = useState(null);
+    const [viewParcel, setViewParcel] = useState(null);
 
     const { data: parcels = [], refetch } = useQuery({
         queryKey: ['myParcels', user?.email],
@@ -176,115 +180,193 @@ const MyParcelsAndPayment = () => {
         }
     };
 
+    const handleViewDetails = (parcel) => {
+        setViewParcel(parcel);
+        setModalType("view");
+    };
 
     return (
-        <div>
-            <h1>All of my parcels : {parcels.length}</h1>
-            <div className="overflow-x-auto">
-                <table className="table ">
-                    {/* head */}
+        <div className="p-2 md:p-6">
+            <h1 className="text-lg md:text-2xl font-bold mb-4">
+                All of my parcels : {parcels.length}
+            </h1>
+            {/* Desktop Table */}
+            <div className="hidden md:block overflow-x-auto">
+                <table className="table w-full">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Sender Name</th>
-                            <th>Sender Email</th>
+                            <th>Email</th>
                             <th>Parcel Name</th>
-                            <th>Parcel Weight</th>
+                            <th>Weight</th>
                             <th>Cost</th>
                             <th>Payment</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {
-                            parcels.map((parcel, i) => {
-                                console.log(parcel._id);
-                                return (
-                                    <tr key={parcel._id} className='hover:bg-base-300'>
-
-                                        <th>{i + 1}</th>
-                                        <td>{parcel.senderName}</td>
-                                        <td>{parcel.senderEmail}</td>
-                                        <td>{parcel.parcelName}</td>
-                                        <td>{parcel.parcelWeight} Kg</td>
-                                        <td>{parcel.cost} Tk</td>
-                                        <td>
-                                            {/* {
-                                                parcel.cost && parcel.paymentStatus === 'paid' ? (
-                                                    <span className='text-green-500 font-semibold'>Paid</span>
-                                                ) : (
-                                                    // <Link to={`/payment/${parcel._id}`} className='btn btn-sm btn-accent rounded-lg'>Pay Now</Link>
-                                                    <button onClick={() => handlePayClick(parcel)}
-                                                        className='btn btn-sm btn-accent rounded-lg'>Pay Now</button>
-                                                )
-                                            } */}
-
-
-                                            {/* {parcel.cost && parcel.paymentStatus === 'paid' ? (
-                                                    <span className='text-green-500 font-semibold'>Paid</span>
-                                                ) : (
-                                                    <button
-                                                        onClick={() => handlePayClick(parcel)}
-                                                        className='btn btn-sm btn-accent rounded-lg'
-                                                        disabled={isPaying} // prevent multiple clicks
-                                                    >
-                                                        {isPaying ? (
-                                                            // <span className="loading loading-spinner loading-sm"></span>
-                                                            <span className="loading loading-spinner loading-sm text-info"></span> // spinner while loading
-                                                        ) : (
-                                                            "Pay Now"
-                                                        )}
-                                                    </button>
-                                                )} */}
-
-                                            {parcel.cost && parcel.paymentStatus === 'paid' ? (
-                                                <span className='text-green-500 font-semibold'>Paid</span>
-                                            ) : (
-                                                <button
-                                                    onClick={() => handlePayClick(parcel)}
-                                                    className='btn btn-sm btn-accent rounded-lg'
-                                                    disabled={payingParcelId === parcel._id} // only disable this row
-                                                >
-                                                    {payingParcelId === parcel._id ? (
-                                                        <span className="loading loading-spinner loading-sm text-success"></span>
-                                                    ) : (
-                                                        "Pay Now"
-                                                    )}
-                                                </button>
-                                            )}
-
-                                        </td>
-                                        <td>
-                                            <div className='flex gap-3'>
-                                                <button className='btn btn-sm btn-primary'>View Details</button>
-                                                <button className='btn btn-sm btn-secondary'>send parcel</button>
-                                                <button
-                                                    onClick={() => handleParcelDelete(parcel._id)}
-                                                    className='btn btn-sm btn-secondary'
-                                                >
-                                                    Delete
-                                                </button>
+                        {parcels.map((parcel, i) => (
+                            <tr key={parcel._id} className="hover:bg-base-200">
+                                <th>{i + 1}</th>
+                                <td>
+                                    <div className="flex items-center gap-3">
+                                        <div className="avatar">
+                                            <div className="mask mask-squircle h-12 w-12">
+                                                <img
+                                                    src={parcel.senderPhoto}
+                                                    alt="" />
                                             </div>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
+                                        </div>
+                                        <div>
+                                            <div className="font-bold">{parcel.senderName}</div>
+                                            <div className="text-sm opacity-50">{parcel.senderAddress}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{parcel.senderEmail}</td>
+                                <td>{parcel.parcelName}</td>
+                                <td>{parcel.parcelWeight} Kg</td>
+                                <td>{parcel.cost} Tk</td>
+
+                                <td>
+                                    {parcel.paymentStatus === "paid" ? (
+                                        <span className="text-green-500 font-semibold">Paid</span>
+                                    ) : (
+                                        <button
+                                            onClick={() => handlePayClick(parcel)}
+                                            className="btn btn-xs btn-accent"
+                                            disabled={payingParcelId === parcel._id}
+                                        >
+                                            {payingParcelId === parcel._id ? (
+                                                <span className="loading loading-spinner loading-xs" />
+                                            ) : (
+                                                "Pay"
+                                            )}
+                                        </button>
+                                    )}
+                                </td>
+
+                                <td className="flex justify-start items-center gap-3 whitespace-nowrap">
+                                    <div
+                                        className="relative overflow-visible tooltip tooltip-bottom"
+                                        data-tip="View Details"
+                                    >
+                                        <button
+                                            onClick={() => handleViewDetails(parcel)}
+                                            className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-black"
+                                        >
+                                            <Eye className="text-xs" />
+
+                                        </button>
+                                    </div>
+                                    {/* <button onClick={() => handleViewDetails(parcel)} className="btn btn-sm btn-primary">
+                                        View
+                                    </button> */}
+                                    <div
+                                        className="relative overflow-visible tooltip tooltip-bottom"
+                                        data-tip="Send Parcel"
+                                    >
+                                        <Link to={`/send-parcel`} className="btn btn-outline btn-square text-green-500 hover:bg-green-500 hover:text-black">
+                                            <Send className="text-xs" />
+                                        </Link>
+                                    </div>
+                                    {/* <button
+                                        onClick={() => handleParcelDelete(parcel._id)}
+                                        className="btn btn-sm btn-error"
+                                    >
+                                        Delete
+                                    </button> */}
+                                    <div className="relative overflow-visible tooltip tooltip-bottom "
+                                        data-tip="Remove">
+                                        <button
+                                            onClick={() => handleParcelDelete(parcel._id)}
+                                            className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black"
+                                        >
+                                            <IoTrashOutline className="text-lg" />
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
+            </div>
+
+            {/* Mobile Cards */}
+            <div className="grid grid-cols-1 gap-4 md:hidden">
+                {parcels.map((parcel, i) => (
+                    <div
+                        key={parcel._id}
+                        className="border rounded-lg p-4 shadow bg-base-100"
+                    >
+                        <div className="flex justify-between">
+                            <h2 className="font-bold">#{i + 1} {parcel.parcelName}</h2>
+                            {parcel.paymentStatus === "paid" ? (
+                                <span className="text-green-500 font-semibold">Paid</span>
+                            ) : (
+                                <button
+                                    onClick={() => handlePayClick(parcel)}
+                                    className="btn btn-xs btn-accent"
+                                    disabled={payingParcelId === parcel._id}
+                                >
+                                    {payingParcelId === parcel._id ? "..." : "Pay"}
+                                </button>
+                            )}
+                        </div>
+
+                        <p className="text-sm mt-1">
+                            <b>Sender:</b> {parcel.senderName}
+                        </p>
+                        <p className="text-sm">
+                            <b>Email:</b> {parcel.senderEmail}
+                        </p>
+                        <p className="text-sm">
+                            <b>Weight:</b> {parcel.parcelWeight} Kg
+                        </p>
+                        <p className="text-sm">
+                            <b>Cost:</b> {parcel.cost} Tk
+                        </p>
+
+                        <div className="flex gap-2 mt-3">
+                            <button onClick={() => handleViewDetails(parcel)} className="btn btn-xs btn-primary">View</button>
+                            <Link to={`/send-parcel`} className="btn btn-xs btn-secondary">Send</Link>
+                            <button
+                                onClick={() => handleParcelDelete(parcel._id)}
+                                className="btn btn-xs btn-error"
+                            >
+                                Delete
+                            </button>
+
+                        </div>
+                    </div>
+                ))}
             </div>
 
             {modalType === "OTP" && (
                 <ModalOTP
                     onClose={() => {
                         setModalType(null);
-                        setPayingParcelId(null); // ✅ cancel করলে loading off
+                        setPayingParcelId(null); 
                     }}
                     onVerify={handleOtpVerify}
                 />
             )}
+
+            {modalType === "view" && (
+                <ViewDetails
+                    parcel={viewParcel}
+                    onClose={() => {
+                        setModalType(null);
+                        setViewParcel(null);
+                    }}
+                />
+            )}
         </div>
     );
+
+
 };
 
 export default MyParcelsAndPayment;

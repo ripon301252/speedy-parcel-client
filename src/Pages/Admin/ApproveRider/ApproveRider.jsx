@@ -69,13 +69,39 @@ const ApproveRider = () => {
             })
     }
 
+    // const handleApproveRider = (rider) => {
+    //     // console.log("approve rider", id)
+    //     updateRiderStatus(rider, "approved")
+    // }
+
     const handleApproveRider = (rider) => {
-        // console.log("approve rider", id)
-        updateRiderStatus(rider, "approved")
+        Swal.fire({
+            title: `Approve ${rider.riderName}?`,
+            icon: "question",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Approve"
+        }).then(result => {
+            if (result.isConfirmed) {
+                updateRiderStatus(rider, "approved");
+            }
+        });
     }
 
+    // const handleRejectRider = (rider) => {
+    //     updateRiderStatus(rider, "rejected")
+    // }
+
     const handleRejectRider = (rider) => {
-        updateRiderStatus(rider, "rejected")
+        Swal.fire({
+            title: `Reject ${rider.riderName}?`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Yes, Reject"
+        }).then(result => {
+            if (result.isConfirmed) {
+                updateRiderStatus(rider, "rejected");
+            }
+        });
     }
 
     return (
@@ -91,7 +117,7 @@ const ApproveRider = () => {
                             </th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Date</th>
+                            <th>Date & Time</th>
                             <th>status</th>
                             <th>Actions</th>
                         </tr>
@@ -123,8 +149,11 @@ const ApproveRider = () => {
                                     {rider.riderEmail}
                                 </td>
 
-                                <td>
-                                    {new Date(rider.createdAt).toLocaleDateString()}
+                                <td className="text-xs">
+                                    {new Date(rider.createdAt).toLocaleString("en-BD", {
+                                        dateStyle: "medium",
+                                        timeStyle: "short",
+                                    })}
                                 </td>
 
                                 <td>
@@ -154,31 +183,32 @@ const ApproveRider = () => {
                                         >
                                             <button
                                                 to={`/editAsset/${rider._id}`}
-                                                className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-black"
+                                                className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800"
                                             >
                                                 <Eye className="text-xs" />
-                                               
+
                                             </button>
                                         </div>
                                         {/* <button onClick={() => handleApproveRider(rider)} className="btn btn-sm">Accept</button>
                                         <button onClick={() => handleRejectRider(rider)} className="btn btn-sm">Reject</button> */}
 
                                         {rider.status === 'approved'
-                                            ? <div className="tooltip tooltip-bottom" data-tip="Make Admin">
+                                            ? <div className="tooltip tooltip-bottom" data-tip="Reject">
                                                 <button
-                                                    onClick={() => handleRejectRider(rider)}
-                                                    className=" btn btn-square btn-outline text-[#00d390] hover:text-gray-800 hover:bg-[#00d390] "
-                                                >
-                                                    <UserRoundPlus className='text-xs ' />
-
-                                                </button>
-                                            </div>
-                                            : <div className="tooltip tooltip-bottom" data-tip="Remove Admin">
-                                                <button
-                                                    onClick={() => handleApproveRider(rider)}
+                                                    onClick={() => handleRejectRider(rider, "rejected")}
                                                     className=" btn btn-square btn-outline  text-[#fcb700] hover:text-gray-800 hover:bg-[#fcb700]"
                                                 >
                                                     <UserRoundX className='text-xs' />
+
+                                                </button>
+                                            </div>
+
+                                            : <div className="tooltip tooltip-bottom" data-tip="Accept">
+                                                <button
+                                                    onClick={() => handleApproveRider(rider, "approved")}
+                                                    className=" btn btn-square btn-outline text-[#00d390] hover:text-gray-800 hover:bg-[#00d390] "
+                                                >
+                                                    <UserRoundPlus className='text-xs ' />
 
                                                 </button>
                                             </div>
@@ -189,7 +219,7 @@ const ApproveRider = () => {
                                             data-tip="Remove">
                                             <button
                                                 onClick={() => handleRiderDelete(rider._id)}
-                                                className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black"
+                                                className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-gray-800"
                                             >
                                                 <IoTrashOutline className="text-lg" />
                                             </button>

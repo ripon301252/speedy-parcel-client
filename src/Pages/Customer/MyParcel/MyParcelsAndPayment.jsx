@@ -330,7 +330,10 @@ const MyParcelsAndPayment = () => {
                         </p>
 
                         <div className="flex gap-2 mt-3">
-                            <button onClick={() => handleViewDetails(parcel)} className="btn btn-xs btn-primary">View</button>
+                            <button onClick={() => handleViewDetails(parcel)}
+                                className="btn btn-xs btn-primary">
+                                View
+                            </button>
                             <Link to={`/send-parcel`} className="btn btn-xs btn-secondary">Send</Link>
                             <button
                                 onClick={() => handleParcelDelete(parcel._id)}
@@ -338,7 +341,6 @@ const MyParcelsAndPayment = () => {
                             >
                                 Delete
                             </button>
-
                         </div>
                     </div>
                 ))}
@@ -348,7 +350,7 @@ const MyParcelsAndPayment = () => {
                 <ModalOTP
                     onClose={() => {
                         setModalType(null);
-                        setPayingParcelId(null); 
+                        setPayingParcelId(null);
                     }}
                     onVerify={handleOtpVerify}
                 />

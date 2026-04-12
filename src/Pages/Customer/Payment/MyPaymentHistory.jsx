@@ -1,24 +1,72 @@
-import React, { } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../../Hooks/useAuth';
 // import useAxiosPublic from '../../../Hooks/useAxiosPublic';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import { Eye } from 'lucide-react';
 import { IoTrashOutline } from "react-icons/io5";
+import ViewDetailsHistory from './ViewPaymentHistory';
+import Swal from 'sweetalert2';
 
 const MyPaymentHistory = () => {
     const { user } = useAuth();
     console.log(user)
     // const axiosPaymentHistory = useAxiosPublic();
     const axiosPaymentHistory = useAxiosSecure();
+    const [modalType, setModalType] = useState(null)
+    const [viewPaymentHistory, setViewPaymentHistory] = useState(null);
 
-    const { data: payments = [] } = useQuery({
+    const { data: payments = [], refetch } = useQuery({
         queryKey: ['paymentHistory', user?.email],
         queryFn: async () => {
             const res = await axiosPaymentHistory.get(`/payment-history?email=${user?.email}`);
             return res.data;
         }
     })
+
+    const handlePaymentDelete = (id) => {
+        console.log("payment delete", id)
+        Swal.fire({
+                    title: "Are you sure?",
+                    text: "You won't be able to revert this!",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Yes, delete it!"
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        axiosPaymentHistory.delete(`/payment-history/${id}`)
+                            .then(res => {
+                                if (res.data.deletedCount) {
+                                    // refetch the data in the UI after deletion
+                                    refetch();
+                                    Swal.fire(
+                                        "Deleted!",
+                                        "Your parcel has been deleted.",
+                                        "success"
+                                    );
+                                }
+                            })
+                            .catch(err => {
+                                console.log(err.message);
+                                Swal.fire(
+                                    "Error!",
+                                    "Failed to delete the parcel.",
+                                    "error"
+                                );
+                            })
+                    }
+                });
+
+    }
+
+    const handleViewDetailsHistory = (payment) => {
+        setViewPaymentHistory(payment);
+        setModalType("view");
+    };
+
+
 
     return (
         <div className="p-2 md:p-6">
@@ -32,7 +80,7 @@ const MyPaymentHistory = () => {
                         <tr>
                             <th>#</th>
                             <th>Sender</th>
-                            <th>Email</th>
+                            {/* <th>Email</th> */}
                             <th>Parcel</th>
                             <th>Amount</th>
                             <th>Transaction</th>
@@ -63,7 +111,7 @@ const MyPaymentHistory = () => {
                                     </div>
                                 </td>
 
-                                <td>{payment.customerEmail}</td>
+                                {/* <td>{payment.customerEmail}</td> */}
                                 <td>{payment.parcelName}</td>
                                 <td>{payment.amount} Tk</td>
                                 <td className="text-xs">{payment.transactionId}</td>
@@ -87,10 +135,14 @@ const MyPaymentHistory = () => {
 
                                 <td>
                                     <div className="flex justify-start items-center gap-3 whitespace-nowrap">
-                                        <button className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800">
+                                        <button
+                                            onClick={() => handleViewDetailsHistory(payment)}
+                                            className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800">
                                             <Eye className='text-xs' />
                                         </button>
-                                        <button className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-gray-800">
+                                        <button
+                                            onClick={() => handlePaymentDelete(payment._id)}
+                                            className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-gray-800">
                                             <IoTrashOutline className='text-lg' />
                                         </button>
                                     </div>
@@ -114,8 +166,8 @@ const MyPaymentHistory = () => {
                             </h2>
 
                             <span className={`badge ${payment.paymentStatus === "paid"
-                                    ? "badge-success"
-                                    : "badge-warning"
+                                ? "badge-success"
+                                : "badge-warning"
                                 }`}>
                                 {payment.paymentStatus}
                             </span>
@@ -155,16 +207,31 @@ const MyPaymentHistory = () => {
                         </p>
 
                         <div className="flex gap-2 mt-3">
-                            <button className="btn btn-xs btn-outline text-blue-500">
-                                <Eye size={16} />
+                            <button
+                                onClick={() => handleViewDetailsHistory(payment)}
+                                className="btn btn-xs btn-primary">
+                                View
                             </button>
-                            <button className="btn btn-xs btn-outline text-red-400">
-                                <IoTrashOutline size={16} />
+                            <button
+                                onClick={() => handlePaymentDelete(payment._id)}
+                                className="btn btn-xs btn-error"
+                            >
+                                Delete
                             </button>
                         </div>
                     </div>
                 ))}
             </div>
+
+            {modalType === "view" && (
+                <ViewDetailsHistory
+                    paymentHistory={viewPaymentHistory}
+                    onClose={() => {
+                        setModalType(null);
+                        setViewPaymentHistory(null);
+                    }}
+                />
+            )}
 
         </div>
     );

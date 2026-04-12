@@ -26,7 +26,7 @@ const Navbar = () => {
             <NavLink to={`/about`} className={activeLinks}>About</NavLink>
             <NavLink to={`/contact`} className={activeLinks}>Contact</NavLink>
             <NavLink to={`/coverage`} className={activeLinks}>Coverage </NavLink>
-            <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink>
+            <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink> 65.5
             {/* <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink> */}
             {/* <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink> */}
         </>

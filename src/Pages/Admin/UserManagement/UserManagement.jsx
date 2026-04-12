@@ -39,7 +39,7 @@ const UserManagement = () => {
             confirmButtonText: "Yes, Make Admin"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+                axiosUserManagement.patch(`/users/${user._id}/role`, roleInfo)
                     .then(res => {
                         if (res.data.modifiedCount) {
                             refetch();
@@ -55,7 +55,7 @@ const UserManagement = () => {
 
         // =============================================================
 
-        // axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+        // axiosUserManagement.patch(`/users/${user._id}/role`, roleInfo)
         // Swal.fire({
         //     position: "top-center",
         //     icon: "success",
@@ -76,7 +76,7 @@ const UserManagement = () => {
             confirmButtonText: "Yes, Remove"
         }).then((result) => {
             if (result.isConfirmed) {
-                axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+                axiosUserManagement.patch(`/users/${user._id}/role`, roleInfo)
                     .then(res => {
                         if (res.data.modifiedCount) {
                             refetch();
@@ -92,7 +92,7 @@ const UserManagement = () => {
 
         // =============================================================
 
-        // axiosUserManagement.patch(`/users/${user._id}`, roleInfo)
+        // axiosUserManagement.patch(`/users/${user._id}/role`, roleInfo)
         // Swal.fire({
         //     position: "top-center",
         //     icon: "success",

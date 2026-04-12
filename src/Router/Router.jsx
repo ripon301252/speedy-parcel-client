@@ -23,6 +23,7 @@ import PaymentHistory from "../Pages/Customer/Payment/MyPaymentHistory";
 import ModalOTP from "../Pages/Customer/Payment/ModalOTP";
 import ApproveRider from "../Pages/Admin/ApproveRider/ApproveRider";
 import UserManagement from "../Pages/Admin/UserManagement/UserManagement";
+import AdminRoute from "./AdminRoute";
 
 
 export const router = createBrowserRouter([
@@ -150,11 +151,16 @@ export const router = createBrowserRouter([
         children: [
             {
                 path: "approve-rider",
-                element: <ApproveRider></ApproveRider>
+                element: <AdminRoute>
+                    <ApproveRider></ApproveRider>
+                </AdminRoute> 
             },
             {
                 path: "user-management",
-                element: <UserManagement></UserManagement>
+                // Component: UserManagement ,
+                element: <AdminRoute>
+                    <UserManagement></UserManagement>
+                </AdminRoute> 
             },
         ]
     }

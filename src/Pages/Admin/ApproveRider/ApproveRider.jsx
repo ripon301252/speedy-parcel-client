@@ -190,7 +190,6 @@ const ApproveRider = () => {
                                         }`}>
                                         {rider.status || "pending"}
                                     </p>
-
                                 </td>
 
                                 <th>

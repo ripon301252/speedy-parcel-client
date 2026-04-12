@@ -29,7 +29,7 @@ const DashboardLayout = () => {
         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content">
           {/* Navbar */}
-          <nav className="navbar w-full bg-base-300">
+          <nav className="navbar w-full bg-base-300 sticky top-0 z-10">
             <label
               htmlFor="my-drawer-4"
               aria-label="open sidebar"

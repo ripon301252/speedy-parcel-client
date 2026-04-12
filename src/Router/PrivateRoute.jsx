@@ -3,14 +3,14 @@ import { useAuth } from '../Hooks/useAuth';
 import { Navigate, useLocation } from 'react-router';
 
 const PrivateRoute = ({children}) => {
-    const {user, loading} = useAuth();
+    const {user, loading: privateLoading} = useAuth();
     const location = useLocation();
     
     
-     if (loading) {
+     if (privateLoading) {
         return (
             <div className="flex justify-center items-center h-screen">
-                <span className="loading loading-spinner loading-lg"></span>
+                <span className="loading loading-spinner loading-lg text-green-500"></span>
             </div>
         );
     }

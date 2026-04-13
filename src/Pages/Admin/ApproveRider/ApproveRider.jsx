@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { Eye, UserRoundPlus, UserRoundX } from 'lucide-react';
 import { IoTrashOutline } from "react-icons/io5";
-// import { set } from 'react-hook-form';
+
 
 import ViewRider from '../../Rider/ViewRider';
 
@@ -12,11 +12,13 @@ import ViewRider from '../../Rider/ViewRider';
 const ApproveRider = () => {
     const [modalType, setModalType] = useState(null);
     const [viewRider, setViewRider] = useState(null);
+    const [searchText, setSearchText] = useState('');
+    const [status, setStatus] = useState('');
     const axiosApproveRider = useAxiosSecure();
     const { data: riders = [], refetch } = useQuery({
-        queryKey: ['riders', 'pending'],
+        queryKey: ['riders', 'pending', searchText, status],
         queryFn: async () => {
-            const res = await axiosApproveRider.get('/riders');
+            const res = await axiosApproveRider.get(`/riders?searchText=${searchText}&status=${status}`);
             return res.data;
         }
     })
@@ -115,10 +117,58 @@ const ApproveRider = () => {
     }
 
     return (
-        <div>
-            <h2 className='text-4xl'>All Riders: {riders.length}</h2>
-            <div className="overflow-x-auto w-full">
-                <table className="table min-w-[700px]">
+        <div className='max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-10'>
+            <h1 className='text-3xl  lg:text-4xl font-bold'>Manage All Riders</h1>
+            {/* <h1 className='text-4xl font-bold'>Rider Control Panel</h1> */}
+            <h1 className='text-sm sm:text-base text-green-500 font-bold mt-1'> ({riders.length}) Users Applied To Become Riders.</h1>
+            {/* <p>search text : {searchText}</p> */}
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
+                {/* Search */}
+                <div className="w-full sm:w-1/2">
+                    <label className="input w-full input-class">
+                        <svg
+                            className="h-[1em] opacity-50"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 24 24"
+                        >
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+
+                        <input
+                            onChange={(e) => setSearchText(e.target.value)}
+                            type="search"
+                            placeholder="Search"
+                            className="w-full"
+                        />
+                    </label>
+                </div>
+
+                {/* Filter */}
+                <div className="w-full sm:w-1/3">
+                    <select
+                        className="select select-bordered w-full input-class"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                    >
+                        <option className='bg-white' value="">All Status</option>
+                        <option className='bg-white' value="pending">Pending</option>
+                        <option className='bg-white' value="approved">Approved</option>
+                        <option className='bg-white' value="rejected">Rejected</option>
+                    </select>
+                </div>
+            </div>
+            <div className="overflow-x-auto w-full ">
+                <table className="table overflow-x-auto w-full rounded-lg  min-w-[650px]">
                     {/* head */}
                     <thead>
                         <tr>
@@ -186,7 +236,7 @@ const ApproveRider = () => {
                                         ? "bg-green-200 text-green-600"
                                         : rider.status === "rejected"
                                             ? "bg-red-200 text-red-600"
-                                            : "bg-yellow-200 text-yellow-600"  
+                                            : "bg-yellow-200 text-yellow-600"
                                         }`}>
                                         {rider.status || "pending"}
                                     </p>

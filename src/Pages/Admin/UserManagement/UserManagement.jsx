@@ -8,16 +8,19 @@ import { IoTrashOutline } from 'react-icons/io5';
 import ViewUser from '../ViewUser';
 
 const UserManagement = () => {
-    const [modalType, setModalType] = useState(null)
+    const [modalType, setModalType] = useState(null);
     const [viewUser, setViewUser] = useState(null);
+    const [searchText, setSearchText] = useState('');
+    const [role, setRole] = useState('')
     const axiosUserManagement = useAxiosSecure();
     const { data: users = [], refetch } = useQuery({
-        queryKey: ["users"],
+        queryKey: ["users", searchText, role],
         queryFn: async () => {
-            const res = await axiosUserManagement.get('/users')
+            const res = await axiosUserManagement.get(`/users?searchText=${searchText}&role=${role}`)
             return res.data;
         }
     })
+
 
     const getRoleBadge = (role) => {
         switch (role) {
@@ -64,8 +67,6 @@ const UserManagement = () => {
         //     timer: 2000
         // });
     };
-
-
 
     const handleRemoveAdmin = (user) => {
         const roleInfo = { role: 'user' }
@@ -146,8 +147,45 @@ const UserManagement = () => {
     }
 
     return (
-        <div>
-            <h1 className='text-4xl'>Manage Users: {users.length}</h1>
+        <div className='max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-10'>
+            <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold'>Manage All Users</h1>
+            {/* <h1 className='text-4xl font-bold'>User Control Panel</h1> */}
+            <h1 className='text-sm sm:text-base text-green-500 font-bold mt-'>Total users ({users.length})</h1>
+            {/* <p>search text : {searchText}</p> */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
+                {/* Search */}
+                <div className="w-full sm:w-1/2">
+                    <label className="input w-full input-class">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input onChange={(e) => setSearchText(e.target.value)} type="search" required placeholder="Search" />
+                    </label>
+                </div>
+                {/* Filter */}
+                <div className="w-full sm:w-1/3">
+                    <select
+                        className="select select-bordered w-full input-class bg-white"
+                        value={role}
+                        onChange={(e) => setRole(e.target.value)}
+                    >
+                        <option className='bg-white' value="">All Roles</option>
+                        <option className='bg-white' value="admin">Admin</option>
+                        <option className='bg-white' value="rider">Rider</option>
+                        <option className='bg-white' value="user">User</option>
+                    </select>
+                </div>
+            </div>
+
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import logoImg from "../assets/delivery4.png";
-import { Motorbike, Users } from 'lucide-react';
+import { HandHelping, Motorbike, Users } from 'lucide-react';
 import useRole from "../Hooks/useRole";
 
 
@@ -12,7 +12,10 @@ const DashboardLayout = () => {
 
   const getTitle = () => {
     if (location.pathname.includes("approve-rider")) {
-      return "Approve Rider";
+      return "Approve Riders";
+    }
+    if (location.pathname.includes("assign-rider")) {
+      return "Assign Riders";
     }
     if (location.pathname.includes("user-management")) {
       return "User Management";
@@ -85,12 +88,24 @@ const DashboardLayout = () => {
                   <li>
                     <Link to={"/dashboard/approve-rider"}
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Approve-Rider"
+                      data-tip="Approve-Riders"
                     >
                       {/* Admin Dashboard icon */}
                       <Motorbike className="text-green-300 my-1.5 inline-block size-5" />
 
-                      <span className="is-drawer-close:hidden">ApproveRider</span>
+                      <span className="is-drawer-close:hidden">Approve Riders</span>
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link to={"/dashboard/assign-rider"}
+                      className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                      data-tip="Assign-Riders"
+                    >
+                      {/* Admin Dashboard icon */}
+                      <HandHelping  className="text-green-300 my-1.5 inline-block size-5" />
+
+                      <span className="is-drawer-close:hidden">Assign Riders</span>
                     </Link>
                   </li>
 

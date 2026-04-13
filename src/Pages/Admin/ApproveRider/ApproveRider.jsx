@@ -178,7 +178,8 @@ const ApproveRider = () => {
                             <th>Name</th>
                             <th>Email</th>
                             <th>Date & Time</th>
-                            <th>status</th>
+                            <th>Work Status</th>
+                            <th>Application Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -223,6 +224,18 @@ const ApproveRider = () => {
                                         dateStyle: "medium",
                                         timeStyle: "short",
                                     })}
+                                </td>
+
+                                <td>
+                                    <span
+                                        className={`px-2 py-1 rounded text-white text-xs font-semibold
+                                                ${rider.workStatus === "available" && "bg-green-500"}
+                                                ${rider.workStatus === "in_delivery" && "bg-yellow-500"}
+                                                // ${rider.workStatus === "busy" && "bg-red-500"}
+                                            `}
+                                        >
+                                        {rider.workStatus}
+                                    </span>
                                 </td>
 
                                 <td>

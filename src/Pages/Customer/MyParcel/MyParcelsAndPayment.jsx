@@ -202,6 +202,7 @@ const MyParcelsAndPayment = () => {
                             <th>Weight</th>
                             <th>Cost</th>
                             <th>Payment</th>
+                            <th>Delivery Status</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -246,6 +247,10 @@ const MyParcelsAndPayment = () => {
                                             )}
                                         </button>
                                     )}
+                                </td>
+
+                                <td>
+                                    <p className='text-red-500 bg-red-100 text-center py-0.5 rounded-lg'>{parcel.deliveryStatus}</p> 
                                 </td>
 
                                 <td className="flex justify-start items-center gap-3 whitespace-nowrap">

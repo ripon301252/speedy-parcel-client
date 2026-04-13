@@ -24,6 +24,7 @@ import ModalOTP from "../Pages/Customer/Payment/ModalOTP";
 import ApproveRider from "../Pages/Admin/ApproveRider/ApproveRider";
 import UserManagement from "../Pages/Admin/UserManagement/UserManagement";
 import AdminRoute from "./AdminRoute";
+import AssignRiders from "../Pages/Admin/AssignRiders";
 
 
 export const router = createBrowserRouter([
@@ -160,6 +161,13 @@ export const router = createBrowserRouter([
                 // Component: UserManagement ,
                 element: <AdminRoute>
                     <UserManagement></UserManagement>
+                </AdminRoute> 
+            },
+            {
+                path: "assign-rider",
+                // Component: AssignRiders ,
+                element: <AdminRoute>
+                    <AssignRiders></AssignRiders>
                 </AdminRoute> 
             },
         ]

@@ -252,8 +252,8 @@ const MyParcelsAndPayment = () => {
                                 <td>
                                     <p
                                         className={`text-center py-0.5 rounded-lg font-medium
-                                            ${parcel.deliveryStatus === "pending-pickup" && "text-orange-400 bg-orange-100"}
-                                            ${parcel.deliveryStatus === "driver_assigned" && "text-green-400 bg-green-100"}
+                                            ${parcel.deliveryStatus === "pending-pickup" && "text-orange-500 bg-orange-100"}
+                                            ${parcel.deliveryStatus === "driver_assigned" && "text-green-500 bg-green-100"}
                                             ${!parcel.deliveryStatus && "text-red-500 bg-red-100"}
                                         `}
                                     >
@@ -273,9 +273,7 @@ const MyParcelsAndPayment = () => {
                                             <Eye className="text-xs" />
                                         </button>
                                     </div>
-                                    {/* <button onClick={() => handleViewDetails(parcel)} className="btn btn-sm btn-primary">
-                                        View
-                                    </button> */}
+                                   
                                     <div
                                         className="relative overflow-visible tooltip tooltip-bottom"
                                         data-tip="Send Parcel"
@@ -284,12 +282,7 @@ const MyParcelsAndPayment = () => {
                                             <Send className="text-xs" />
                                         </Link>
                                     </div>
-                                    {/* <button
-                                        onClick={() => handleParcelDelete(parcel._id)}
-                                        className="btn btn-sm btn-error"
-                                    >
-                                        Delete
-                                    </button> */}
+                                  
                                     <div className="relative overflow-visible tooltip tooltip-bottom "
                                         data-tip="Remove">
                                         <button

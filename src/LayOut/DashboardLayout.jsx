@@ -1,3 +1,198 @@
+// import React from "react";
+// import { Link, Outlet, useLocation } from "react-router";
+// import logoImg from "../assets/delivery4.png";
+// import { HandHelping, Motorbike, Users } from "lucide-react";
+// import useRole from "../Hooks/useRole";
+// import { useAuth } from "../Hooks/useAuth";
+// import Logo from "../Component/Logo";
+
+// const DashboardLayout = () => {
+//   const { role } = useRole();
+//   const { user } = useAuth();
+//   const location = useLocation();
+
+//   const getTitle = () => {
+//     if (location.pathname.includes("approve-rider")) return "Approve Riders";
+//     if (location.pathname.includes("assign-rider")) return "Assign Parcels & Riders";
+//     if (location.pathname.includes("user-management")) return "User Management";
+//     return "Dashboard";
+//   };
+
+//   // 👉 sidebar auto close (mobile UX)
+//   const closeDrawer = () => {
+//     const drawer = document.getElementById("my-drawer-4");
+//     if (drawer) drawer.checked = false;
+//   };
+
+//   return (
+//     <div className="min-h-screen bg-base-100">
+
+//       <div className="drawer lg:drawer-open">
+
+//         {/* TOGGLE CONTROL */}
+//         <input id="my-drawer-4" type="checkbox" className="drawer-toggle" />
+
+//         {/* MAIN CONTENT */}
+//         <div className="drawer-content">
+
+//           {/* TOP NAVBAR */}
+//           <nav className="navbar bg-base-200 shadow-md sticky top-0 z-10 px-4">
+
+//             {/* MOBILE MENU BUTTON */}
+//             <label
+//               htmlFor="my-drawer-4"
+//               className="btn btn-square btn-ghost lg:hidden"
+//             >
+//               ☰
+//             </label>
+
+//             <h1 className="text-lg font-bold ml-2">{getTitle()}</h1>
+
+//             <div className="ml-auto flex items-center gap-3">
+
+//               <span className="text-xs px-2 py-1 bg-green-100 text-green-600 rounded-full">
+//                 {role}
+//               </span>
+
+//               <div className="flex items-center gap-2">
+//                 <div className="avatar">
+//                   <div className="w-8 rounded-full">
+//                     <img
+//                       src={
+//                         user?.photoURL ||
+//                         "https://i.ibb.co/4pDNDk1/avatar.png"
+//                       }
+//                     />
+//                   </div>
+//                 </div>
+
+//                 <span className="text-sm font-medium hidden md:block">
+//                   {user?.displayName}
+//                 </span>
+//               </div>
+//             </div>
+//           </nav>
+
+//           {/* HEADER CARD */}
+//           <div className="p-4">
+//             <div className="bg-base-200 rounded-xl p-4 shadow flex justify-between items-center">
+
+//               <div>
+//                 <h2 className="text-xl font-bold">{getTitle()}</h2>
+//                 <p className="text-sm text-gray-500">
+//                   Welcome back 👋 Manage everything from here
+//                 </p>
+//               </div>
+
+//               <div className="hidden md:block stats shadow">
+//                 <div className="stat">
+//                   <div className="stat-title">Status</div>
+//                   <div className="stat-value text-green-500 text-lg">
+//                     Active
+//                   </div>
+//                 </div>
+//               </div>
+
+//             </div>
+//           </div>
+
+//           {/* PAGE CONTENT */}
+//           <div className="p-4">
+//             <Outlet />
+//           </div>
+
+//         </div>
+
+//         {/* SIDEBAR */}
+//         <div className="drawer-side">
+
+//           {/* OVERLAY (click to close) */}
+//           <label htmlFor="my-drawer-4" className="drawer-overlay"></label>
+
+//           <div className="min-h-full w-64 bg-base-200 p-3">
+
+//             {/* LOGO */}
+//             <div className=" mb-4 px-1">
+//               {/* <img src={logoImg} className="w-8" />
+//               <h2 className="font-bold text-lg">ParcelX</h2> */}
+//               <Logo></Logo>
+//             </div>
+
+//             <ul className="menu gap-1">
+
+//               {/* HOME */}
+//               <li>
+//                 <Link
+//                   to="/"
+//                   onClick={closeDrawer}
+//                   className="flex gap-2 items-center"
+//                 >
+//                   <img src={logoImg} className="w-5" />
+//                   Home
+//                 </Link>
+//               </li>
+
+//               {/* ADMIN MENU */}
+//               {role === "admin" && (
+//                 <>
+//                   <li className="menu-title">Admin Panel</li>
+
+//                   <li>
+//                     <Link
+//                       to="/dashboard/approve-rider"
+//                       onClick={closeDrawer}
+//                       className="flex gap-2 items-center"
+//                     >
+//                       <Motorbike size={18} />
+//                       Approve Riders
+//                     </Link>
+//                   </li>
+
+//                   <li>
+//                     <Link
+//                       to="/dashboard/assign-rider"
+//                       onClick={closeDrawer}
+//                       className="flex gap-2 items-center"
+//                     >
+//                       <HandHelping size={18} />
+//                       Assign Parcels
+//                     </Link>
+//                   </li>
+
+//                   <li>
+//                     <Link
+//                       to="/dashboard/user-management"
+//                       onClick={closeDrawer}
+//                       className="flex gap-2 items-center"
+//                     >
+//                       <Users size={18} />
+//                       User Management
+//                     </Link>
+//                   </li>
+//                 </>
+//               )}
+
+//               {/* SETTINGS */}
+//               <li className="mt-6">
+//                 <button className="flex gap-2 items-center">
+//                   ⚙️ Settings
+//                 </button>
+//               </li>
+
+//             </ul>
+//           </div>
+
+//         </div>
+
+//       </div>
+//     </div>
+//   );
+// };
+
+// export default DashboardLayout;
+
+
+
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router";
 import logoImg from "../assets/delivery4.png";

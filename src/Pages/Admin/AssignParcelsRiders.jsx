@@ -129,8 +129,8 @@ const AssignParcelsRiders = () => {
             </div>
 
 
-            <dialog ref={riderModalRef} className="modal modal-bottom sm:modal-middle">
-                <div className="modal-box w-full max-w-4xl">
+            <dialog ref={riderModalRef} className="modal modal-bottom sm:modal-middle ">
+                <div className="modal-box w-full max-w-4xl lg:ml-58">
                     <h1 className='text-3xl lg:text-4xl font-bold'>Manage Riders</h1>
                     <h3 className="text-sm sm:text-base text-green-500 font-bold mt-1">
                         ({ridersLoading ? "Loading..." : riders.length}) Riders left to assign

@@ -26,6 +26,7 @@ import UserManagement from "../Pages/Admin/UserManagement/UserManagement";
 import AdminRoute from "./AdminRoute";
 import AssignParcelsRiders from "../Pages/Admin/AssignParcelsRiders";
 import AssignedDeliveries from "../Pages/Rider/AssignedDeliveries";
+import RiderRoute from "./RiderRoute";
 
 
 export const router = createBrowserRouter([
@@ -83,17 +84,22 @@ export const router = createBrowserRouter([
             //     path: "/track-delivery",
             //     element: <TrackDelivery></TrackDelivery>
             // },
-            
+
             // only rider route
             {
-                path: "/Rider",
+                path: "/rider",
                 element: <PrivateRoute><Rider></Rider></PrivateRoute>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
             {
                 path: "/assigned-deliveries",
-                element: <PrivateRoute><AssignedDeliveries></AssignedDeliveries></PrivateRoute>
-                
+                element:
+                    <PrivateRoute>
+                        <RiderRoute>
+                            <AssignedDeliveries></AssignedDeliveries>
+                        </RiderRoute>
+                    </PrivateRoute>
+
             },
             // {
             //     path: "/Accept-delivery-request",
@@ -131,7 +137,7 @@ export const router = createBrowserRouter([
             //     path: "/View-reports",
             //     element: <Contact></Contact>
             // },
-            
+
         ]
     },
     {
@@ -160,19 +166,19 @@ export const router = createBrowserRouter([
                 path: "approve-rider",
                 element: <AdminRoute>
                     <ApproveRider></ApproveRider>
-                </AdminRoute> 
+                </AdminRoute>
             },
             {
                 path: "user-management",
                 element: <AdminRoute>
                     <UserManagement></UserManagement>
-                </AdminRoute> 
+                </AdminRoute>
             },
             {
                 path: "assign-rider",
                 element: <AdminRoute>
                     <AssignParcelsRiders></AssignParcelsRiders>
-                </AdminRoute> 
+                </AdminRoute>
             },
         ]
     }

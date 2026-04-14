@@ -250,7 +250,15 @@ const MyParcelsAndPayment = () => {
                                 </td>
 
                                 <td>
-                                    <p className='text-red-500 bg-red-100 text-center py-0.5 rounded-lg'>{parcel.deliveryStatus}</p> 
+                                    <p
+                                        className={`text-center py-0.5 rounded-lg font-medium
+                                            ${parcel.deliveryStatus === "pending-pickup" && "text-orange-400 bg-orange-100"}
+                                            ${parcel.deliveryStatus === "driver_assigned" && "text-green-400 bg-green-100"}
+                                            ${!parcel.deliveryStatus && "text-red-500 bg-red-100"}
+                                        `}
+                                    >
+                                        {parcel.deliveryStatus || "payment-pending"}
+                                    </p>
                                 </td>
 
                                 <td className="flex justify-start items-center gap-3 whitespace-nowrap">
@@ -263,7 +271,6 @@ const MyParcelsAndPayment = () => {
                                             className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-black"
                                         >
                                             <Eye className="text-xs" />
-
                                         </button>
                                     </div>
                                     {/* <button onClick={() => handleViewDetails(parcel)} className="btn btn-sm btn-primary">

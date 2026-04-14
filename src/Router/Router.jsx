@@ -24,7 +24,8 @@ import ModalOTP from "../Pages/Customer/Payment/ModalOTP";
 import ApproveRider from "../Pages/Admin/ApproveRider/ApproveRider";
 import UserManagement from "../Pages/Admin/UserManagement/UserManagement";
 import AdminRoute from "./AdminRoute";
-import AssignRiders from "../Pages/Admin/AssignRiders";
+import AssignParcelsRiders from "../Pages/Admin/AssignParcelsRiders";
+import AssignedDeliveries from "../Pages/Rider/AssignedDeliveries";
 
 
 export const router = createBrowserRouter([
@@ -78,54 +79,59 @@ export const router = createBrowserRouter([
                 path: "/payment-history",
                 element: <PaymentHistory></PaymentHistory>
             },
-            {
-                path: "/track-delivery",
-                element: <TrackDelivery></TrackDelivery>
-            },
+            // {
+            //     path: "/track-delivery",
+            //     element: <TrackDelivery></TrackDelivery>
+            // },
+            
+            // only rider route
             {
                 path: "/Rider",
                 element: <PrivateRoute><Rider></Rider></PrivateRoute>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
             {
-                path: "/Accept-delivery-request",
-                element: <AcceptDeliveryRequest></AcceptDeliveryRequest>
+                path: "/assigned-deliveries",
+                element: <PrivateRoute><AssignedDeliveries></AssignedDeliveries></PrivateRoute>
+                
             },
-            {
-                path: "/Update-delivery-status",
-                element: <DeliveryStatus></DeliveryStatus>
-            },
-            {
-                path: "/View-earnings",
-                element: <Contact></Contact>
-            },
-            {
-                path: "/Dashboard-analytics",
-                element: <Contact></Contact>
-            },
-            {
-                path: "/Manage-users",
-                element: <Contact></Contact>
-            },
-            {
-                path: "/Manage-deliveries",
-                element: <Contact></Contact>
-            },
-            {
-                path: "/Manage-orders",
-                element: <Contact></Contact>
-            },
-            {
-                path: "/Assign-riders",
-                element: <Contact></Contact>
-            },
-            {
-                path: "/View-reports",
-                element: <Contact></Contact>
-            },
+            // {
+            //     path: "/Accept-delivery-request",
+            //     element: <AcceptDeliveryRequest></AcceptDeliveryRequest>
+            // },
+            // {
+            //     path: "/Update-delivery-status",
+            //     element: <DeliveryStatus></DeliveryStatus>
+            // },
+            // {
+            //     path: "/View-earnings",
+            //     element: <Contact></Contact>
+            // },
+            // {
+            //     path: "/Dashboard-analytics",
+            //     element: <Contact></Contact>
+            // },
+            // {
+            //     path: "/Manage-users",
+            //     element: <Contact></Contact>
+            // },
+            // {
+            //     path: "/Manage-deliveries",
+            //     element: <Contact></Contact>
+            // },
+            // {
+            //     path: "/Manage-orders",
+            //     element: <Contact></Contact>
+            // },
+            // {
+            //     path: "/Assign-riders",
+            //     element: <Contact></Contact>
+            // },
+            // {
+            //     path: "/View-reports",
+            //     element: <Contact></Contact>
+            // },
             
-
-
         ]
     },
     {
@@ -158,16 +164,14 @@ export const router = createBrowserRouter([
             },
             {
                 path: "user-management",
-                // Component: UserManagement ,
                 element: <AdminRoute>
                     <UserManagement></UserManagement>
                 </AdminRoute> 
             },
             {
                 path: "assign-rider",
-                // Component: AssignRiders ,
                 element: <AdminRoute>
-                    <AssignRiders></AssignRiders>
+                    <AssignParcelsRiders></AssignParcelsRiders>
                 </AdminRoute> 
             },
         ]

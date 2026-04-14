@@ -3,7 +3,7 @@ import React, { useRef, useState } from 'react';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
 
-const AssignRiders = () => {
+const AssignParcelsRiders = () => {
     const [selectedParcel, setSelectedParcel] = useState(null);
     const axiosAssignRider = useAxiosSecure();
     const riderModalRef = useRef();
@@ -44,7 +44,7 @@ const AssignRiders = () => {
             // parcelName: selectedParcel.parcelName,
             // senderEmail: selectedParcel.senderEmail,
         }
-        await axiosAssignRider.patch(`/parcels/${selectedParcel._id}`, riderAssignInfo) 
+        await axiosAssignRider.patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
                     riderModalRef.current.close()
@@ -63,8 +63,9 @@ const AssignRiders = () => {
 
 
     return (
-        <div>
-            <h1 className='text-4xl'>Assign Rider: {parcels.length}</h1>
+        <div className='max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-10'>
+            <h1 className='text-3xl lg:text-4xl font-bold'>Manage Parcels</h1>
+            <h1 className='text-sm sm:text-base text-green-500 font-bold mt-1'>({parcels.length}) parcels left to assign</h1>
             <div className="overflow-x-auto">
                 <table className="table">
                     {/* head */}
@@ -72,6 +73,7 @@ const AssignRiders = () => {
                         <tr>
                             <th>#</th>
                             <th>Parcel Name</th>
+                            <th>Sender Info</th>
                             <th>Cost</th>
                             <th>Date & Time</th>
                             <th>Pickup District</th>
@@ -82,6 +84,21 @@ const AssignRiders = () => {
                         {parcels.map((parcel, i) => <tr key={parcel._id}>
                             <th>{i + 1}</th>
                             <td>{parcel.parcelName}</td>
+
+                            <td>
+                                <div className="flex items-center gap-3">
+                                    <img
+                                        className="w-10 h-10 rounded-full"
+                                        src={parcel.senderPhoto}
+                                        alt=""
+                                    />
+                                    <div>
+                                        <p className="font-bold">{parcel.senderName}</p>
+                                        <p className="text-xs opacity-50">{parcel.senderEmail}</p>
+                                    </div>
+                                </div>
+                            </td>
+
                             <td>{parcel.cost} Tk</td>
                             <td className="text-xs">
                                 {new Date(parcel.createdAt).toLocaleString("en-BD", {
@@ -114,9 +131,9 @@ const AssignRiders = () => {
 
             <dialog ref={riderModalRef} className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box w-full max-w-4xl">
-
-                    <h3 className="font-bold text-lg mb-4">
-                        Riders: {ridersLoading ? "Loading..." : riders.length}
+                    <h1 className='text-3xl lg:text-4xl font-bold'>Manage Riders</h1>
+                    <h3 className="text-sm sm:text-base text-green-500 font-bold mt-1">
+                        ({ridersLoading ? "Loading..." : riders.length}) Riders left to assign
                     </h3>
 
                     {/* Desktop Table */}
@@ -151,7 +168,7 @@ const AssignRiders = () => {
                                         </td>
 
                                         <td>
-                                            {rider.riderDistrict}, {rider.riderArea}
+                                            {rider.riderRegion}, {rider.riderDistrict}, {rider.riderArea}, 
                                         </td>
 
                                         <td>
@@ -218,4 +235,4 @@ const AssignRiders = () => {
     );
 };
 
-export default AssignRiders;
+export default AssignParcelsRiders;

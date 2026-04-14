@@ -15,7 +15,7 @@ const DashboardLayout = () => {
       return "Approve Riders";
     }
     if (location.pathname.includes("assign-rider")) {
-      return "Assign Riders";
+      return "Assign Parcels & Riders";
     }
     if (location.pathname.includes("user-management")) {
       return "User Management";
@@ -100,12 +100,12 @@ const DashboardLayout = () => {
                   <li>
                     <Link to={"/dashboard/assign-rider"}
                       className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
-                      data-tip="Assign-Riders"
+                      data-tip="Assign-Parcels & Riders"
                     >
                       {/* Admin Dashboard icon */}
                       <HandHelping  className="text-green-300 my-1.5 inline-block size-5" />
 
-                      <span className="is-drawer-close:hidden">Assign Riders</span>
+                      <span className="is-drawer-close:hidden">Assign Parcels & Riders</span>
                     </Link>
                   </li>
 

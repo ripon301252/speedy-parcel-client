@@ -118,7 +118,7 @@ const ApproveRider = () => {
 
     return (
         <div className='max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-10'>
-            <h1 className='text-3xl  lg:text-4xl font-bold'>Manage All Riders</h1>
+            <h1 className='text-3xl lg:text-4xl font-bold'>Manage All Riders</h1>
             {/* <h1 className='text-4xl font-bold'>Rider Control Panel</h1> */}
             <h1 className='text-sm sm:text-base text-green-500 font-bold mt-1'> ({riders.length}) Users Applied To Become Riders.</h1>
             {/* <p>search text : {searchText}</p> */}

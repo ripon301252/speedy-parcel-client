@@ -52,8 +52,9 @@ const Navbar = () => {
         /rider/active-delivery
         /rider/delivery-history
         /rider/earnings */}
-            <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink>
+            {/* <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink> */}
             {/* <NavLink to={`/Accept-delivery-request`} className={activeLinks}>Accept delivery request </NavLink> */}
+            <NavLink to={`/assigned-deliveries`} className={activeLinks}>Assigned Deliveries</NavLink>
             {/* <NavLink to={`/Update-delivery-status`} className={activeLinks}>Update delivery status </NavLink> */}
             {/* <NavLink to={`/dashboard`} className={activeLinks}>Dashboard </NavLink> */}
             {/* <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink> */}

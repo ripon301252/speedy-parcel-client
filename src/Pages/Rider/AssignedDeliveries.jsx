@@ -2,7 +2,6 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import { useAuth } from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
-// import DeliveryStatus from '../Admin/DeliveryStatus/DeliveryStatus';
 import Swal from 'sweetalert2';
 
 const AssignedDeliveries = () => {
@@ -18,10 +17,13 @@ const AssignedDeliveries = () => {
     // console.log(parcels);
 
 
-    const handleAcceptDelivery = (parcel) => {
+    const handleDeliveryStatusUpdate = (parcel, status) => {
         const deliveryStatusInfo = {
-            deliveryStatus: "rider_accepted"
+            deliveryStatus: status
         }
+
+        let message = `Parcel Status is Updated with ${status.split("_").join(' ')}`
+
         axiosAssignedDelivery.patch(`/parcels/${parcel._id}/deliveryStatus`, deliveryStatusInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
@@ -29,7 +31,7 @@ const AssignedDeliveries = () => {
                     Swal.fire({
                         position: "top-center",
                         icon: "success",
-                        title: `Thank you for accepting`,
+                        title: message,
                         showConfirmButton: false,
                         timer: 1500
                     });
@@ -37,24 +39,24 @@ const AssignedDeliveries = () => {
             })
     }
 
-    const handleRejectDelivery = (parcel) => {
-        const deliveryStatusInfo = {
-            deliveryStatus: "rider_rejected"
-        }
-        axiosAssignedDelivery.patch(`/parcels/${parcel._id}/deliveryStatus`, deliveryStatusInfo)
-            .then(res => {
-                if (res.data.modifiedCount) {
-                    refetch();
-                    Swal.fire({
-                        position: "top-center",
-                        icon: "success",
-                        title: `Thank you for accepting`,
-                        showConfirmButton: false,
-                        timer: 1500
-                    });
-                }
-            })
-    }
+    // const handleRejectDelivery = (parcel) => {
+    //     const deliveryStatusInfo = {
+    //         deliveryStatus: "rider_rejected",
+    //     }
+    //     axiosAssignedDelivery.patch(`/parcels/${parcel._id}/deliveryStatus`, deliveryStatusInfo)
+    //         .then(res => {
+    //             if (res.data.modifiedCount) {
+    //                 refetch();
+    //                 Swal.fire({
+    //                     position: "top-center",
+    //                     icon: "success",
+    //                     title: "Delivery rejected successfully",
+    //                     showConfirmButton: false,
+    //                     timer: 1500
+    //                 });
+    //             }
+    //         })
+    // }
 
     return (
         <div>
@@ -64,14 +66,12 @@ const AssignedDeliveries = () => {
                     {/* head */}
                     <thead>
                         <tr>
-                            <th>
-                                #
-                            </th>
+                            <th>#</th>
                             <th>Sender Info</th>
                             <th>Receiver Info</th>
                             <th>Parcel Name</th>
                             <th>Confirm</th>
-                            <th>Actions</th>
+                            <th> Other Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,25 +119,44 @@ const AssignedDeliveries = () => {
                                 {parcel.deliveryStatus === 'driver_assigned'
                                     ? <>
                                         <button
-                                            onClick={() => handleAcceptDelivery(parcel)}
+                                            onClick={() => handleDeliveryStatusUpdate(parcel, "rider_accepted")}
                                             className='btn btn-xs text-green-500 hover:bg-green-500 hover:text-gray-800 btn-outline mr-2'
                                         >
                                             Accept
                                         </button>
                                         <button
-                                            onClick={() => handleRejectDelivery(parcel)}
-                                            className='btn btn-xs text-orange-500 hover:bg-orange-500 hover:text-gray-800 btn-outline'>Reject</button>
+                                            // onClick={() => handleRejectDelivery(parcel)}
+                                            onClick={() => handleDeliveryStatusUpdate(parcel, "rider_rejected")}
+                                            className='btn btn-xs text-orange-500 hover:bg-orange-500 hover:text-gray-800 btn-outline'>Reject
+                                        </button>
                                     </>
-                                    : <span>Accepted</span>
+                                    : <span className="text-green-600 font-semibold">Accepted</span>
                                 }
                             </td>
                             <th>
-                                <button className="btn btn-ghost btn-xs">details</button>
+                                <div className='flex gap-5'>
+                                    {parcel.deliveryStatus !== "parcel_picked_up" ? (
+                                        <button
+                                            onClick={() =>
+                                                handleDeliveryStatusUpdate(parcel, "parcel_picked_up")
+                                            }
+                                            className="btn btn-xs text-green-500 hover:bg-green-500 hover:text-gray-800 btn-outline mr-2"
+                                        >
+                                            Mark as Picked Up
+                                        </button>
+                                    ) : (
+                                        <button
+                                            onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_delivered")}
+                                            className='btn btn-xs text-green-500 hover:bg-green-500 hover:text-gray-800 btn-outline mr-2'
+                                        >
+                                            Mark as Delivered
+                                        </button>
+                                    )}
+
+
+                                </div>
                             </th>
                         </tr>)}
-
-
-
                     </tbody>
                 </table>
             </div>

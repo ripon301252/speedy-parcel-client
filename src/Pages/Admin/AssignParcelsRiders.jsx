@@ -59,9 +59,6 @@ const AssignParcelsRiders = () => {
                 }
             })
     }
-
-
-
     return (
         <div className='max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-10'>
             <h1 className='text-3xl lg:text-4xl font-bold'>Manage Parcels</h1>
@@ -130,7 +127,7 @@ const AssignParcelsRiders = () => {
 
 
             <dialog ref={riderModalRef} className="modal modal-bottom sm:modal-middle ">
-                <div className="modal-box w-full max-w-4xl lg:ml-58">
+                <div className="modal-box w-full max-w-4xl">
                     <h1 className='text-3xl lg:text-4xl font-bold'>Manage Riders</h1>
                     <h3 className="text-sm sm:text-base text-green-500 font-bold mt-1">
                         ({ridersLoading ? "Loading..." : riders.length}) Riders left to assign

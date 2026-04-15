@@ -37,9 +37,24 @@ const AssignedDeliveries = () => {
             })
     }
 
-
- 
-
+    const handleRejectDelivery = (parcel) => {
+        const deliveryStatusInfo = {
+            deliveryStatus: "rider_rejected"
+        }
+        axiosAssignedDelivery.patch(`/parcels/${parcel._id}/deliveryStatus`, deliveryStatusInfo)
+            .then(res => {
+                if (res.data.modifiedCount) {
+                    refetch();
+                    Swal.fire({
+                        position: "top-center",
+                        icon: "success",
+                        title: `Thank you for accepting`,
+                        showConfirmButton: false,
+                        timer: 1500
+                    });
+                }
+            })
+    }
 
     return (
         <div>
@@ -110,7 +125,7 @@ const AssignedDeliveries = () => {
                                             Accept
                                         </button>
                                         <button
-                                            // onClick={() => handleRejectDelivery(parcel)}
+                                            onClick={() => handleRejectDelivery(parcel)}
                                             className='btn btn-xs text-orange-500 hover:bg-orange-500 hover:text-gray-800 btn-outline'>Reject</button>
                                     </>
                                     : <span>Accepted</span>

@@ -87,7 +87,7 @@ const MyParcelsAndPayment = () => {
     const handlePayment = async (parcel) => {
         if (!user) return toast.error("User not logged in");
 
-        const idToken = await user.getIdToken(); // ✅ Firebase token
+        // const idToken = await user.getIdToken(); // ✅ Firebase token
 
         const paymentInfo = {
             cost: parcel.cost,
@@ -97,13 +97,14 @@ const MyParcelsAndPayment = () => {
             senderName: parcel.senderName,
             senderAddress: parcel.senderAddress,
             senderPhoto: parcel.senderPhoto,
+            trackingId: parcel.trackingId   //new
         };
 
         try {
             const res = await axiosMyParcels.post('/stripe-payment', paymentInfo, {
-                headers: {
-                    Authorization: `Bearer ${idToken}`, // ✅ send token
-                },
+                // headers: {
+                //     Authorization: `Bearer ${idToken}`, // ✅ send token
+                // },
             });
 
             window.location.assign(res.data.url); // redirect to Stripe
@@ -197,8 +198,8 @@ const MyParcelsAndPayment = () => {
                         <tr>
                             <th>#</th>
                             <th>Sender Name</th>
-                            <th>Email</th>
                             <th>Parcel Name</th>
+                            <th>Tracking Id</th>
                             <th>Weight</th>
                             <th>Cost</th>
                             <th>Payment</th>
@@ -214,7 +215,7 @@ const MyParcelsAndPayment = () => {
                                 <td>
                                     <div className="flex items-center gap-3">
                                         <div className="avatar">
-                                            <div className="mask mask-squircle h-12 w-12">
+                                            <div className="mask mask-squircle h-14 w-14">
                                                 <img
                                                     src={parcel.senderPhoto}
                                                     alt="" />
@@ -223,11 +224,18 @@ const MyParcelsAndPayment = () => {
                                         <div>
                                             <div className="font-bold">{parcel.senderName}</div>
                                             <div className="text-sm opacity-50">{parcel.senderAddress}</div>
+                                            <div className="text-sm opacity-50">{parcel.senderEmail}</div>
                                         </div>
                                     </div>
                                 </td>
-                                <td>{parcel.senderEmail}</td>
                                 <td>{parcel.parcelName}</td>
+                                <td>
+                                    <Link to={`/parcel-tracking/${parcel.trackingId}`}>
+                                        <p className='text-green-400'>{parcel.trackingId}</p>
+                                    </Link> 
+                                    
+                                </td>
+
                                 <td>{parcel.parcelWeight} Kg</td>
                                 <td>{parcel.cost} Tk</td>
 

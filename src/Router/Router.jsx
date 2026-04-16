@@ -27,6 +27,9 @@ import AdminRoute from "./AdminRoute";
 import AssignParcelsRiders from "../Pages/Admin/AssignParcelsRiders";
 import AssignedDeliveries from "../Pages/Rider/AssignedDeliveries";
 import RiderRoute from "./RiderRoute";
+import CompletedDeliveries from "../Pages/Rider/CompletedDeliveries";
+import ParcelTracking from "../Pages/Public/ParcelTracking";
+import SendParcel from "../Pages/Customer/SendParcel/SendParcel";
 
 
 export const router = createBrowserRouter([
@@ -52,8 +55,12 @@ export const router = createBrowserRouter([
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
             {
+                path: "/parcel-tracking/:trackingId",
+                element: <ParcelTracking></ParcelTracking>,
+            },
+            {
                 path: "/send-parcel",
-                element: <PrivateRoute><PlaceOrder></PlaceOrder></PrivateRoute>,
+                element: <PrivateRoute><SendParcel></SendParcel></PrivateRoute>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
             },
             {
@@ -97,6 +104,16 @@ export const router = createBrowserRouter([
                     <PrivateRoute>
                         <RiderRoute>
                             <AssignedDeliveries></AssignedDeliveries>
+                        </RiderRoute>
+                    </PrivateRoute>
+
+            },
+            {
+                path: "/completed-deliveries",
+                element:
+                    <PrivateRoute>
+                        <RiderRoute>
+                            <CompletedDeliveries></CompletedDeliveries>
                         </RiderRoute>
                     </PrivateRoute>
 

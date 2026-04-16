@@ -26,6 +26,7 @@ const Navbar = () => {
             <NavLink to={`/about`} className={activeLinks}>About</NavLink>
             <NavLink to={`/contact`} className={activeLinks}>Contact</NavLink>
             <NavLink to={`/coverage`} className={activeLinks}>Coverage </NavLink>
+            {/* <NavLink to={`/parcel-tracking`} className={activeLinks}>Parcel Tracking </NavLink> */}
             <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink>
             {/* <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink> */}
             {/* <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink> */}
@@ -55,6 +56,7 @@ const Navbar = () => {
             {/* <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink> */}
             {/* <NavLink to={`/Accept-delivery-request`} className={activeLinks}>Accept delivery request </NavLink> */}
             <NavLink to={`/assigned-deliveries`} className={activeLinks}>Assigned Deliveries</NavLink>
+            <NavLink to={`/completed-deliveries`} className={activeLinks}>Completed Deliveries</NavLink>
             {/* <NavLink to={`/Update-delivery-status`} className={activeLinks}>Update delivery status </NavLink> */}
             {/* <NavLink to={`/dashboard`} className={activeLinks}>Dashboard </NavLink> */}
             {/* <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink> */}

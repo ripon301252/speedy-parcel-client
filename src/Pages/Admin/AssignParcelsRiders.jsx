@@ -39,6 +39,7 @@ const AssignParcelsRiders = () => {
             riderName: rider.riderName,
             riderEmail: rider.riderEmail,
             parcelId: selectedParcel._id,
+            trackingId: selectedParcel.trackingId,
             // riderDistrict: rider.riderDistrict,
             // riderArea: rider.riderArea,
             // parcelName: selectedParcel.parcelName,

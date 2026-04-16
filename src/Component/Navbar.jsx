@@ -26,7 +26,7 @@ const Navbar = () => {
             <NavLink to={`/about`} className={activeLinks}>About</NavLink>
             <NavLink to={`/contact`} className={activeLinks}>Contact</NavLink>
             <NavLink to={`/coverage`} className={activeLinks}>Coverage </NavLink>
-            <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink> 65.5
+            <NavLink to={`/send-parcel`} className={activeLinks}>Send Parcel</NavLink>
             {/* <NavLink to={`/rider`} className={activeLinks}>Be a Rider</NavLink> */}
             {/* <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink> */}
         </>
@@ -63,24 +63,24 @@ const Navbar = () => {
         </>
     )
 
-    const adminLinks = (
-        <>
-            {/* /admin
-        /admin/users
-        /admin/orders
-        /admin/assign-rider
-        /admin/analytics */}
-            <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink>
-            {/* <NavLink to={`/Dashboard-analytics`} className={activeLinks}>Dashboard (analytics) </NavLink>
-            <NavLink to={`/Manage-users`} className={activeLinks}>Manage users </NavLink>
-            <NavLink to={`/Manage-deliveries`} className={activeLinks}>Manage deliveries </NavLink>
-            <NavLink to={`/Manage-orders`} className={activeLinks}>Manage orders </NavLink>
-            <NavLink to={`/Assign-riders`} className={activeLinks}>Assign riders </NavLink>
-            <NavLink to={`/View-reports`} className={activeLinks}>View reports </NavLink>
-            <NavLink to={`/coverage`} className={activeLinks}>Coverage </NavLink> */}
+    // const adminLinks = (
+    //     <>
+    //         {/* /admin
+    //     /admin/users
+    //     /admin/orders
+    //     /admin/assign-rider
+    //     /admin/analytics */}
+    //         <NavLink to={`/dashboard`} className={activeLinks}>Dashboard</NavLink>
+    //         {/* <NavLink to={`/Dashboard-analytics`} className={activeLinks}>Dashboard (analytics) </NavLink>
+    //         <NavLink to={`/Manage-users`} className={activeLinks}>Manage users </NavLink>
+    //         <NavLink to={`/Manage-deliveries`} className={activeLinks}>Manage deliveries </NavLink>
+    //         <NavLink to={`/Manage-orders`} className={activeLinks}>Manage orders </NavLink>
+    //         <NavLink to={`/Assign-riders`} className={activeLinks}>Assign riders </NavLink>
+    //         <NavLink to={`/View-reports`} className={activeLinks}>View reports </NavLink>
+    //         <NavLink to={`/coverage`} className={activeLinks}>Coverage </NavLink> */}
                 
-        </>
-    )
+    //     </>
+    // )
 
 
     const handleLogout = () => {
@@ -106,10 +106,11 @@ const Navbar = () => {
                         {!user && publicLinks}
                         {user && role === "rider" && riderLinks}
                         {user && role === "user" && customerLinks}
-                        {user && role === "admin" && adminLinks}
+                        {/* {user && role === "admin" && adminLinks} */}
                     </div>
                 </div>
                 <div>
+                    <Link to={`/dashboard`} className='btn btn-outline mx-3 hover:bg-green-500'>Dashboard</Link>
                     <Link to={`/rider`} className='btn btn-outline mx-3 hover:bg-green-500'>Be a Rider</Link>
                     {user ?
                         (<button onClick={handleLogout} className='btn'>Logout</button>)

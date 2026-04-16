@@ -3,6 +3,9 @@ import React from 'react';
 import { useAuth } from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { Eye } from 'lucide-react';
+import { MdAccessibleForward, MdNotAccessible } from "react-icons/md";
+import { MdCheckCircle, MdCancel, MdLocalShipping, } from "react-icons/md";
 
 const AssignedDeliveries = () => {
     const { user } = useAuth();
@@ -116,46 +119,72 @@ const AssignedDeliveries = () => {
                             </td>
                             <td>{parcel.parcelName}</td>
                             <td>
-                                {parcel.deliveryStatus === 'driver_assigned'
-                                    ? <>
-                                        <button
-                                            onClick={() => handleDeliveryStatusUpdate(parcel, "rider_accepted")}
-                                            className='btn btn-xs text-green-500 hover:bg-green-500 hover:text-gray-800 btn-outline mr-2'
-                                        >
-                                            Accept
-                                        </button>
-                                        <button
-                                            // onClick={() => handleRejectDelivery(parcel)}
-                                            onClick={() => handleDeliveryStatusUpdate(parcel, "rider_rejected")}
-                                            className='btn btn-xs text-orange-500 hover:bg-orange-500 hover:text-gray-800 btn-outline'>Reject
-                                        </button>
-                                    </>
-                                    : <span className="text-green-600 font-semibold">Accepted</span>
-                                }
+                                {parcel.deliveryStatus === "driver_assigned" ? (
+                                    <div className="flex gap-2">
+
+                                        {/* Accept */}
+                                        <div className="tooltip tooltip-bottom" data-tip="Accept Delivery">
+                                            <button
+                                                onClick={() =>
+                                                    handleDeliveryStatusUpdate(parcel, "rider_accepted")
+                                                }
+                                                className="btn btn-outline btn-square text-green-600 hover:bg-green-600 hover:text-white transition"
+                                            >
+                                                <MdCheckCircle className="text-xl" />
+                                            </button>
+                                        </div>
+
+                                        {/* Reject */}
+                                        <div className="tooltip tooltip-bottom" data-tip="Reject Delivery">
+                                            <button
+                                                onClick={() =>
+                                                    handleDeliveryStatusUpdate(parcel, "rider_rejected")
+                                                }
+                                                className="btn btn-outline btn-square text-red-600 hover:bg-red-600 hover:text-white transition"
+                                            >
+                                                <MdCancel className="text-xl" />
+                                            </button>
+                                        </div>
+
+                                    </div>
+                                ) : (
+                                    <div className="tooltip tooltip-bottom" data-tip="Accept Success">
+                                        <MdCheckCircle className="text-green-600 text-2xl" />
+                                    </div>
+                                )}
                             </td>
                             <th>
-                                <div className='flex gap-5'>
-                                    {parcel.deliveryStatus !== "parcel_picked_up" ? (
-                                        <button
-                                            onClick={() =>
-                                                handleDeliveryStatusUpdate(parcel, "parcel_picked_up")
-                                            }
-                                            className="btn btn-xs text-green-500 hover:bg-green-500 hover:text-gray-800 btn-outline mr-2"
-                                        >
-                                            Mark as Picked Up
-                                        </button>
-                                    ) : (
+                                <div className='flex gap-3'>
+                                    <div>
+                                        {parcel.deliveryStatus !== "parcel_picked_up" ? (
+                                            <div className="tooltip tooltip-bottom" data-tip="Parcel Picked-Up">
+                                                <button
+                                                    onClick={() =>
+                                                        handleDeliveryStatusUpdate(parcel, "parcel_picked_up")
+                                                    }
+                                                    className="btn btn-outline btn-square text-orange-600 hover:bg-orange-600 hover:text-white transition"
+                                                >
+                                                    <MdLocalShipping className="text-xl" />
+                                                </button>
+                                            </div>
+                                        ) : (
+                                            <div className="tooltip tooltip-bottom mt-1" data-tip="Picked-Up Success">
+                                                <span className="text-green-600 font-semibold"><MdCheckCircle className="text-2xl" /></span>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <div className="tooltip tooltip-bottom" data-tip="Parcel Delivered">
                                         <button
                                             onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_delivered")}
-                                            className='btn btn-xs text-green-500 hover:bg-green-500 hover:text-gray-800 btn-outline mr-2'
+                                            className='btn btn-outline btn-square text-green-600 hover:bg-green-600 hover:text-white transition'
                                         >
-                                            Mark as Delivered
+                                            <MdCheckCircle className="text-xl" />
                                         </button>
-                                    )}
-
-
+                                    </div>
                                 </div>
                             </th>
+                            
                         </tr>)}
                     </tbody>
                 </table>

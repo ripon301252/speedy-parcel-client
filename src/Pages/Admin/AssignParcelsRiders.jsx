@@ -175,6 +175,21 @@ const AssignParcelsRiders = () => {
                                                 Assign
                                             </button>
                                         </td>
+
+                                        {/* <td>
+                                            {selectedParcel?.deliveryStatus !== "driver_assigned" ? (
+                                                <button
+                                                    onClick={() => handleAssignRider(rider)}
+                                                    className="btn btn-xs btn-primary"
+                                                >
+                                                    Assign
+                                                </button>
+                                            ) : (
+                                                <span className="text-green-600 font-semibold">
+                                                    Assigned
+                                                </span>
+                                            )}
+                                        </td> */}
                                     </tr>
                                 ))}
                             </tbody>

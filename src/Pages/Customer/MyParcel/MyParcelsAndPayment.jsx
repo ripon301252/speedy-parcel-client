@@ -252,9 +252,13 @@ const MyParcelsAndPayment = () => {
                                 <td>
                                     <p
                                         className={`text-center py-0.5 rounded-lg font-medium
-                                            ${parcel.deliveryStatus === "pending-pickup" && "text-orange-500 bg-orange-100"}
-                                            ${parcel.deliveryStatus === "driver_assigned" && "text-green-500 bg-green-100"}
-                                            ${!parcel.deliveryStatus && "text-red-500 bg-red-100"}
+                                            ${parcel.deliveryStatus === "pending-pickup" && "text-yellow-600 bg-yellow-100"}
+                                            ${parcel.deliveryStatus === "driver_assigned" && "text-blue-600 bg-blue-100"}
+                                            ${parcel.deliveryStatus === "rider_accepted" && "text-indigo-600 bg-indigo-100"}
+                                            ${parcel.deliveryStatus === "rider_rejected" && "text-red-600 bg-red-100"}
+                                            ${parcel.deliveryStatus === "parcel_picked_up" && "text-orange-600 bg-orange-100"}
+                                            ${parcel.deliveryStatus === "parcel_delivered" && "text-green-600 bg-green-100"}
+                                            ${!parcel.deliveryStatus && "text-red-600 bg-red-100"}
                                         `}
                                     >
                                         {parcel.deliveryStatus || "payment-pending"}
@@ -273,7 +277,7 @@ const MyParcelsAndPayment = () => {
                                             <Eye className="text-xs" />
                                         </button>
                                     </div>
-                                   
+
                                     <div
                                         className="relative overflow-visible tooltip tooltip-bottom"
                                         data-tip="Send Parcel"
@@ -282,7 +286,7 @@ const MyParcelsAndPayment = () => {
                                             <Send className="text-xs" />
                                         </Link>
                                     </div>
-                                  
+
                                     <div className="relative overflow-visible tooltip tooltip-bottom "
                                         data-tip="Remove">
                                         <button

@@ -160,7 +160,10 @@ export const router = createBrowserRouter([
     },
     {
         path: 'dashboard',
-        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        element: <PrivateRoute><AdminRoute>
+            <DashboardLayout></DashboardLayout>
+        </AdminRoute>
+        </PrivateRoute>,
         children: [
             {
                 path: "approve-rider",

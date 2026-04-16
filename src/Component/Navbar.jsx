@@ -1,10 +1,11 @@
-import React, {} from 'react';
+import React, { } from 'react';
 
 import { Link, NavLink } from 'react-router';
 import Logo from './Logo';
 import { useAuth } from '../Hooks/useAuth';
 import { toast } from 'react-toastify';
 import useRole from '../Hooks/useRole';
+import ThemeToggle from '../Theme/ThemeToggle';
 
 
 const Navbar = () => {
@@ -80,7 +81,7 @@ const Navbar = () => {
     //         <NavLink to={`/Assign-riders`} className={activeLinks}>Assign riders </NavLink>
     //         <NavLink to={`/View-reports`} className={activeLinks}>View reports </NavLink>
     //         <NavLink to={`/coverage`} className={activeLinks}>Coverage </NavLink> */}
-                
+
     //     </>
     // )
 
@@ -111,9 +112,10 @@ const Navbar = () => {
                         {/* {user && role === "admin" && adminLinks} */}
                     </div>
                 </div>
-                <div>
-                    <Link to={`/dashboard`} className='btn btn-outline mx-3 hover:bg-green-500'>Dashboard</Link>
-                    <Link to={`/rider`} className='btn btn-outline mx-3 hover:bg-green-500'>Be a Rider</Link>
+                <div className='flex items-center gap-3'>
+                    <Link to={`/dashboard`} className='btn btn-outline hover:bg-green-500'>Dashboard</Link>
+                    <Link to={`/rider`} className='btn btn-outline hover:bg-green-500'>Be a Rider</Link>
+                    <ThemeToggle />
                     {user ?
                         (<button onClick={handleLogout} className='btn'>Logout</button>)
                         :

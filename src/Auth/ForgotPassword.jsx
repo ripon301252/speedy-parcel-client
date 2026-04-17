@@ -56,7 +56,7 @@ const ForgotPassword = () => {
                         ref={emailRef}
                         defaultValue={prefilledEmail}
                         type="email"
-                        className="input input-class"
+                        className="input input-class text-gray-800"
                         placeholder="Enter your email"
                         required />
                 </div>

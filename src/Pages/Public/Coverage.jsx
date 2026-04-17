@@ -64,7 +64,7 @@ const Coverage = () => {
       </div>
 
       {/* Map */}
-      <div className="rounded-2xl overflow-hidden shadow-lg border">
+      <div className="rounded-2xl overflow-hidden shadow-lg border z-0">
         <MapContainer
           center={position}
           zoom={8}

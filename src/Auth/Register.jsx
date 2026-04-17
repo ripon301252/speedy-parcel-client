@@ -183,7 +183,7 @@ const Register = () => {
                     <div>
                         <label className="label text-gray-800 font-semibold">Name</label>
                         <input type="text" name='name'
-                            className="input input-class"
+                            className="input input-class text-gray-800"
                             placeholder="Name" required />
                         {nameerror && (
                             <p className="text-xs text-red-500 mt-1">{nameerror}</p>
@@ -195,7 +195,7 @@ const Register = () => {
                         <label className="label text-gray-800 font-semibold">Photo</label>
                         <input
                             type="file"
-                            className="file-input file-choose input-class"
+                            className="file-input file-choose input-class text-gray-800"
                             onChange={(e) => {
                                 const file = e.target.files[0];
                                 console.log("Selected file:", file);
@@ -209,7 +209,7 @@ const Register = () => {
                     <div>
                         <label className="label text-gray-800 font-semibold">Email</label>
                         <input type="email" name='email'
-                            className="input input-class"
+                            className="input input-class text-gray-800"
                             placeholder="Email" required />
                     </div>
 
@@ -221,7 +221,7 @@ const Register = () => {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                className="input input-class"
+                                className="input input-class text-gray-800"
                                 placeholder="Password" required
                             />
 

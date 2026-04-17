@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { useAuth } from '../../../Hooks/useAuth';
-// import useAxiosPublic from '../../../Hooks/useAxiosPublic';
+import { useAuth } from '../../Hooks/useAuth';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
-import { Eye } from 'lucide-react';
-import { IoTrashOutline } from "react-icons/io5";
-import ViewDetailsHistory from './ViewPaymentHistory';
 import Swal from 'sweetalert2';
+import { Eye } from 'lucide-react';
+import { IoTrashOutline } from 'react-icons/io5';
+import ViewPaymentHistory from '../Customer/Payment/ViewPaymentHistory';
+// import ViewDetailsHistory from '../';
 
-const MyPaymentHistory = () => {
+const AllPaymentHistory = () => {
     const { user } = useAuth();
     console.log(user)
     // const axiosPaymentHistory = useAxiosPublic();
@@ -20,14 +20,20 @@ const MyPaymentHistory = () => {
 
     const { data, refetch } = useQuery({
         queryKey: ['paymentHistory', user?.email, page],
+        enabled: !!user?.email,
         queryFn: async () => {
-            const res = await axiosPaymentHistory.get(`/payment-history?email=${user?.email}&page=${page}&limit=${limit}`);
+            const url = `/payment-history?page=${page}&limit=${limit}`;
+            const res = await axiosPaymentHistory.get(url);
             return res.data;
         }
-    })
-    
+    });
+
+    // const payments = Array.isArray(data?.data) ? data.data : [];
 
     const payments = data?.data ?? [];
+    console.log(payments)
+    const total = data?.total ?? 0;
+
 
     const handlePaymentDelete = (id) => {
         console.log("payment delete", id)
@@ -71,10 +77,11 @@ const MyPaymentHistory = () => {
         setModalType("view");
     };
 
-
-
     return (
         <div className="p-2 md:p-6">
+            <h1 className="text-xl md:text-3xl font-bold mb-4">
+  Payment History : {total}
+</h1>
             <h1 className="text-xl md:text-3xl font-bold mb-4">
                 Payment History : {payments.length}
             </h1>
@@ -145,18 +152,18 @@ const MyPaymentHistory = () => {
                                             className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800">
                                             <Eye className='text-xs' />
                                         </button>
-                                        {/* <button
+                                        <button
                                             onClick={() => handlePaymentDelete(payment._id)}
                                             className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-gray-800">
                                             <IoTrashOutline className='text-lg' />
-                                        </button> */}
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
-                
+
                 {/* pagination */}
                 <div className="flex justify-center gap-3 mt-4">
                     <button
@@ -240,19 +247,19 @@ const MyPaymentHistory = () => {
                                 className="btn btn-xs btn-primary">
                                 View
                             </button>
-                            {/* <button
+                            <button
                                 onClick={() => handlePaymentDelete(payment._id)}
                                 className="btn btn-xs btn-error"
                             >
                                 Delete
-                            </button> */}
+                            </button>
                         </div>
                     </div>
                 ))}
             </div>
 
             {modalType === "view" && (
-                <ViewDetailsHistory
+                <ViewPaymentHistory
                     paymentHistory={viewPaymentHistory}
                     onClose={() => {
                         setModalType(null);
@@ -265,5 +272,4 @@ const MyPaymentHistory = () => {
     );
 };
 
-export default MyPaymentHistory;
-
+export default AllPaymentHistory;

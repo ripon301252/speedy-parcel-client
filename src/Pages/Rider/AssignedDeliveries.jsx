@@ -186,7 +186,6 @@ const AssignedDeliveries = () => {
                                     </div>
                                 </div>
                             </th>
-                            
                         </tr>)}
                     </tbody>
                 </table>

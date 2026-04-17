@@ -106,7 +106,7 @@ const ReviewModal = ({ closeModal }) => {
                         placeholder="Your Name"
                         value={formData.userName}
                         onChange={handleChange}
-                        className="input input-bordered input-class"
+                        className="input input-bordered input-class text-gray-800 "
                         required
                         disabled={!!user} // লগইন থাকলে editable না
                     />
@@ -118,7 +118,7 @@ const ReviewModal = ({ closeModal }) => {
                         placeholder="Your Email"
                         value={formData.user_email}
                         onChange={handleChange}
-                        className="input input-bordered input-class"
+                        className="input input-bordered input-class text-gray-800 "
                         required
                         disabled={!!user}
                     />
@@ -130,7 +130,7 @@ const ReviewModal = ({ closeModal }) => {
                         placeholder="Your Designation"
                         value={formData.designation}
                         onChange={handleChange}
-                        className="input input-bordered input-class"
+                        className="input input-bordered input-class text-gray-800 "
                     />
 
                     {/* Photo URL */}
@@ -140,7 +140,7 @@ const ReviewModal = ({ closeModal }) => {
                         placeholder="Photo URL"
                         value={formData.user_photoURL}
                         onChange={handleChange}
-                        className="input input-bordered input-class"
+                        className="input input-bordered input-class text-gray-800 "
                         disabled={!!user} // লগইন থাকলে edit disabled
                     />
 
@@ -166,7 +166,7 @@ const ReviewModal = ({ closeModal }) => {
                         placeholder="Write your review..."
                         value={formData.review}
                         onChange={handleChange}
-                        className="textarea textarea-bordered input-class h-24"
+                        className="textarea textarea-bordered text-gray-800 input-class h-24"
                         required
                     ></textarea>
 

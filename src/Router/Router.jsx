@@ -30,6 +30,10 @@ import RiderRoute from "./RiderRoute";
 import CompletedDeliveries from "../Pages/Rider/CompletedDeliveries";
 import ParcelTracking from "../Pages/Public/ParcelTracking";
 import SendParcel from "../Pages/Customer/SendParcel/SendParcel";
+import CashOutHistory from "../Pages/Rider/CashOutHistory";
+import RidersCashOutHistory from "../Pages/Admin/RidersCashoutHistory";
+import AllPaymentHistory from "../Pages/Admin/AllPaymentHistory";
+import UserProfile from "../Auth/UserProfile";
 
 
 export const router = createBrowserRouter([
@@ -53,6 +57,10 @@ export const router = createBrowserRouter([
                 path: "/coverage",
                 element: <Coverage></Coverage>,
                 loader: () => fetch('/serviceCenter.json').then(res => res.json())
+            },
+            {
+                path: "/user-profile",
+                element: <UserProfile></UserProfile>,
             },
             {
                 path: "/parcel-tracking/:trackingId",
@@ -118,6 +126,16 @@ export const router = createBrowserRouter([
                     </PrivateRoute>
 
             },
+            {
+                path: "/cash-out-history",
+                element:
+                    <PrivateRoute>
+                        <RiderRoute>
+                            <CashOutHistory></CashOutHistory>
+                        </RiderRoute>
+                    </PrivateRoute>
+
+            },
             // {
             //     path: "/Accept-delivery-request",
             //     element: <AcceptDeliveryRequest></AcceptDeliveryRequest>
@@ -175,6 +193,7 @@ export const router = createBrowserRouter([
             },
         ]
     },
+    // only admin
     {
         path: 'dashboard',
         element: <PrivateRoute><AdminRoute>
@@ -198,6 +217,24 @@ export const router = createBrowserRouter([
                 path: "assign-rider",
                 element: <AdminRoute>
                     <AssignParcelsRiders></AssignParcelsRiders>
+                </AdminRoute>
+            },
+            {
+                path: "riders-cash-out",
+                element: <AdminRoute>
+                    <RidersCashOutHistory></RidersCashOutHistory>
+                </AdminRoute>
+            },
+            {
+                path: "all-payment-history",
+                element: <AdminRoute>
+                    <AllPaymentHistory></AllPaymentHistory>
+                </AdminRoute>
+            },
+            {
+                path: "user-profile",
+                element: <AdminRoute>
+                    <UserProfile></UserProfile>
                 </AdminRoute>
             },
         ]

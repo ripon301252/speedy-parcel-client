@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -61,8 +61,12 @@ const CompletedDeliveries = () => {
 
             const res = await axiosCompletedDelivery.post("/cash-out", {
                 riderEmail: user.email,
+                riderPhoto: user.photoURL,
+                riderName: user.displayName,
                 parcelId: parcel._id,
-                amount: payout
+                amount: payout,
+                riderDistrict: parcel.senderDistrict,
+                riderArea: parcel.senderArea
             });
 
             if (res.data.insertedId) {

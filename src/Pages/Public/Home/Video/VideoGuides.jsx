@@ -20,7 +20,7 @@ const VideoGuide = ({ toggle }) => {
             <div className="flex justify-center mb-8 gap-4">
                 <button
                     onClick={() => setActiveTab('user')}
-                    className={`px-6 py-2 rounded-full font-semibold transition ${activeTab === 'user'
+                    className={`px-6 py-2 rounded-lg font-semibold transition ${activeTab === 'user'
                             ? 'bg-green-500 text-white shadow-lg'
                             : 'bg-gray-200 text-gray-700'
                         }`}
@@ -30,7 +30,7 @@ const VideoGuide = ({ toggle }) => {
 
                 <button
                     onClick={() => setActiveTab('rider')}
-                    className={`px-6 py-2 rounded-full font-semibold transition ${activeTab === 'rider'
+                    className={`px-6 py-2 rounded-lg font-semibold transition ${activeTab === 'rider'
                             ? 'bg-green-500 text-white shadow-lg'
                             : 'bg-gray-200 text-gray-700'
                         }`}
@@ -74,7 +74,7 @@ const VideoGuide = ({ toggle }) => {
                 {activeTab === 'user' ? (
                     <>
                         <div className="p-4 bg-white text-gray-800 rounded-xl shadow">Create Account</div>
-                        <div className="p-4 bg-white text-gray-800 rounded-xl shadow">Place Order</div>
+                        <div className="p-4 bg-white text-gray-800 rounded-xl shadow">Send Parcel</div>
                         <div className="p-4 bg-white text-gray-800 rounded-xl shadow">Make Payment</div>
                         <div className="p-4 bg-white text-gray-800 rounded-xl shadow">Track Parcel</div>
                         <div className="p-4 bg-white text-gray-800 rounded-xl shadow">Give Review</div>

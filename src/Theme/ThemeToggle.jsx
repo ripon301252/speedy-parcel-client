@@ -52,7 +52,7 @@ import useTheme from "./useTheme";
 import { IoIosSunny } from "react-icons/io";
 import { LuSunMoon } from "react-icons/lu";
 
-export default function ThemeToggle() {
+ const ThemeToggle =  () => {
   const { theme, toggleTheme } = useTheme();
 
   return (
@@ -64,6 +64,8 @@ export default function ThemeToggle() {
     </button>
   );
 }
+
+export default ThemeToggle
 
 
 // =========================================================

@@ -71,7 +71,7 @@ const Login = () => {
                     <div>
                         <label className="label text-gray-800 font-semibold">Email</label>
                         <input type="email" name='email'
-                            className="input input-class"
+                            className="input input-class text-gray-800"
                             placeholder="Email" required />
                     </div>
 
@@ -83,7 +83,7 @@ const Login = () => {
                             <input
                                 type={showPassword ? "text" : "password"}
                                 name="password"
-                                className="input input-class"
+                                className="input input-class text-gray-800"
                                 placeholder="Password" required
                             />
 

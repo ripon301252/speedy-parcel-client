@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Outlet, useLocation } from "react-router";
-import { BadgeDollarSign, HandHelping, Motorbike, User, Users } from "lucide-react";
+import { BadgeDollarSign, Cuboid, HandHelping, Motorbike, User, Users } from "lucide-react";
 import useRole from "../Hooks/useRole";
 import { useAuth } from "../Hooks/useAuth";
 import Logo from "../Component/Logo";
@@ -9,6 +9,11 @@ import { HiOutlineCash } from "react-icons/hi";
 import ThemeToggle from "../Theme/ThemeToggle";
 
 const DashboardLayout = () => {
+  const activeClass = (path) =>
+  isActive(path)
+    ? "bg-green-100 text-green-600 font-semibold"
+    : "hover:bg-base-300";
+
   const { role } = useRole();
   const { user } = useAuth();
   const location = useLocation();
@@ -20,6 +25,7 @@ const DashboardLayout = () => {
     if (location.pathname.includes("riders-cash-out")) return "Riders Cash Out";
     if (location.pathname.includes("all-payment-history")) return "All Payment History";
     if (location.pathname.includes("user-profile")) return "User Profile";
+    if (location.pathname.includes("all-parcels")) return "All Parcels";
     return "Dashboard";
   };
 
@@ -132,7 +138,7 @@ const DashboardLayout = () => {
                 <Link
                   to="/"
                   onClick={closeDrawer}
-                  className="flex gap-2 items-center"
+                  className="flex gap-2 items-center hover:text-green-300"
                 >
                   <MdOutlineHome size={18} />
                   Home
@@ -146,9 +152,42 @@ const DashboardLayout = () => {
 
                   <li>
                     <Link
+                      to="/dashboard/user-profile"
+                      onClick={closeDrawer}
+                      className="flex gap-2 items-center hover:text-green-300"
+                    >
+                      <User size={18} />
+                      User Profile
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/dashboard/user-management"
+                      onClick={closeDrawer}
+                      className="flex gap-2 items-center hover:text-green-300"
+                    >
+                      <Users size={18} />
+                      User Management
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
+                      to="/dashboard/all-parcels"
+                      onClick={closeDrawer}
+                      className="flex gap-2 items-center hover:text-green-300"
+                    >
+                      <Cuboid size={18} /> 
+                      All parcels
+                    </Link>
+                  </li>
+
+                  <li>
+                    <Link
                       to="/dashboard/approve-rider"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center"
+                      className="flex gap-2 items-center hover:text-green-300"
                     >
                       <Motorbike size={18} />
                       Approve Riders
@@ -159,31 +198,22 @@ const DashboardLayout = () => {
                     <Link
                       to="/dashboard/assign-rider"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center"
+                      className="flex gap-2 items-center hover:text-green-300"
                     >
                       <HandHelping size={18} />
                       Assign Parcels
                     </Link>
                   </li>
 
-                  <li>
-                    <Link
-                      to="/dashboard/user-management"
-                      onClick={closeDrawer}
-                      className="flex gap-2 items-center"
-                    >
-                      <Users size={18} />
-                      User Management
-                    </Link>
-                  </li>
+
 
                   <li>
                     <Link
                       to="/dashboard/riders-cash-out"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center"
+                      className="flex gap-2 items-center hover:text-green-300"
                     >
-                      <HiOutlineCash size={18} /> 
+                      <HiOutlineCash size={18} />
                       Riders Cash Out
                     </Link>
                   </li>
@@ -191,28 +221,20 @@ const DashboardLayout = () => {
                     <Link
                       to="/dashboard/all-payment-history"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center"
+                      className="flex gap-2 items-center hover:text-green-300"
                     >
-                      <BadgeDollarSign size={18} />  
+                      <BadgeDollarSign size={18} />
                       All Payment History
                     </Link>
                   </li>
-                  <li>
-                    <Link
-                      to="/dashboard/user-profile"
-                      onClick={closeDrawer}
-                      className="flex gap-2 items-center"
-                    >
-                      <User size={18} />  
-                      User Profile
-                    </Link>
-                  </li>
+
+
                 </>
               )}
 
               {/* SETTINGS */}
               <li className="mt-6">
-                <button className="flex gap-2 items-center">
+                <button className="flex gap-2 items-center hover:text-green-300">
                   ⚙️ Settings
                 </button>
               </li>

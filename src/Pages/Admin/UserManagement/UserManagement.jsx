@@ -13,14 +13,20 @@ const UserManagement = () => {
     const [searchText, setSearchText] = useState('');
     const [role, setRole] = useState('')
     const axiosUserManagement = useAxiosSecure();
-    const { data: users = [], refetch } = useQuery({
-        queryKey: ["users", searchText, role],
+
+    const [page, setPage] = useState(1);
+    const limit = 10;
+
+    const { data, refetch } = useQuery({
+        queryKey: ["users", searchText, role, page],
         queryFn: async () => {
-            const res = await axiosUserManagement.get(`/users?searchText=${searchText}&role=${role}`)
+            const res = await axiosUserManagement.get(`/users?searchText=${searchText}&role=${role}&page=${page}&limit=${limit}`)
             return res.data;
         }
     })
 
+    const users = data?.data ?? [];
+    const total = data?.total ?? 0;
 
     const getRoleBadge = (role) => {
         switch (role) {
@@ -151,6 +157,7 @@ const UserManagement = () => {
             <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold'>Manage All Users</h1>
             {/* <h1 className='text-4xl font-bold'>User Control Panel</h1> */}
             <h1 className='text-sm sm:text-base text-green-500 font-bold mt-'>Total users ({users.length})</h1>
+            <h1 className='text-sm sm:text-base text-green-500 font-bold mt-'>All users ({total})</h1>
             {/* <p>search text : {searchText}</p> */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
                 {/* Search */}
@@ -174,14 +181,14 @@ const UserManagement = () => {
                 {/* Filter */}
                 <div className="w-full sm:w-1/3">
                     <select
-                        className="select select-bordered w-full input-class bg-white"
+                        className="select select-bordered w-full input-class bg-white "
                         value={role}
                         onChange={(e) => setRole(e.target.value)}
                     >
-                        <option className='bg-white' value="">All Roles</option>
-                        <option className='bg-white' value="admin">Admin</option>
-                        <option className='bg-white' value="rider">Rider</option>
-                        <option className='bg-white' value="user">User</option>
+                        <option className='bg-white text-gray-800' value="">All Roles</option>
+                        <option className='bg-white text-gray-800' value="admin">Admin</option>
+                        <option className='bg-white text-gray-800' value="rider">Rider</option>
+                        <option className='bg-white text-gray-800' value="user">User</option>
                     </select>
                 </div>
             </div>
@@ -302,6 +309,27 @@ const UserManagement = () => {
                     </tbody>
 
                 </table>
+                {/* pagination */}
+                <div className="flex justify-center gap-3 mt-4">
+                    <button
+                        onClick={() => setPage(page - 1)}
+                        disabled={page === 1}
+                        className="btn btn-sm"
+                    >
+                        Prev
+                    </button>
+
+                    <span className="px-3 py-1 border rounded">
+                        Page {page}
+                    </span>
+
+                    <button
+                        onClick={() => setPage(page + 1)}
+                        className="btn btn-sm"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
             {modalType === "view" && (
                 <ViewUser

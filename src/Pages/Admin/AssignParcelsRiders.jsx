@@ -8,15 +8,19 @@ const AssignParcelsRiders = () => {
     const axiosAssignRider = useAxiosSecure();
     const riderModalRef = useRef();
 
-    const { data: parcels = [], refetch: parcelsRefetch } = useQuery({
+    const { data, refetch : parcelsRefetch} = useQuery({
         queryKey: ["parcels", "pending-pickup"],
         queryFn: async () => {
-            const res = await axiosAssignRider.get('/parcels?deliveryStatus=pending-pickup')
+            const res = await axiosAssignRider.get('/parcels?deliveryStatus=pending-pickup');
             return res.data;
         }
-    })
+    });
 
-    const { data: riders = [], isLoading: ridersLoading } = useQuery({
+    const parcels = data?.data ?? []; // ✅ correct
+
+
+
+    const { data: ridersData , isLoading: ridersLoading } = useQuery({
         queryKey: ['riders', selectedParcel?.senderDistrict, selectedParcel?.senderArea, 'available'],
         enabled: !!selectedParcel,
         queryFn: async () => {
@@ -26,6 +30,10 @@ const AssignParcelsRiders = () => {
             return res.data;
         }
     })
+
+     const riders = ridersData?.data ?? [];
+
+
 
     const handleAssignRiderModal = (parcel) => {
         setSelectedParcel(parcel);
@@ -166,7 +174,7 @@ const AssignParcelsRiders = () => {
                                         </td>
 
                                         <td>
-                                            {rider.riderRegion}, {rider.riderDistrict}, {rider.riderArea}, 
+                                            {rider.riderRegion}, {rider.riderDistrict}, {rider.riderArea},
                                         </td>
 
                                         <td>

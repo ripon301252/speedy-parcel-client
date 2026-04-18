@@ -15,20 +15,42 @@ const AllPaymentHistory = () => {
     const axiosPaymentHistory = useAxiosSecure();
     const [modalType, setModalType] = useState(null)
     const [viewPaymentHistory, setViewPaymentHistory] = useState(null);
+    const [searchText, setSearchText] = useState('');
+    const [status, setStatus] = useState('');
     const [page, setPage] = useState(1);
     const limit = 10;
 
+    // const { data, refetch } = useQuery({
+    //     queryKey: ['paymentHistory', user?.email, page],
+    //     enabled: !!user?.email,
+    //     queryFn: async () => {
+    //         const url = `/payment-history?page=${page}&limit=${limit}`;
+    //         const res = await axiosPaymentHistory.get(url);
+    //         return res.data;
+    //     }
+    // });
+
+    // const { data, refetch } = useQuery({
+    //     queryKey: ['paymentHistory', user?.email, page, searchText, status],
+    //     enabled: !!user?.email,
+    //     queryFn: async () => {
+    //         const url = `/payment-history?searchText=${searchText}&deliveryStatus=${status}&page=${page}&limit=${limit}`;
+    //         const res = await axiosPaymentHistory.get(url);
+    //         return res.data;
+    //     }
+    // });
+
     const { data, refetch } = useQuery({
-        queryKey: ['paymentHistory', user?.email, page],
+        queryKey: ['paymentHistory', user?.email, page, searchText, status],
         enabled: !!user?.email,
         queryFn: async () => {
-            const url = `/payment-history?page=${page}&limit=${limit}`;
-            const res = await axiosPaymentHistory.get(url);
+            const res = await axiosPaymentHistory.get(
+                `/payment-history?searchText=${searchText}&deliveryStatus=${status}&page=${page}&limit=${limit}`
+            );
             return res.data;
         }
     });
 
-    // const payments = Array.isArray(data?.data) ? data.data : [];
 
     const payments = data?.data ?? [];
     console.log(payments)
@@ -80,11 +102,53 @@ const AllPaymentHistory = () => {
     return (
         <div className="p-2 md:p-6">
             <h1 className="text-xl md:text-3xl font-bold mb-4">
-  Payment History : {total}
-</h1>
+                Payment History : {total}
+            </h1>
             <h1 className="text-xl md:text-3xl font-bold mb-4">
                 Payment History : {payments.length}
             </h1>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
+                {/* Search */}
+                <div className="w-full sm:w-1/2">
+                    <label className="input w-full input-class">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input onChange={(e) => {
+                            setSearchText(e.target.value);
+                            setPage(1);
+                        }} type="search" required placeholder="Search" />
+                    </label>
+                </div>
+
+                {/* Filter */}
+                <div className="w-full sm:w-1/3">
+                    <select
+                        className="select select-bordered w-full sm:w-1/3 input-class"
+                        value={status}
+                        onChange={(e) => {
+                            setStatus(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        <option value="">All</option>
+                        <option value="paid">Paid</option>
+                        <option value="pending">Pending</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </div>
+            </div>
+
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
                 <table className="table w-full">
@@ -133,7 +197,11 @@ const AllPaymentHistory = () => {
                                 </td>
 
                                 <td>
-                                    <span className="text-green-500">
+                                    <span className={`px-2 py-1 rounded text-xs font-semibold
+                                        ${payment.paymentStatus === "paid" && "bg-green-100 text-green-600"}
+                                        ${payment.paymentStatus === "pending" && "bg-yellow-100 text-yellow-600"}
+                                        ${payment.paymentStatus === "failed" && "bg-red-100 text-red-600"}
+                                    `}>
                                         {payment.paymentStatus}
                                     </span>
                                 </td>

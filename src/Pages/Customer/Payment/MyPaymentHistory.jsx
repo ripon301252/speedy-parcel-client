@@ -25,46 +25,11 @@ const MyPaymentHistory = () => {
             return res.data;
         }
     })
-    
+
 
     const payments = data?.data ?? [];
+    const total = data?.total ?? 0;
 
-    const handlePaymentDelete = (id) => {
-        console.log("payment delete", id)
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosPaymentHistory.delete(`/payment-history/${id}`)
-                    .then(res => {
-                        if (res.data.deletedCount) {
-                            // refetch the data in the UI after deletion
-                            refetch();
-                            Swal.fire(
-                                "Deleted!",
-                                "Your parcel has been deleted.",
-                                "success"
-                            );
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err.message);
-                        Swal.fire(
-                            "Error!",
-                            "Failed to delete the parcel.",
-                            "error"
-                        );
-                    })
-            }
-        });
-
-    }
 
     const handleViewDetailsHistory = (payment) => {
         setViewPaymentHistory(payment);
@@ -77,6 +42,9 @@ const MyPaymentHistory = () => {
         <div className="p-2 md:p-6">
             <h1 className="text-xl md:text-3xl font-bold mb-4">
                 Payment History : {payments.length}
+            </h1>
+            <h1 className="text-xl md:text-3xl font-bold mb-4">
+                total History : {total}
             </h1>
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
@@ -156,7 +124,7 @@ const MyPaymentHistory = () => {
                         ))}
                     </tbody>
                 </table>
-                
+
                 {/* pagination */}
                 <div className="flex justify-center gap-3 mt-4">
                     <button

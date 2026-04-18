@@ -65,13 +65,13 @@ const Navbar = () => {
         </>
     );
 
-    // const adminLinks = (
-    //     <>
-    //         <NavLink to="/all-users" className={activeLinks}>Admin Dashboard</NavLink>
-    //         {/* <NavLink to="/all-parcels" className={activeLinks}>Parcels</NavLink>
-    //         <NavLink to="/all-payment-history" className={activeLinks}>Payments</NavLink> */}
-    //     </>
-    // );
+    const adminLinks = (
+        <>
+            <NavLink to="/dashboard" className={activeLinks}>Dashboard</NavLink>
+            <NavLink to="/all-parcels" className={activeLinks}>Chart</NavLink>
+            {/* <NavLink to="/all-payment-history" className={activeLinks}>Payments</NavLink> */}
+        </>
+    );
 
     if (isLoading) {
         return (
@@ -82,7 +82,7 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 border-b shadow-sm z-[9999]">
+        <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 border-b shadow-sm z-[999]">
             <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
 
                 {/* Logo */}
@@ -93,7 +93,7 @@ const Navbar = () => {
                     {!user && publicLinks}
                     {user && role === "user" && userLinks}
                     {user && role === "rider" && riderLinks}
-                    {/* {user && role === "admin" && adminLinks} */}
+                    {user && role === "admin" && adminLinks}
                 </div>
 
 
@@ -102,7 +102,7 @@ const Navbar = () => {
                 <div className="flex items-center gap-3">
                     {/* <NavLink to="/all-users" className="btn btn-xs btn-warning">Dashboard</NavLink> */}
 
-                    <NavLink to="/rider" className="btn btn-xs btn-warning hidden lg:inline-flex">Be a Rider</NavLink>
+                    <NavLink to="/rider" className="btn btn-sm rounded-lg bg-green-500 hover:bg-green-600 hidden lg:inline-flex">Be a Rider</NavLink>
 
                     <ThemeToggle />
 
@@ -150,6 +150,13 @@ const Navbar = () => {
                                         >
                                             Dashboard
                                         </Link>
+                                        <Link
+                                            to="/dashboard"
+                                            className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                                        >
+                                            Chart
+                                        </Link>
+                                        
 
                                         <button
                                             onClick={handleLogout}
@@ -190,11 +197,12 @@ const Navbar = () => {
 
 
                         <div className="border-t pt-3 space-y-2">
-                        <NavLink to="/rider" className="btn btn-sm w-full btn-warning ">Be a Rider</NavLink>
+                        <NavLink to="/rider" className="btn btn-sm w-full bg-green-500 ">Be a Rider</NavLink>
+                        <NavLink to="/all-parcels" className="btn btn-sm w-full bg-green-500">Chart</NavLink>
                             <Link
                                 to="/dashboard"
                                 onClick={() => setMenuOpen(false)}
-                                className="btn btn-sm w-full rounded-lg"
+                                className="btn btn-sm btn-warning w-full rounded-lg"
                             >
                                 Dashboard
                             </Link>

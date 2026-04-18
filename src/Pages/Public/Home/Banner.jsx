@@ -40,7 +40,7 @@ const Banner = () => {
 
             {/* Video */}
             <video
-              className="w-full h-[220px] sm:h-[320px] md:h-[450px] lg:h-[600px] object-cover"
+              className="w-full h-[120px] sm:h-[220px] md:h-[350px] lg:h-[500px] object-cover"
               autoPlay
               muted
               loop

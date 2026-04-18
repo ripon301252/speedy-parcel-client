@@ -34,6 +34,7 @@ import CashOutHistory from "../Pages/Rider/CashOutHistory";
 import RidersCashOutHistory from "../Pages/Admin/RidersCashoutHistory";
 import AllPaymentHistory from "../Pages/Admin/AllPaymentHistory";
 import UserProfile from "../Auth/UserProfile";
+import AllParcels from "../Pages/Admin/AllParcels";
 
 
 export const router = createBrowserRouter([
@@ -235,6 +236,12 @@ export const router = createBrowserRouter([
                 path: "user-profile",
                 element: <AdminRoute>
                     <UserProfile></UserProfile>
+                </AdminRoute>
+            },
+            {
+                path: "all-parcels",
+                element: <AdminRoute>
+                    <AllParcels></AllParcels>
                 </AdminRoute>
             },
         ]

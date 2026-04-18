@@ -4,8 +4,6 @@ import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 import { Eye, UserRoundPlus, UserRoundX } from 'lucide-react';
 import { IoTrashOutline } from "react-icons/io5";
-
-
 import ViewRider from '../../Rider/ViewRider';
 
 
@@ -15,13 +13,21 @@ const ApproveRider = () => {
     const [searchText, setSearchText] = useState('');
     const [status, setStatus] = useState('');
     const axiosApproveRider = useAxiosSecure();
-    const { data: riders = [], refetch } = useQuery({
-        queryKey: ['riders', 'pending', searchText, status],
+    const [page, setPage] = useState(1);
+    const limit = 10;
+
+    const { data, refetch } = useQuery({
+        queryKey: ['riders', 'pending', searchText, status, page],
         queryFn: async () => {
-            const res = await axiosApproveRider.get(`/riders?searchText=${searchText}&status=${status}`);
+            const res = await axiosApproveRider.get(`/riders?searchText=${searchText}&status=${status}&page=${page}&limit=${limit}`);
             return res.data;
         }
     })
+
+    const riders = data?.data || [];
+    // const parcels = data?.data ?? [];
+    console.log(riders)
+    const total = data?.total ?? 0;
 
     const handleRiderDelete = (id) => {
         console.log("Delete", id)
@@ -121,6 +127,7 @@ const ApproveRider = () => {
             <h1 className='text-3xl lg:text-4xl font-bold'>Manage All Riders</h1>
             {/* <h1 className='text-4xl font-bold'>Rider Control Panel</h1> */}
             <h1 className='text-sm sm:text-base text-green-500 font-bold mt-1'> ({riders.length}) Users Applied To Become Riders.</h1>
+            <h1 className='text-sm sm:text-base text-green-500 font-bold mt-1'> Total ({total})</h1>
             {/* <p>search text : {searchText}</p> */}
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
@@ -160,10 +167,10 @@ const ApproveRider = () => {
                         value={status}
                         onChange={(e) => setStatus(e.target.value)}
                     >
-                        <option className='bg-white' value="">All Status</option>
-                        <option className='bg-white' value="pending">Pending</option>
-                        <option className='bg-white' value="approved">Approved</option>
-                        <option className='bg-white' value="rejected">Rejected</option>
+                        <option className='bg-white text-gray-800' value="">All Status</option>
+                        <option className='bg-white text-gray-800' value="pending">Pending</option>
+                        <option className='bg-white text-gray-800' value="approved">Approved</option>
+                        <option className='bg-white text-gray-800' value="rejected">Rejected</option>
                     </select>
                 </div>
             </div>
@@ -234,7 +241,7 @@ const ApproveRider = () => {
                                                 // ${rider.workStatus === "busy" && "bg-red-500"}
                                             `}
                                         >
-                                        {rider.workStatus}
+                                        {rider.workStatus || "N/A"}
                                     </span>
                                 </td>
 
@@ -311,9 +318,31 @@ const ApproveRider = () => {
                             </tr>)
                         }
                     </tbody>
-
                 </table>
+                 {/* pagination */}
+                <div className="flex justify-center gap-3 mt-4">
+                    <button
+                        onClick={() => setPage(page - 1)}
+                        disabled={page === 1}
+                        className="btn btn-sm"
+                    >
+                        Prev
+                    </button>
+
+                    <span className="px-3 py-1 border rounded">
+                        Page {page}
+                    </span>
+
+                    <button
+                        onClick={() => setPage(page + 1)}
+                        className="btn btn-sm"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
+
+            
 
             {modalType === "view" && (
                 <ViewRider
@@ -323,6 +352,8 @@ const ApproveRider = () => {
                     }}
                 />
             )}
+
+            
 
         </div>
     );

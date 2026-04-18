@@ -1,18 +1,15 @@
+import React, { useEffect, useState } from 'react';
+import { useAuth } from '../../Hooks/useAuth';
+import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
-import { useAuth } from '../../../Hooks/useAuth';
-import useAxiosSecure from '../../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
-import ModalOTP from '../Payment/ModalOTP';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router';
-import ViewDetails from './ViewDetails';
 import { Eye, Send } from 'lucide-react';
-import { IoTrashOutline } from "react-icons/io5";
+import { IoTrashOutline } from 'react-icons/io5';
+import ViewDetails from '../Customer/MyParcel/ViewDetails';
 
-
-
-const MyParcelsAndPayment = () => {
+const AllParcels = () => {
     const { user } = useAuth();
     // console.log(user)
     const axiosMyParcels = useAxiosSecure()
@@ -21,23 +18,30 @@ const MyParcelsAndPayment = () => {
     const [modalType, setModalType] = useState(null)
     const [selectedParcel, setSelectedParcel] = useState(null);
     const [viewParcel, setViewParcel] = useState(null);
+    const [searchText, setSearchText] = useState('');
+    const [status, setStatus] = useState('');
 
     const [page, setPage] = useState(1);
     const limit = 10;
 
     const { data, refetch } = useQuery({
-        queryKey: ['myParcels', user?.email, page],
+        queryKey: ['myParcels', user?.email, searchText, status, page],
         queryFn: async () => {
-            const url = `/parcels?email=${user.email}&page=${page}&limit=${limit}`
+            const url = `/parcels?page=${page}&limit=${limit}&searchText=${searchText}&deliveryStatus=${status}`
             const res = await axiosMyParcels.get(url)
             return res.data;
         }
     })
 
+
     const parcels = data?.data || [];
     // const parcels = data?.data ?? [];
     console.log(parcels)
     const total = data?.total ?? 0;
+
+    useEffect(() => {
+        setPage(1);
+    }, [searchText, status]);
 
     const handleParcelDelete = (id) => {
         console.log("delete parcel with id:", id);
@@ -76,7 +80,7 @@ const MyParcelsAndPayment = () => {
     }
 
 
-   
+
 
 
     const handlePayment = async (parcel) => {
@@ -110,7 +114,7 @@ const MyParcelsAndPayment = () => {
     };
 
 
-    
+
 
     const handleOtpVerify = async (enteredOtp) => {
         try {
@@ -146,6 +150,17 @@ const MyParcelsAndPayment = () => {
         }
     };
 
+    const statusOptions = [
+        { label: "All Status", value: "" },
+        { label: "Pending Pickup", value: "pending-pickup" },
+        { label: "Driver Assigned", value: "driver_assigned" },
+        { label: "Rider Accepted", value: "rider_accepted" },
+        { label: "Rider Rejected", value: "rider_rejected" },
+        { label: "Parcel Picked Up", value: "parcel_picked_up" },
+        { label: "Parcel Delivered", value: "parcel_delivered" },
+        { label: "Payment Pending", value: "payment-pending" },
+    ];
+
     const handleViewDetails = (parcel) => {
         setViewParcel(parcel);
         setModalType("view");
@@ -159,6 +174,49 @@ const MyParcelsAndPayment = () => {
             <h1 className="text-lg md:text-2xl font-bold mb-4">
                 total parcels : {total}
             </h1>
+
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
+                {/* Search */}
+                <div className="w-full sm:w-1/2">
+                    <label className="input w-full input-class">
+                        <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+                            <g
+                                strokeLinejoin="round"
+                                strokeLinecap="round"
+                                strokeWidth="2.5"
+                                fill="none"
+                                stroke="currentColor"
+                            >
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <path d="m21 21-4.3-4.3"></path>
+                            </g>
+                        </svg>
+                        <input onChange={(e) => setSearchText(e.target.value)} type="search" required placeholder="Search" />
+                    </label>
+                </div>
+
+                {/* Filter */}
+                <div className="w-full sm:w-1/3">
+                    <select
+                        className="select select-bordered w-full input-class bg-white"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+
+                    >
+                        {statusOptions.map((opt) => (
+                            <option
+                                key={opt.value}
+                                value={opt.value}
+                                className="bg-white text-gray-800"
+                            >
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
+                </div>
+            </div>
+
+
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
                 <table className="table w-full">
@@ -263,7 +321,7 @@ const MyParcelsAndPayment = () => {
                                         </Link>
                                     </div>
 
-                                    {/* <div className="relative overflow-visible tooltip tooltip-bottom "
+                                    <div className="relative overflow-visible tooltip tooltip-bottom "
                                         data-tip="Remove">
                                         <button
                                             onClick={() => handleParcelDelete(parcel._id)}
@@ -271,7 +329,7 @@ const MyParcelsAndPayment = () => {
                                         >
                                             <IoTrashOutline className="text-lg" />
                                         </button>
-                                    </div> */}
+                                    </div>
                                 </td>
                             </tr>
                         ))}
@@ -341,12 +399,12 @@ const MyParcelsAndPayment = () => {
                                 View
                             </button>
                             <Link to={`/send-parcel`} className="btn btn-xs btn-secondary">Send</Link>
-                            {/* <button
+                            <button
                                 onClick={() => handleParcelDelete(parcel._id)}
                                 className="btn btn-xs btn-error"
                             >
                                 Delete
-                            </button> */}
+                            </button>
                         </div>
                     </div>
                 ))}
@@ -373,8 +431,6 @@ const MyParcelsAndPayment = () => {
             )}
         </div>
     );
-
-
 };
 
-export default MyParcelsAndPayment;
+export default AllParcels;

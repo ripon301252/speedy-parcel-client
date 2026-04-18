@@ -21,62 +21,36 @@ const MyParcelsAndPayment = () => {
     const [modalType, setModalType] = useState(null)
     const [selectedParcel, setSelectedParcel] = useState(null);
     const [viewParcel, setViewParcel] = useState(null);
+    const [status, setStatus] = useState();
 
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    const { data, refetch } = useQuery({
-        queryKey: ['myParcels', user?.email, page],
+    const { data } = useQuery({
+        queryKey: ['myParcels', user?.email, status, page],
+        enabled: !!user?.email,
         queryFn: async () => {
-            const url = `/parcels?email=${user.email}&page=${page}&limit=${limit}`
-            const res = await axiosMyParcels.get(url)
+            const url = `/parcels?email=${user?.email}&page=${page}&limit=${limit}&deliveryStatus=${status || ""}`;
+            const res = await axiosMyParcels.get(url);
             return res.data;
         }
-    })
+    });
 
     const parcels = data?.data || [];
     // const parcels = data?.data ?? [];
     console.log(parcels)
     const total = data?.total ?? 0;
 
-    const handleParcelDelete = (id) => {
-        console.log("delete parcel with id:", id);
-        Swal.fire({
-            title: "Are you sure?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-        }).then((result) => {
-            if (result.isConfirmed) {
-                axiosMyParcels.delete(`/parcels/${id}`)
-                    .then(res => {
-                        if (res.data.deletedCount) {
-                            // refetch the data in the UI after deletion
-                            refetch();
-                            Swal.fire(
-                                "Deleted!",
-                                "Your parcel has been deleted.",
-                                "success"
-                            );
-                        }
-                    })
-                    .catch(err => {
-                        console.log(err.message);
-                        Swal.fire(
-                            "Error!",
-                            "Failed to delete the parcel.",
-                            "error"
-                        );
-                    })
-            }
-        });
-    }
-
-
-   
+    const statusOptions = [
+        { label: "All Status", value: "" },
+        { label: "Pending Pickup", value: "pending-pickup" },
+        { label: "Driver Assigned", value: "driver_assigned" },
+        { label: "Rider Accepted", value: "rider_accepted" },
+        { label: "Rider Rejected", value: "rider_rejected" },
+        { label: "Parcel Picked Up", value: "parcel_picked_up" },
+        { label: "Parcel Delivered", value: "parcel_delivered" },
+        { label: "Payment Pending", value: "payment-pending" },
+    ];
 
 
     const handlePayment = async (parcel) => {
@@ -110,7 +84,7 @@ const MyParcelsAndPayment = () => {
     };
 
 
-    
+
 
     const handleOtpVerify = async (enteredOtp) => {
         try {
@@ -159,6 +133,27 @@ const MyParcelsAndPayment = () => {
             <h1 className="text-lg md:text-2xl font-bold mb-4">
                 total parcels : {total}
             </h1>
+
+            {/* Filter */}
+            <div className="w-full sm:w-1/3">
+                <select
+                    className="select select-bordered w-full input-class bg-white"
+                    value={status}
+                    onChange={(e) => setStatus(e.target.value)}
+
+                >
+                    {statusOptions.map((opt) => (
+                        <option
+                            key={opt.value}
+                            value={opt.value}
+                            className="bg-white text-gray-800"
+                        >
+                            {opt.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
                 <table className="table w-full">

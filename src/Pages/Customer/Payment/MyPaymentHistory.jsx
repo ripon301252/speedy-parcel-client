@@ -15,13 +15,14 @@ const MyPaymentHistory = () => {
     const axiosPaymentHistory = useAxiosSecure();
     const [modalType, setModalType] = useState(null)
     const [viewPaymentHistory, setViewPaymentHistory] = useState(null);
+     const [status, setStatus] = useState('');
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    const { data, refetch } = useQuery({
-        queryKey: ['paymentHistory', user?.email, page],
+    const { data } = useQuery({
+        queryKey: ['paymentHistory', user?.email, page, status],
         queryFn: async () => {
-            const res = await axiosPaymentHistory.get(`/payment-history?email=${user?.email}&page=${page}&limit=${limit}`);
+            const res = await axiosPaymentHistory.get(`/payment-history?email=${user?.email}&page=${page}&limit=${limit}&deliveryStatus=${status}`);
             return res.data;
         }
     })
@@ -46,6 +47,24 @@ const MyPaymentHistory = () => {
             <h1 className="text-xl md:text-3xl font-bold mb-4">
                 total History : {total}
             </h1>
+
+            {/* Filter */}
+                <div className="w-full sm:w-1/3">
+                    <select
+                        className="select select-bordered w-full sm:w-1/3 input-class"
+                        value={status}
+                        onChange={(e) => {
+                            setStatus(e.target.value);
+                            setPage(1);
+                        }}
+                    >
+                        <option value="">All</option>
+                        <option value="paid">Paid</option>
+                        <option value="pending">Pending</option>
+                        <option value="failed">Failed</option>
+                    </select>
+                </div>
+
             {/* Desktop Table */}
             <div className="hidden md:block overflow-x-auto">
                 <table className="table w-full">

@@ -53,7 +53,7 @@ const AssignParcelsRiders = () => {
             // parcelName: selectedParcel.parcelName,
             // senderEmail: selectedParcel.senderEmail,
         }
-        await axiosAssignRider.patch(`/parcels/${selectedParcel._id}`, riderAssignInfo)
+        await axiosAssignRider.patch(`/parcels/${selectedParcel._id}/assign`, riderAssignInfo)
             .then(res => {
                 if (res.data.modifiedCount) {
                     riderModalRef.current.close()

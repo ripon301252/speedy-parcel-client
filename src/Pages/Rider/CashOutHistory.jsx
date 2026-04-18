@@ -7,19 +7,20 @@ import { IoTrashOutline } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 
 const CashOutHistory = () => {
-     const [selectedCashOut, setSelectedCashOut] = useState(null);
+    const [selectedCashOut, setSelectedCashOut] = useState(null);
     const { user } = useAuth();
     console.log(user)
     const axiosCashOut = useAxiosSecure();
+    const [status, setStatus] = useState('');
     const cashOutModalRef = useRef();
 
     const [page, setPage] = useState(1);
     const limit = 10;
 
     const { data, refetch } = useQuery({
-        queryKey: ['cashOuts', user?.email, page],
+        queryKey: ['cashOuts', user?.email, status, page],
         queryFn: async () => {
-            const url = `/cash-out?email=${user?.email}&page=${page}&limit=${limit}`
+            const url = `/cash-out?email=${user?.email}&status=${status}&page=${page}&limit=${limit}`
             const res = await axiosCashOut.get(url)
             console.log(res)
             return (await res).data;
@@ -76,6 +77,19 @@ const CashOutHistory = () => {
                 <h1 className="text-xl md:text-3xl font-bold mb-4">
                     Total cashOut History : {total}
                 </h1>
+                {/* Filter */}
+                <div className="w-full sm:w-1/3">
+                    <select
+                        className="select select-bordered w-full input-class"
+                        value={status}
+                        onChange={(e) => setStatus(e.target.value)}
+                    >
+                        <option className='bg-white text-gray-800' value="">All Status</option>
+                        <option className='bg-white text-gray-800' value="pending">Pending</option>
+                        <option className='bg-white text-gray-800' value="approved">Approved</option>
+                        <option className='bg-white text-gray-800' value="rejected">Rejected</option>
+                    </select>
+                </div>
                 {/* Desktop Table */}
                 <div className="hidden md:block overflow-x-auto">
                     <table className="table w-full">

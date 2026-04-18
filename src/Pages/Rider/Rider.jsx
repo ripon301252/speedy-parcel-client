@@ -41,19 +41,22 @@ const Rider = () => {
             .then(res => {
                 if (res.data.insertedId) {
                     Swal.fire({
-                        position: "top-center",
                         icon: "success",
-                        title: "Your application has been submitted. we will reach to you in 20 days",
-                        showConfirmButton: false,
-                        timer: 3500
+                        title: "Application submitted",
                     });
                 }
             })
+            .catch(err => {
+                Swal.fire({
+                    icon: "error",
+                    title: err.response?.data?.message || "Something went wrong"
+                });
+            });
     }
 
     return (
         <div>
-            
+
             <form onSubmit={handleSubmit(handleRiderApplication)} className=' max-w-7xl mx-auto'>
                 {/* two column */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>

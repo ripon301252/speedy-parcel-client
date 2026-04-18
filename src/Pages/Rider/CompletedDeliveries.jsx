@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { } from 'react';
 import { useAuth } from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -7,13 +7,31 @@ import Swal from 'sweetalert2';
 const CompletedDeliveries = () => {
     const { user } = useAuth();
     const axiosCompletedDelivery = useAxiosSecure();
+
+
+
     const { data: parcels = [], refetch } = useQuery({
-        queryKey: ['parcels', user.email, 'driver_assigned'],
+        // queryKey: ['parcels', user.email, 'driver_assigned'],
+        queryKey: ['parcels', user.email, 'parcel_delivered'],
         queryFn: async () => {
             const res = await axiosCompletedDelivery.get(`/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel_delivered`,)
             return res.data;
         }
     })
+
+    const { data: cashOuts = [], refetch: refetchCashOuts } = useQuery({
+        queryKey: ['cashOuts'],
+        queryFn: async () => {
+            const res = await axiosCompletedDelivery.get(`/cash-out`);
+            return res.data.data;
+        }
+    });
+
+    const getCashOutByParcel = (parcelId) => {
+        return cashOuts.find(c => c.parcelId === parcelId);
+    };
+
+
 
     const calculatePayout = (parcel) => {
         let percentage = 0;
@@ -36,24 +54,7 @@ const CompletedDeliveries = () => {
         return payout;
     };
 
-    // const handleCashOut = async (parcel) => {
-    //     try {
-    //         const payout = calculatePayout(parcel);
-
-    //         const res = await axiosCompletedDelivery.post("/cash-out", {
-    //             riderEmail: user.email,
-    //             parcelId: parcel._id,
-    //             amount: payout
-    //         });
-
-    //         if (res.data.insertedId) {
-    //             alert("Cash-out request sent!");
-    //             refetch();
-    //         }
-    //     } catch (err) {
-    //         console.log(err);
-    //     }
-    // };
+ 
 
     const handleCashOut = async (parcel) => {
         try {
@@ -70,6 +71,7 @@ const CompletedDeliveries = () => {
             });
 
             if (res.data.insertedId) {
+                await refetchCashOuts(); 
                 Swal.fire({
                     icon: "success",
                     title: "Cash-out Request Sent!",
@@ -90,6 +92,8 @@ const CompletedDeliveries = () => {
             });
         }
     };
+
+   
 
     return (
         <div>
@@ -147,12 +151,20 @@ const CompletedDeliveries = () => {
                             <td>{calculatePayout(parcel)} Tk</td>
 
                             <td>
-                                <button
-                                    onClick={() => handleCashOut(parcel)}
-                                    className='btn btn-sm btn-success'
-                                >
-                                    Cash Out
-                                </button>
+                                {
+                                    getCashOutByParcel(parcel._id) ? (
+                                        <span className="text-green-600 font-semibold">
+                                            Cash Out Applied
+                                        </span>
+                                    ) : (
+                                        <button
+                                            onClick={() => handleCashOut(parcel)}
+                                            className="btn btn-sm btn-success"
+                                        >
+                                            Cash Out
+                                        </button>
+                                    )
+                                }
                             </td>
                         </tr>)
                         }

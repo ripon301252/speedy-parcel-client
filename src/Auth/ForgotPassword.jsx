@@ -31,10 +31,11 @@ const ForgotPassword = () => {
     };
 
     return (
-        <div className='flex justify-center items-center gap-12 min-h-screen px-4 py-6'>
+        <div className='flex lg:flex-row flex-col justify-center items-center gap-12 min-h-screen px-4 py-6'>
             <title>SpeedyParcel - Reset Password</title>
             <div>
-                <Lottie style={{ width: "360px" }}
+                <Lottie
+                    className="w-full max-w-[520px] mx-auto"
                     animationData={loginLottie}
                     loop={true}>
                 </Lottie>
@@ -76,7 +77,7 @@ const ForgotPassword = () => {
 
 
             </div>
-            
+
         </div>
     );
 };

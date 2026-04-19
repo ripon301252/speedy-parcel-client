@@ -15,7 +15,7 @@ const MyPaymentHistory = () => {
     const axiosPaymentHistory = useAxiosSecure();
     const [modalType, setModalType] = useState(null)
     const [viewPaymentHistory, setViewPaymentHistory] = useState(null);
-     const [status, setStatus] = useState('');
+    const [status, setStatus] = useState('');
     const [page, setPage] = useState(1);
     const limit = 10;
 
@@ -40,39 +40,39 @@ const MyPaymentHistory = () => {
 
 
     return (
-        <div className="p-2 md:p-6">
+        <div className="p-2 md:p-6 space-y-4">
             <h1 className="text-xl md:text-3xl font-bold mb-4">
                 Payment History : {payments.length}
             </h1>
-            <h1 className="text-xl md:text-3xl font-bold mb-4">
-                total History : {total}
+            <h1 className="text-xl opacity-20 font-bold mb-4">
+                Total Records : {total}
             </h1>
 
             {/* Filter */}
-                <div className="w-full sm:w-1/3">
-                    <select
-                        className="select select-bordered w-full sm:w-1/3 input-class"
-                        value={status}
-                        onChange={(e) => {
-                            setStatus(e.target.value);
-                            setPage(1);
-                        }}
-                    >
-                        <option value="">All</option>
-                        <option value="paid">Paid</option>
-                        <option value="pending">Pending</option>
-                        <option value="failed">Failed</option>
-                    </select>
-                </div>
+            <div className="w-full sm:w-1/3 mb-6">
+                <label className="text-sm font-semibold mb-1 block">Filter by Status</label>
+                <select
+                    className="select select-bordered w-full input-class"
+                    value={status}
+                    onChange={(e) => {
+                        setStatus(e.target.value);
+                        setPage(1);
+                    }}
+                >
+                    <option value="">All</option>
+                    <option value="paid">Paid</option>
+                    <option value="pending">Pending</option>
+                    <option value="failed">Failed</option>
+                </select>
+            </div>
 
             {/* Desktop Table */}
-            <div className="hidden md:block overflow-x-auto">
+            <div className="hidden md:block overflow-x-auto mt-4">
                 <table className="table w-full">
                     <thead>
                         <tr>
                             <th>#</th>
                             <th>Sender</th>
-                            {/* <th>Email</th> */}
                             <th>Parcel</th>
                             <th>Amount</th>
                             <th>Transaction</th>
@@ -102,8 +102,6 @@ const MyPaymentHistory = () => {
                                         </div>
                                     </div>
                                 </td>
-
-                                {/* <td>{payment.customerEmail}</td> */}
                                 <td>{payment.parcelName}</td>
                                 <td>{payment.amount} Tk</td>
                                 <td className="text-xs">{payment.transactionId}</td>
@@ -132,11 +130,6 @@ const MyPaymentHistory = () => {
                                             className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800">
                                             <Eye className='text-xs' />
                                         </button>
-                                        {/* <button
-                                            onClick={() => handlePaymentDelete(payment._id)}
-                                            className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-gray-800">
-                                            <IoTrashOutline className='text-lg' />
-                                        </button> */}
                                     </div>
                                 </td>
                             </tr>
@@ -227,12 +220,6 @@ const MyPaymentHistory = () => {
                                 className="btn btn-xs btn-primary">
                                 View
                             </button>
-                            {/* <button
-                                onClick={() => handlePaymentDelete(payment._id)}
-                                className="btn btn-xs btn-error"
-                            >
-                                Delete
-                            </button> */}
                         </div>
                     </div>
                 ))}

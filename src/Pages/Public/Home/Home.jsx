@@ -65,10 +65,10 @@ const Home = () => {
                     : <VideoGuides toggle={() => setShowVideo(true)} />
                 }
 
-                {/* {showReview
+                {showReview
                     ? <Reviews1 toggle={() => setShowReview(false)} />
                     : <Reviews2 reviewPromise={reviewPromise} toggle={() => setShowReview(true)} />
-                } */}
+                }
             </div>
 
             <FAQ />

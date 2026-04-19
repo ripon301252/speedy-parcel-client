@@ -81,7 +81,7 @@ const Register = () => {
 
                 const image_hosting_url = `${import.meta.env.VITE_img_url}=${import.meta.env.VITE_image_host_key}`;
                 const res = await axiosPublic.post(
-                    image_hosting_url ,
+                    image_hosting_url,
                     formData
                 );
 
@@ -142,14 +142,14 @@ const Register = () => {
 
 
     return (
-        <div className='flex justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
+        <div className='flex lg:flex-row flex-col justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
 
             {/* Lottie */}
             <div className="flex-1 text-center">
                 <Lottie
-                    style={{ width: "520px" }}
                     animationData={loginLottie}
                     loop={true}
+                    className="w-full max-w-[520px] mx-auto"
                 />
             </div>
 
@@ -168,12 +168,12 @@ const Register = () => {
                     <div className='flex justify-center'>
                         {preview && (
                             <>
-                            <div className='flex flex-col'>
-                                <div>
-                                    <img src={preview} className="w-20 h-20 bg-white border border-gray-300 p-2 shadow-2xl rounded-full mt-2" />
+                                <div className='flex flex-col'>
+                                    <div>
+                                        <img src={preview} className="w-20 h-20 bg-white border border-gray-300 p-2 shadow-2xl rounded-full mt-2" />
+                                    </div>
+                                    {/* <p className="text-sm text-gray-700">{image.name} ({(image.size / 1024).toFixed(2)} KB)</p> */}
                                 </div>
-                                {/* <p className="text-sm text-gray-700">{image.name} ({(image.size / 1024).toFixed(2)} KB)</p> */}
-                            </div>
 
                             </>
                         )}

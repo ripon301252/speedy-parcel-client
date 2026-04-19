@@ -53,7 +53,7 @@ const Login = () => {
     };
 
     return (
-        <div className='flex justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
+        <div className='flex lg:flex-row flex-col-reverse justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
 
             <div className='flex-1 flex flex-col justify-center bg-white p-10 rounded-2xl shadow-xl border border-gray-200'>
 
@@ -149,7 +149,7 @@ const Login = () => {
             {/* Lottie */}
             <div className="flex-1 text-center">
                 <Lottie
-                    style={{ width: "520px" }}
+                    className="w-full max-w-[520px] mx-auto"
                     animationData={loginLottie}
                     loop={true}
                 />

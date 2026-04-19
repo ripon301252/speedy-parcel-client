@@ -83,9 +83,6 @@ const MyParcelsAndPayment = () => {
         }
     };
 
-
-
-
     const handleOtpVerify = async (enteredOtp) => {
         try {
             const res = await axiosMyParcels.post("/verify-otp", {
@@ -127,11 +124,12 @@ const MyParcelsAndPayment = () => {
 
     return (
         <div className="p-2 md:p-6">
-            <h1 className="text-lg md:text-2xl font-bold mb-4">
-                All of my parcels : {parcels.length}
+            <h1 className="text-lg md:text-3xl font-bold mb-4">
+                {/* My Parcels : {parcels.length} */}
+                My Parcels
             </h1>
-            <h1 className="text-lg md:text-2xl font-bold mb-4">
-                total parcels : {total}
+            <h1 className="text-lg md:text-lg opacity-20 font-bold mb-4">
+                Total Records : {total}
             </h1>
 
             {/* Filter */}
@@ -257,16 +255,6 @@ const MyParcelsAndPayment = () => {
                                             <Send className="text-xs" />
                                         </Link>
                                     </div>
-
-                                    {/* <div className="relative overflow-visible tooltip tooltip-bottom "
-                                        data-tip="Remove">
-                                        <button
-                                            onClick={() => handleParcelDelete(parcel._id)}
-                                            className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-black"
-                                        >
-                                            <IoTrashOutline className="text-lg" />
-                                        </button>
-                                    </div> */}
                                 </td>
                             </tr>
                         ))}

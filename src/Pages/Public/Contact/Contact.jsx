@@ -1,56 +1,69 @@
-import React from 'react';
+import React, { useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { toast } from "react-toastify";
 
 const Contact = () => {
+  const formRef = useRef();
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    emailjs
+      .sendForm(
+        "service_ismpp5l",  
+        "template_d6w3243", 
+        formRef.current,
+        "5VmMzxI_WOZfotIti"
+      )
+      .then(
+        () => {
+          toast.success("Message sent successfully ✅");
+          e.target.reset();
+        },
+        (error) => {
+          toast.error("Failed to send ❌");
+          console.log(error);
+        }
+      );
+  };
+
   return (
-    <div className="min-h-screen  flex flex-col items-center p-6">
-      <h1 className="text-4xl font-bold text-green-600 mb-6">Contact Us</h1>
-      <p className="text-gray-700 text-center max-w-2xl mb-10">
-        Have questions or need help with your delivery? Fill out the form below 
-        or reach out to our support team, and we’ll get back to you as soon as possible.
-      </p>
+    <div className="min-h-screen flex flex-col items-center p-6">
+      <h1 className="text-4xl font-bold text-green-600 mb-6">
+        Contact Us
+      </h1>
 
-      <div className=" shadow-lg rounded-lg p-8 max-w-2xl w-full">
-        <form className="flex flex-col gap-6">
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">Name</label>
-            <input 
-              type="text" 
-              placeholder="Your Name" 
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-400 focus:outline-none"
-            />
-          </div>
+      <div className="shadow-lg rounded-lg p-8 max-w-2xl w-full">
+        <form ref={formRef} onSubmit={handleSubmit} className="flex flex-col gap-6">
+          
+          <input
+            type="text"
+            name="user_name"
+            placeholder="Your Name"
+            className="w-full border p-3 rounded-lg"
+            required
+          />
 
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">Email</label>
-            <input 
-              type="email" 
-              placeholder="Your Email" 
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-400 focus:outline-none"
-            />
-          </div>
+          <input
+            type="email"
+            name="user_email"
+            placeholder="Your Email"
+            className="w-full border p-3 rounded-lg"
+            required
+          />
 
-          <div>
-            <label className="block text-gray-700 font-semibold mb-2">Message</label>
-            <textarea 
-              rows="5" 
-              placeholder="Your Message" 
-              className="w-full border border-gray-300 rounded-lg p-3 focus:ring-2 focus:ring-green-400 focus:outline-none"
-            ></textarea>
-          </div>
+          <textarea
+            name="message"
+            rows="5"
+            placeholder="Your Message"
+            className="w-full border p-3 rounded-lg"
+            required
+          ></textarea>
 
-          <button 
-            type="submit" 
-            className="bg-green-500 hover:bg-green-600 text-white font-bold py-3 rounded-lg transition"
-          >
+          <button className="bg-green-500 text-white py-3 rounded-lg">
             Send Message
           </button>
         </form>
-
-        <div className="mt-10 text-gray-700">
-          <p className="mb-2"><strong>Phone:</strong> +880 1234 567890</p>
-          <p className="mb-2"><strong>Email:</strong> support@speedyparcel.com</p>
-          <p><strong>Address:</strong> 123 Speedy St, Dhaka, Bangladesh</p>
-        </div>
       </div>
     </div>
   );

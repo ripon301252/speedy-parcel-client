@@ -1,6 +1,7 @@
 import React from "react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Link } from "react-router";
 
 const Banner = () => {
   const slides = [
@@ -67,13 +68,13 @@ const Banner = () => {
 
                 {/* Buttons */}
                 <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
-                  <button className="px-5 py-2 sm:px-8 sm:py-3 bg-green-500 hover:bg-green-600 transition rounded-full font-semibold text-sm sm:text-base">
-                    Get Started
-                  </button>
+                  <Link to={`/contact`} className="px-5 py-2 sm:px-8 sm:py-3 bg-green-500 hover:bg-green-600 transition rounded-full font-semibold text-sm sm:text-base">
+                    Contact
+                  </Link>
 
-                  <button className="px-5 py-2 sm:px-8 sm:py-3 border border-white text-white hover:bg-white hover:text-black transition rounded-full font-semibold text-sm sm:text-base">
+                  <Link to={'/about'} className="px-5 py-2 sm:px-8 sm:py-3 border border-white text-white hover:bg-white hover:text-black transition rounded-full font-semibold text-sm sm:text-base">
                     Learn More
-                  </button>
+                  </Link>
                 </div>
 
               </div>

@@ -1,5 +1,7 @@
+import { Motorbike } from "lucide-react";
 import React from "react";
 import { FaArrowRight } from "react-icons/fa6";
+import { Link } from "react-router";
 
 const FAQ = () => {
   return (
@@ -69,10 +71,11 @@ const FAQ = () => {
       </div>
 
       <div className="flex justify-center items-center my-10">
-        <a className="btn btn-outline text-green-500 hover:bg-green-500 hover:text-gray-800 rounded-lg">
+        <Link to={`/rider`} className="btn btn-outline text-green-500 hover:bg-green-500 hover:text-gray-800 rounded-lg">
+          <Motorbike size={18} />
           Be a Rider
           <FaArrowRight className=" p-1 text-2xl  rounded-full -rotate-45 cursor-pointer " />
-        </a>
+        </Link>
         
       </div>
     </div>

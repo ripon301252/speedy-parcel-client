@@ -1,21 +1,24 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
-import { BadgeDollarSign, Cuboid, HandHelping, Motorbike, User, Users } from "lucide-react";
+import { BadgeDollarSign, Cuboid, HandHelping, LogOut, Motorbike, User, Users } from "lucide-react";
 import useRole from "../Hooks/useRole";
 import { useAuth } from "../Hooks/useAuth";
 import Logo from "../Component/Logo";
 import { MdOutlineHome } from "react-icons/md";
 import { HiOutlineCash } from "react-icons/hi";
 import ThemeToggle from "../Theme/ThemeToggle";
+import { toast } from "react-toastify";
 
 const DashboardLayout = () => {
-  const activeClass = (path) =>
-  isActive(path)
-    ? "bg-green-100 text-green-600 font-semibold"
-    : "hover:bg-base-300";
+  // const activeClass = (path) =>
+  // isActive(path)
+  //   ? "bg-green-100 text-green-600 font-semibold"
+  //   : "hover:bg-base-300";
+  const [avatarOpen, setAvatarOpen] = useState(false);
+  const avatarRef = useRef();
 
   const { role } = useRole();
-  const { user } = useAuth();
+  const { user, logOut } = useAuth();
   const location = useLocation();
 
   const getTitle = () => {
@@ -27,6 +30,23 @@ const DashboardLayout = () => {
     if (location.pathname.includes("user-profile")) return "User Profile";
     if (location.pathname.includes("all-parcels")) return "All Parcels";
     return "Dashboard";
+  };
+
+  // 🔒 outside click close dropdown
+  // useEffect(() => {
+  //   const handleClickOutside = (e) => {
+  //     if (avatarRef.current && !avatarRef.current.contains(e.target)) {
+  //       setAvatarOpen(false);
+  //     }
+  //   };
+  //   document.addEventListener("mousedown", handleClickOutside);
+  //   return () => document.removeEventListener("mousedown", handleClickOutside);
+  // }, []);
+
+  const handleLogout = () => {
+    logOut()
+      .then(() => toast.success("Logout successful"))
+      .catch((err) => toast.error(err.message));
   };
 
   // 👉 sidebar auto close (mobile UX)
@@ -67,7 +87,7 @@ const DashboardLayout = () => {
                 {role}
               </span>
 
-              <div className="flex items-center gap-2">
+              {/* <div className="flex items-center gap-2">
                 <div className="avatar">
                   <div className="w-8 rounded-full">
                     <img
@@ -82,7 +102,85 @@ const DashboardLayout = () => {
                 <span className="text-sm font-medium hidden md:block">
                   {user?.displayName}
                 </span>
+              </div> */}
+
+
+
+              {/* Avatar */}
+              <div className="relative hidden lg:inline-flex" ref={avatarRef}
+
+                onClick={() => setAvatarOpen(false)} // outside click = close
+              >
+                {user ? (
+                  <>
+                    <img
+                      onClick={(e) => {
+                        e.stopPropagation(); // prevent parent click
+                        setAvatarOpen(!avatarOpen);
+                      }}
+                      src={
+                        user?.photoURL ||
+                        "https://i.ibb.co/4pDNDk1/avatar.png"
+                      }
+                      alt="avatar"
+                      className="w-10 h-10 rounded-full border-2 border-amber-400 cursor-pointer object-cover"
+                    />
+
+                    {avatarOpen && (
+                      <div
+                        onClick={(e) => e.stopPropagation()} // inside click safe
+                        className="absolute right-0 mt-13 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50"
+                      >
+                        <p className="font-semibold text-gray-800 dark:text-white">
+                          {user?.displayName || "User"}
+                        </p>
+                        <p className="text-xs text-gray-500 break-all">
+                          {user?.email}
+                        </p>
+
+                        <span className="mt-2 text-xs bg-amber-100 text-amber-600 px-2 py-1 rounded">
+                          {role}
+                        </span>
+
+                        <hr className="my-2" />
+
+                        {/* <Link
+                          to="/user-profile"
+                          className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                        >
+                          Profile
+                        </Link>
+
+                        <Link
+                          to="/dashboard"
+                          className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                        >
+                          Dashboard
+                        </Link>
+                        <Link
+                          to="/dashboard/charts"
+                          className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                        >
+                          Chart
+                        </Link> */}
+
+                        <button
+                          onClick={handleLogout}
+                          className="w-full text-left px-3 py-2 rounded hover:bg-red-100 text-red-500 text-sm"
+                        >
+                          Logout
+                        </button>
+                      </div>
+                    )}
+                  </>
+                ) : (
+                  <Link to="/login" className="btn btn-sm rounded-full">
+                    Login
+                  </Link>
+                )}
               </div>
+
+
             </div>
           </nav>
 
@@ -178,7 +276,7 @@ const DashboardLayout = () => {
                       onClick={closeDrawer}
                       className="flex gap-2 items-center hover:text-green-300"
                     >
-                      <Cuboid size={18} /> 
+                      <Cuboid size={18} />
                       All parcels
                     </Link>
                   </li>
@@ -227,10 +325,16 @@ const DashboardLayout = () => {
                       All Payment History
                     </Link>
                   </li>
-
-
                 </>
               )}
+
+              <button
+                onClick={handleLogout}
+                className="flex gap-2 items-center text-left px-3 py-2 rounded hover:bg-red-100 text-red-500 text-sm cursor-pointer"
+              >
+                <LogOut size={18} />
+                Logout
+              </button>
 
               {/* SETTINGS */}
               <li className="mt-6">

@@ -6,6 +6,9 @@ import useRole from "../Hooks/useRole";
 import ThemeToggle from "../Theme/ThemeToggle";
 import Logo from "./Logo";
 import { toast } from "react-toastify";
+import { FaBox } from "react-icons/fa";
+import { MdOutlineHome } from "react-icons/md";
+import { Handshake, Info, LogIn, MapPin, Motorbike, Phone, Send } from "lucide-react";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
@@ -15,16 +18,16 @@ const Navbar = () => {
     const [avatarOpen, setAvatarOpen] = useState(false);
     const avatarRef = useRef();
 
-    // 🔒 outside click close dropdown
-    useEffect(() => {
-        const handleClickOutside = (e) => {
-            if (avatarRef.current && !avatarRef.current.contains(e.target)) {
-                setAvatarOpen(false);
-            }
-        };
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => document.removeEventListener("mousedown", handleClickOutside);
-    }, []);
+    // // 🔒 outside click close dropdown
+    // useEffect(() => {
+    //     const handleClickOutside = (e) => {
+    //         if (avatarRef.current && !avatarRef.current.contains(e.target)) {
+    //             setAvatarOpen(false);
+    //         }
+    //     };
+    //     document.addEventListener("mousedown", handleClickOutside);
+    //     return () => document.removeEventListener("mousedown", handleClickOutside);
+    // }, []);
 
     const handleLogout = () => {
         logOut()
@@ -32,44 +35,121 @@ const Navbar = () => {
             .catch((err) => toast.error(err.message));
     };
 
-    const activeLinks = ({ isActive }) =>
-        `px-3 py-2 text-sm font-medium transition-all duration-300 ${isActive
-            ? "text-amber-500 border-b-2 border-amber-500"
-            : "text-gray-700 dark:text-gray-200 hover:text-amber-500"
+    const activeLinks = (isActive) =>
+        `px-3 py-2 text-sm font-medium flex items-center gap-1 transition-all duration-300 ${isActive
+            ? "text-gray-800 text-xs bg-green-300 rounded-lg"
+            : "text-xs dark:text-gray-200 hover:bg-green-300 hover:text-gray-800 rounded-lg"
         }`;
 
     // 🔗 Links
     const publicLinks = (
         <>
-            <NavLink to="/" className={activeLinks}>Home</NavLink>
-            <NavLink to="/about" className={activeLinks}>About</NavLink>
-            <NavLink to="/contact" className={activeLinks}>Contact</NavLink>
-            <NavLink to="/coverage" className={activeLinks}>Coverage</NavLink>
-            <NavLink to="/send-parcel" className={activeLinks}>Send Parcel</NavLink>
+            <NavLink
+                to="/" className={({ isActive }) => activeLinks(isActive)}
+            >
+                <MdOutlineHome size={18} />
+                Home
+            </NavLink>
+            <NavLink
+                to="/about"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <Info size={18} />
+                About
+            </NavLink>
+            <NavLink
+                to="/contact"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <Phone size={18} />
+                Contact
+            </NavLink>
+            <NavLink
+                to="/coverage"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <MapPin size={18} />
+                Coverage
+            </NavLink>
+            <NavLink
+                to="/send-parcel"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <Send size={18} />
+                Send Parcel
+            </NavLink>
         </>
     );
 
     const userLinks = (
         <>
-            <NavLink to="/send-parcel" className={activeLinks}>Send Parcel</NavLink>
-            <NavLink to="/my-parcels" className={activeLinks}>My Parcels</NavLink>
-            <NavLink to="/payment-history" className={activeLinks}>Payments</NavLink>
+            <NavLink
+                to="/send-parcel"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                Send Parcel
+            </NavLink>
+
+            <NavLink
+                to="/my-parcels"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                My Parcels
+            </NavLink>
+            <NavLink
+                to="/payment-history"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                Payments
+            </NavLink>
         </>
     );
 
     const riderLinks = (
         <>
-            <NavLink to="/assigned-deliveries" className={activeLinks}>Assigned</NavLink>
-            <NavLink to="/completed-deliveries" className={activeLinks}>Completed</NavLink>
-            <NavLink to="/cash-out-history" className={activeLinks}>Cash Out</NavLink>
+            <NavLink
+                to="/assigned-deliveries"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                Assigned
+            </NavLink>
+            <NavLink
+                to="/completed-deliveries"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                Completed
+            </NavLink>
+            <NavLink
+                to="/cash-out-history"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                Cash Out
+            </NavLink>
         </>
     );
 
     const adminLinks = (
         <>
-            <NavLink to="/dashboard" className={activeLinks}>Dashboard</NavLink>
-            <NavLink to="/all-parcels" className={activeLinks}>Chart</NavLink>
-            {/* <NavLink to="/all-payment-history" className={activeLinks}>Payments</NavLink> */}
+            <NavLink
+                to="/dashboard" className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                Dashboard
+            </NavLink>
+            <NavLink
+                to="/dashboard/charts"
+                className={({ isActive }) => activeLinks(isActive)}
+            >
+                <FaBox />
+                Chart
+            </NavLink>
+            <NavLink to="/dashboard/user-profile" className={({ isActive }) => activeLinks(isActive)}>Profile</NavLink>
         </>
     );
 
@@ -101,17 +181,29 @@ const Navbar = () => {
                 {/* Right Side */}
                 <div className="flex items-center gap-3">
                     {/* <NavLink to="/all-users" className="btn btn-xs btn-warning">Dashboard</NavLink> */}
-
-                    <NavLink to="/rider" className="btn btn-sm rounded-lg bg-green-500 hover:bg-green-600 hidden lg:inline-flex">Be a Rider</NavLink>
-
                     <ThemeToggle />
 
+                    <NavLink to="/rider"
+                        className="btn btn-sm btn-outline text-amber-500 rounded-lg hover:bg-amber-500 shadow-none hover:border-amber-500 hover:text-gray-800 hidden lg:inline-flex"
+                    >
+                        <Motorbike size={18} />
+                        Be a Rider
+                    </NavLink>
+
+                    
+
                     {/* Avatar */}
-                    <div className="relative hidden lg:inline-flex" ref={avatarRef}>
+                    <div className="relative hidden lg:inline-flex" ref={avatarRef}
+
+                        onClick={() => setAvatarOpen(false)} // outside click = close
+                    >
                         {user ? (
                             <>
                                 <img
-                                    onClick={() => setAvatarOpen(!avatarOpen)}
+                                    onClick={(e) => {
+                                        e.stopPropagation(); // prevent parent click
+                                        setAvatarOpen(!avatarOpen);
+                                    }}
                                     src={
                                         user?.photoURL ||
                                         "https://i.ibb.co/4pDNDk1/avatar.png"
@@ -120,10 +212,11 @@ const Navbar = () => {
                                     className="w-10 h-10 rounded-full border-2 border-amber-400 cursor-pointer object-cover"
                                 />
 
-                                {/* Dropdown */}
                                 {avatarOpen && (
-                                    <div className="absolute right-0 mt-13 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50">
-
+                                    <div
+                                        onClick={(e) => e.stopPropagation()} // inside click safe
+                                        className="absolute right-0 mt-13 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50"
+                                    >
                                         <p className="font-semibold text-gray-800 dark:text-white">
                                             {user?.displayName || "User"}
                                         </p>
@@ -150,13 +243,12 @@ const Navbar = () => {
                                         >
                                             Dashboard
                                         </Link>
-                                        <Link
-                                            to="/dashboard"
+                                        {/* <Link
+                                            to="/dashboard/charts"
                                             className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                                         >
                                             Chart
-                                        </Link>
-                                        
+                                        </Link> */}
 
                                         <button
                                             onClick={handleLogout}
@@ -168,7 +260,8 @@ const Navbar = () => {
                                 )}
                             </>
                         ) : (
-                            <Link to="/login" className="btn btn-sm rounded-full">
+                            <Link to="/login" className="btn btn-sm btn-outline text-green-500 hover:bg-green-500 shadow-none hover:border-green-500 hover:text-gray-800 rounded-lg">
+                                <LogIn size={16} />
                                 Login
                             </Link>
                         )}
@@ -184,7 +277,7 @@ const Navbar = () => {
                 </div>
             </div>
 
-            
+
             {/* Mobile Menu */}
             {menuOpen && (
                 <div className="md:hidden absolute top-full left-0 w-full bg-white dark:bg-gray-900 shadow-xl border-t z-50 animate-fadeIn">
@@ -197,8 +290,8 @@ const Navbar = () => {
 
 
                         <div className="border-t pt-3 space-y-2">
-                        <NavLink to="/rider" className="btn btn-sm w-full bg-green-500 ">Be a Rider</NavLink>
-                        <NavLink to="/all-parcels" className="btn btn-sm w-full bg-green-500">Chart</NavLink>
+                            <NavLink to="/rider" className="btn btn-sm w-full bg-green-500 ">Be a Rider</NavLink>
+                            <NavLink to="/dashboard/charts" className="btn btn-sm w-full bg-green-500">Chart</NavLink>
                             <Link
                                 to="/dashboard"
                                 onClick={() => setMenuOpen(false)}

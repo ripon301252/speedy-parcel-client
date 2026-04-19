@@ -69,7 +69,7 @@ const Coverage = () => {
           center={position}
           zoom={8}
           scrollWheelZoom={false}
-          className="h-[300px] md:h-[500px] w-full"
+          className="h-[300px] md:h-[500px] w-full z-0 leaflet-container"
           ref={mapRef}
         >
           <TileLayer
@@ -85,8 +85,8 @@ const Coverage = () => {
                     {center.district}
                   </p>
                   <p className="mt-1">
-                    <span className="font-bold">Service Area: </span>
-                    {center.covered_area.join(", ")}
+                    <span className="font-bold text-orange-500">Service Area: </span>
+                    <span className="text-sm text-green-800">{center.covered_area.join(", ")}</span> 
                   </p>
                 </div>
               </Popup>

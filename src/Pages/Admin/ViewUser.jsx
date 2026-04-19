@@ -4,7 +4,7 @@ const ViewUser = ({ userView, onClose }) => {
     if (!userView) return null;
 
     return (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-2 text-gray-800">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[9999] p-2 text-gray-800">
             <div className="bg-white w-full max-w-md md:max-w-lg rounded-xl shadow-lg p-5">
 
                 {/* Title */}

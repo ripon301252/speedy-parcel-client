@@ -22,3 +22,7 @@
          file:bg-gray-200 file:text-gray-800 
          /* hover:file:bg-green-600; */
 }
+
+.leaflet-container .leaflet-control {
+  z-index: 0;
+}

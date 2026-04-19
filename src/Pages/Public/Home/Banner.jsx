@@ -67,12 +67,12 @@ const Banner = () => {
                 </p>
 
                 {/* Buttons */}
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
-                  <Link to={`/contact`} className="px-5 py-2 sm:px-8 sm:py-3 bg-green-500 hover:bg-green-600 transition rounded-full font-semibold text-sm sm:text-base">
+                <div className="flex flex-col items-center sm:flex-row gap-2 sm:gap-4 justify-center">
+                  <Link to={`/contact`} className="px-5 py-2 sm:px-8 sm:py-3 bg-green-500 hover:bg-green-600 transition rounded-full font-semibold text-sm sm:text-base w-36 ">
                     Contact
                   </Link>
 
-                  <Link to={'/about'} className="px-5 py-2 sm:px-8 sm:py-3 border border-white text-white hover:bg-white hover:text-black transition rounded-full font-semibold text-sm sm:text-base">
+                  <Link to={'/about'} className="px-5 py-2 sm:px-8 sm:py-3 border border-white text-white hover:bg-white hover:text-black transition rounded-full font-semibold text-sm sm:text-base w-37">
                     Learn More
                   </Link>
                 </div>

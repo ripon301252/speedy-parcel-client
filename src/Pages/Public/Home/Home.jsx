@@ -7,6 +7,7 @@ import VideoGuides from './Video/VideoGuides';
 import Brand from './Brand/Brand';
 import Brands from './Brand/Brands';
 import FAQ from './FAQ/FAQ';
+import OurServices from '../OurServices';
 
 
 const reviewPromise = fetch('http://localhost:3000/reviews')
@@ -50,6 +51,9 @@ const Home = () => {
     return (
         <div>
             <Banner />
+
+            <OurServices />
+
             <div className="">
                 {showBrand
                     ? <Brand toggle={() => setShowBrand(false)} />
@@ -66,6 +70,7 @@ const Home = () => {
                     : <Reviews2 reviewPromise={reviewPromise} toggle={() => setShowReview(true)} />
                 }
             </div>
+
             <FAQ />
         </div>
     );

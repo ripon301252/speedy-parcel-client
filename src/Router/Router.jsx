@@ -1,7 +1,6 @@
 import { createBrowserRouter } from "react-router";
 import Root from "../LayOut/Root";
 import Home from "../Pages/Public/Home/Home";
-import About from "../Pages/Public/About/About";
 import Contact from "../Pages/Public/Contact/Contact";
 import PlaceOrder from "../Pages/Customer/SendParcel/SendParcel";
 import TrackDelivery from "../Pages/Rider/TrackDelivery/TrackDelivery";
@@ -36,6 +35,14 @@ import AllPaymentHistory from "../Pages/Admin/AllPaymentHistory";
 import UserProfile from "../Auth/UserProfile";
 import AllParcels from "../Pages/Admin/AllParcels";
 import Charts from "../Pages/Admin/Charts";
+import AboutUs from "../Pages/Public/AboutUs/AboutUs"
+import Story from "../Pages/Public/AboutUs/Story"
+import Mission from "../Pages/Public/AboutUs/Mission"
+import Success from "../Pages/Public/AboutUs/Success"
+import TeamOthers from "../Pages/Public/AboutUs/TeamOthers"
+
+
+
 
 
 export const router = createBrowserRouter([
@@ -49,7 +56,25 @@ export const router = createBrowserRouter([
             },
             {
                 path: "/about",
-                element: <About></About>
+                element: <AboutUs />,
+                children: [
+                    {
+                        path: "story",
+                        element: <Story />,
+                    },
+                    {
+                        path: "mission",
+                        element: <Mission />,
+                    },
+                    {
+                        path: "success",
+                        element: <Success />,
+                    },
+                    {
+                        path: "team",
+                        element: <TeamOthers />,
+                    },
+                ],
             },
             {
                 path: "/contact",

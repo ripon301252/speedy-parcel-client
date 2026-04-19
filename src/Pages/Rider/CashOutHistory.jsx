@@ -3,363 +3,225 @@ import { useAuth } from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { Eye } from 'lucide-react';
-import { IoTrashOutline } from 'react-icons/io5';
 import Swal from 'sweetalert2';
 
 const CashOutHistory = () => {
-    const [selectedCashOut, setSelectedCashOut] = useState(null);
-    const { user } = useAuth();
-    console.log(user)
-    const axiosCashOut = useAxiosSecure();
-    const [status, setStatus] = useState('');
-    const cashOutModalRef = useRef();
+  const [selectedCashOut, setSelectedCashOut] = useState(null);
+  const { user } = useAuth();
+  const axiosCashOut = useAxiosSecure();
+  const cashOutModalRef = useRef();
 
-    const [page, setPage] = useState(1);
-    const limit = 10;
+  const [status, setStatus] = useState('');
+  const [page, setPage] = useState(1);
+  const limit = 10;
 
-    const { data, refetch } = useQuery({
-        queryKey: ['cashOuts', user?.email, status, page],
-        queryFn: async () => {
-            const url = `/cash-out?email=${user?.email}&status=${status}&page=${page}&limit=${limit}`
-            const res = await axiosCashOut.get(url)
-            console.log(res)
-            return (await res).data;
-        }
-    })
-    const cashOuts = data?.data || [];
-    const total = data?.total ?? 0;
-
-    // const handleCashOutDelete = (id) => {
-    //     Swal.fire({
-    //         title: "Are you sure?",
-    //         text: "This cash-out request will be deleted!",
-    //         icon: "warning",
-    //         showCancelButton: true,
-    //         confirmButtonColor: "#3085d6",
-    //         cancelButtonColor: "#d33",
-    //         confirmButtonText: "Yes, delete it"
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-
-    //             axiosCashOut.delete(`/cash-out/${id}`)
-    //                 .then(res => {
-    //                     console.log("deleted:", res.data);
-
-    //                     if (res.data.deletedCount > 0) {
-    //                         refetch()
-    //                         Swal.fire(
-    //                             "Deleted!",
-    //                             "Cash-out request removed successfully.",
-    //                             "success"
-    //                         );
-    //                     }
-    //                 })
-    //                 .catch(err => {
-    //                     console.log(err);
-    //                     Swal.fire("Error", "Something went wrong", "error");
-    //                 });
-    //         }
-    //     });
-    // };
-
-    const handleCashOutRiderModal = (cashOut) => {
-        setSelectedCashOut(cashOut);
-        cashOutModalRef.current.showModal();
+  const { data, refetch } = useQuery({
+    queryKey: ['cashOuts', user?.email, status, page],
+    queryFn: async () => {
+      const url = `/cash-out?email=${user?.email}&status=${status}&page=${page}&limit=${limit}`;
+      const res = await axiosCashOut.get(url);
+      return res.data;
     }
+  });
 
+  const cashOuts = data?.data || [];
+  const total = data?.total ?? 0;
 
-    return (
-        <div>
-            <div className="p-2 md:p-6">
-                <h1 className="text-xl md:text-3xl font-bold mb-4">
-                    cashOut History : {cashOuts.length}
-                </h1>
-                <h1 className="text-xl md:text-3xl font-bold mb-4">
-                    Total cashOut History : {total}
-                </h1>
-                {/* Filter */}
-                <div className="w-full sm:w-1/3">
-                    <select
-                        className="select select-bordered w-full input-class"
-                        value={status}
-                        onChange={(e) => setStatus(e.target.value)}
-                    >
-                        <option className='bg-white text-gray-800' value="">All Status</option>
-                        <option className='bg-white text-gray-800' value="pending">Pending</option>
-                        <option className='bg-white text-gray-800' value="approved">Approved</option>
-                        <option className='bg-white text-gray-800' value="rejected">Rejected</option>
-                    </select>
-                </div>
-                {/* Desktop Table */}
-                <div className="hidden md:block overflow-x-auto">
-                    <table className="table w-full">
-                        <thead>
-                            <tr>
-                                <th>#</th>
-                                <th>Name</th>
-                                <th>Address</th>
-                                <th>Amount</th>
-                                <th>Transaction</th>
-                                <th>Status</th>
-                                <th>Date</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
+  const handleCashOutRiderModal = (cashOut) => {
+    setSelectedCashOut(cashOut);
+    cashOutModalRef.current.showModal();
+  };
 
-                        <tbody>
-                            {cashOuts.map((cashOut, i) => (
-                                <tr key={cashOut._id} className="hover">
-                                    <th>{i + 1}</th>
+  return (
+    <div className="p-4 md:p-6">
 
-                                    <td>
-                                        <div className="flex items-center gap-3">
-                                            <img
-                                                src={cashOut.riderPhoto}
-                                                className="w-10 h-10 rounded-lg"
-                                            />
-                                            <div>
-                                                <p className="font-bold">{cashOut.riderName}</p>
-                                                <p className="text-xs opacity-50">
-                                                    {cashOut.riderEmail}
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <p className="font-bold">{cashOut.riderDistrict}</p>
-                                            <p className="text-xs opacity-50">
-                                                {cashOut.riderArea}
-                                            </p>
-                                        </div>
+      {/* HEADER */}
+      <h1 className="text-lg md:text-3xl font-bold mb-2">
+        Cash Out History ({cashOuts.length})
+      </h1>
 
-                                    </td>
-                                    <td>{cashOut.amount} Tk</td>
-                                    <td className="text-xs">{cashOut.transactionId}</td>
+      <h2 className="text-sm md:text-lg mb-4 text-gray-600">
+        Total Records: {total}
+      </h2>
 
-                                    <td>
-                                        <span className="text-green-500">
-                                            {cashOut.status}
-                                        </span>
-                                    </td>
+      {/* FILTER */}
+      <div className="mb-4 w-full md:w-1/3">
+        <select
+          className="select select-bordered w-full"
+          value={status}
+          onChange={(e) => setStatus(e.target.value)}
+        >
+          <option value="">All Status</option>
+          <option value="pending">Pending</option>
+          <option value="approved">Approved</option>
+          <option value="rejected">Rejected</option>
+        </select>
+      </div>
 
-                                    <td className="text-xs">
-                                        {new Date(cashOut.createdAt).toLocaleString("en-BD", {
-                                            dateStyle: "medium",
-                                            timeStyle: "short",
-                                        })}
-                                    </td>
+      {/* ================= TABLE (DESKTOP) ================= */}
+      <div className="hidden md:block overflow-x-auto max-w-7xl mx-auto shadow rounded-xl">
+        <table className="table w-full">
 
-                                    <td>
-                                        <div className="flex justify-start items-center gap-3 whitespace-nowrap">
-                                            <button
-                                                onClick={() => handleCashOutRiderModal(cashOut)}
-                                                className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800">
-                                                <Eye className='text-xs' />
-                                            </button>
-                                            {/* <button
-                                                onClick={() => handleCashOutDelete(cashOut._id)}
-                                                className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-gray-800">
-                                                <IoTrashOutline className='text-lg' />
-                                            </button> */}
-                                        </div>
-                                    </td>
-                                </tr>
-                            ))}
-                        </tbody>
-                    </table>
-                    <div className="flex justify-center gap-3 mt-4">
-                        <button
-                            onClick={() => setPage(page - 1)}
-                            disabled={page === 1}
-                            className="btn btn-sm"
-                        >
-                            Prev
-                        </button>
+          <thead className="">
+            <tr>
+              <th>#</th>
+              <th>User</th>
+              <th>Location</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th>Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
 
-                        <span className="px-3 py-1 border rounded">
-                            Page {page}
-                        </span>
+          <tbody>
+            {cashOuts.map((cashOut, i) => (
+              <tr key={cashOut._id} className="hover">
 
-                        <button
-                            onClick={() => setPage(page + 1)}
-                            className="btn btn-sm"
-                        >
-                            Next
-                        </button>
+                <td>{i + 1}</td>
+
+                <td>
+                  <div className="flex items-center gap-2">
+                    <img
+                      src={cashOut.riderPhoto}
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <div>
+                      <p className="font-bold">{cashOut.riderName}</p>
+                      <p className="text-xs">{cashOut.riderEmail}</p>
                     </div>
-                </div>
-            </div>
+                  </div>
+                </td>
 
-            {/* Mobile Cards */}
-            <div className="grid gap-4 md:hidden">
-                {cashOuts.map((cashOut, i) => (
-                    <div
-                        key={cashOut._id}
-                        className="border rounded-xl p-4 shadow bg-base-100"
-                    >
-                        <div className="flex justify-between items-center mb-2">
-                            <h2 className="font-bold text-sm">
-                                #{i + 1} {cashOut.parcelName}
-                            </h2>
+                <td className="text-sm">
+                  {cashOut.riderDistrict}, {cashOut.riderArea}
+                </td>
 
-                            <span className={`badge ${cashOut.cashOutStatus === "paid"
-                                ? "badge-success"
-                                : "badge-warning"
-                                }`}>
-                                {cashOut.cashOutStatus}
-                            </span>
-                        </div>
+                <td className="font-semibold">{cashOut.amount} Tk</td>
 
-                        <div className="flex items-center gap-3 mb-2">
-                            <img
-                                src={cashOut.senderPhoto}
-                                className="w-10 h-10 rounded-lg"
-                            />
-                            <div>
-                                <p className="font-semibold text-sm">
-                                    {cashOut.senderName}
-                                </p>
-                                <p className="text-xs opacity-50">
-                                    {cashOut.senderAddress}
-                                </p>
-                            </div>
-                        </div>
+                <td>
+                  <span className="px-2 py-1 text-xs rounded bg-yellow-100 text-yellow-600">
+                    {cashOut.status}
+                  </span>
+                </td>
 
-                        <p className="text-sm"><b>Email:</b> {cashOut.customerEmail}</p>
-                        <p className="text-sm"><b>Amount:</b> {cashOut.amount} Tk</p>
+                <td className="text-xs">
+                  {new Date(cashOut.createdAt).toLocaleString()}
+                </td>
 
-                        <p className="text-sm break-all">
-                            <b>Transaction:</b> {cashOut.transactionId}
-                        </p>
+                <td>
+                  <button
+                    onClick={() => handleCashOutRiderModal(cashOut)}
+                    className="btn btn-square btn-outline text-blue-500 hover:bg-blue-500 hover:text-gray-800"
+                  >
+                    <Eye className='text-lg' />
+                  </button>
+                </td>
 
-                        <p className="text-sm">
-                            <b>Tracking:</b> {cashOut.trackingId || "Not Assigned"}
-                        </p>
+              </tr>
+            ))}
+          </tbody>
 
-                        <p className="text-xs mt-1 text-gray-500">
-                            {new Date(cashOut.paidDate).toLocaleString("en-BD", {
-                                dateStyle: "medium",
-                                timeStyle: "short",
-                            })}
-                        </p>
+        </table>
 
-                        <div className="flex gap-2 mt-3">
-                            <button
-                                onClick={() => handleCashOutRiderModal(cashOut)}
-                                className="btn btn-xs btn-primary">
-                                View
-                            </button>
-                            {/* <button
-                                onClick={() => handleCashOutDelete(cashOut._id)}
-                                className="btn btn-xs btn-error"
-                            >
-                                Delete
-                            </button> */}
-                        </div>
-                    </div>
-                ))}
-            </div>
-            <dialog ref={cashOutModalRef} className="modal modal-bottom sm:modal-middle">
-                <div className="modal-box w-full max-w-md sm:max-w-lg">
+        {/* PAGINATION */}
+        <div className="flex justify-center gap-3 p-4">
+          <button
+            className="btn btn-sm"
+            disabled={page === 1}
+            onClick={() => setPage(page - 1)}
+          >
+            Prev
+          </button>
 
-                    <h1 className="text-xl sm:text-2xl font-bold mb-4 text-center sm:text-left">
-                        Cash Out Details
-                    </h1>
+          <span className="px-3 py-1 border rounded">
+            Page {page}
+          </span>
 
-                    {selectedCashOut ? (
-                        <div className="space-y-4">
-
-                            {/* Rider Info */}
-                            <div className="flex flex-col sm:flex-row items-center sm:items-start gap-3 sm:gap-4 text-center sm:text-left">
-                                <img
-                                    src={selectedCashOut.riderPhoto}
-                                    className="w-16 h-16 rounded-full border object-cover"
-                                    alt="rider"
-                                />
-                                <div>
-                                    <p className="font-bold text-lg">
-                                        {selectedCashOut.riderName}
-                                    </p>
-                                    <p className="text-sm text-gray-500 break-all">
-                                        {selectedCashOut.riderEmail}
-                                    </p>
-                                </div>
-                            </div>
-
-                            {/* Location */}
-                            <div className=" p-3 rounded-lg text-sm text-center sm:text-left">
-                                📍 {selectedCashOut.riderDistrict}, {selectedCashOut.riderArea}
-                            </div>
-
-                            {/* Divider */}
-                            <div className="border-t"></div>
-
-                            {/* Details */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
-
-                                <div>
-                                    <p className="font-semibold">Parcel ID</p>
-                                    <p className="break-all text-gray-600">
-                                        {selectedCashOut.parcelId}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p className="font-semibold">Amount</p>
-                                    <p className="text-green-600 font-bold text-base">
-                                        {selectedCashOut.amount} Tk
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p className="font-semibold">Transaction ID</p>
-                                    <p className="break-all text-blue-500">
-                                        {selectedCashOut.transactionId}
-                                    </p>
-                                </div>
-
-                                <div>
-                                    <p className="font-semibold">Status</p>
-                                    <span
-                                        className={`px-2 py-1 rounded text-xs font-bold inline-block ${selectedCashOut.status === "pending"
-                                            ? "bg-yellow-100 text-yellow-600"
-                                            : selectedCashOut.status === "paid"
-                                                ? "bg-green-100 text-green-600"
-                                                : "bg-blue-100 text-blue-600"
-                                            }`}
-                                    >
-                                        {selectedCashOut.status}
-                                    </span>
-                                </div>
-
-                                <div className="sm:col-span-2">
-                                    <p className="font-semibold">Date</p>
-                                    <p className="text-gray-600">
-                                        {new Date(selectedCashOut.createdAt).toLocaleString("en-BD", {
-                                            dateStyle: "medium",
-                                            timeStyle: "short",
-                                        })}
-                                    </p>
-                                </div>
-
-                            </div>
-                        </div>
-                    ) : (
-                        <p className="text-center text-gray-500">No data selected</p>
-                    )}
-
-                    {/* Close Button */}
-                    <div className="modal-action">
-                        <form method="dialog" className="w-full sm:w-auto">
-                            <button className="btn w-full">Close</button>
-                        </form>
-                    </div>
-
-                </div>
-            </dialog>
+          <button
+            className="btn btn-sm"
+            onClick={() => setPage(page + 1)}
+          >
+            Next
+          </button>
         </div>
-    );
+      </div>
+
+      {/* ================= MOBILE CARDS ================= */}
+      <div className="grid gap-4 md:hidden">
+
+        {cashOuts.map((cashOut, i) => (
+          <div key={cashOut._id} className="border rounded-xl p-4 shadow ">
+
+            <div className="flex justify-between">
+              <h2 className="font-bold">#{i + 1}</h2>
+              <span className="text-xs text-gray-500">
+                {cashOut.status}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-3 mt-2">
+              <img
+                src={cashOut.riderPhoto}
+                className="w-10 h-10 rounded-full"
+              />
+              <div>
+                <p className="font-semibold">{cashOut.riderName}</p>
+                <p className="text-xs text-gray-500">{cashOut.riderEmail}</p>
+              </div>
+            </div>
+
+            <p className="text-sm mt-2">
+              📍 {cashOut.riderDistrict}, {cashOut.riderArea}
+            </p>
+
+            <p className="font-bold mt-1">
+              {cashOut.amount} Tk
+            </p>
+
+            <div className="mt-3">
+              <button
+                onClick={() => handleCashOutRiderModal(cashOut)}
+                className="btn btn-sm w-full"
+              >
+                <Eye size={16} /> View
+              </button>
+            </div>
+
+          </div>
+        ))}
+
+      </div>
+
+      {/* ================= MODAL ================= */}
+      <dialog ref={cashOutModalRef} className="modal">
+        <div className="modal-box w-11/12 max-w-lg">
+
+          <h3 className="font-bold text-lg mb-4">Cash Out Details</h3>
+
+          {selectedCashOut && (
+            <div className="space-y-3 text-sm">
+
+              <p><b>Name:</b> {selectedCashOut.riderName}</p>
+              <p><b>Email:</b> {selectedCashOut.riderEmail}</p>
+              <p><b>Amount:</b> {selectedCashOut.amount} Tk</p>
+              <p><b>Status:</b> {selectedCashOut.status}</p>
+              <p><b>Location:</b> {selectedCashOut.riderDistrict}, {selectedCashOut.riderArea}</p>
+
+            </div>
+          )}
+
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
+          </div>
+
+        </div>
+      </dialog>
+
+    </div>
+  );
 };
 
 export default CashOutHistory;

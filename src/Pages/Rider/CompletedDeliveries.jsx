@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React from 'react';
 import { useAuth } from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
@@ -8,16 +8,15 @@ const CompletedDeliveries = () => {
     const { user } = useAuth();
     const axiosCompletedDelivery = useAxiosSecure();
 
-
-
     const { data: parcels = [], refetch } = useQuery({
-        // queryKey: ['parcels', user.email, 'driver_assigned'],
-        queryKey: ['parcels', user.email, 'parcel_delivered'],
+        queryKey: ['parcels', user?.email, 'parcel_delivered'],
         queryFn: async () => {
-            const res = await axiosCompletedDelivery.get(`/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel_delivered`,)
+            const res = await axiosCompletedDelivery.get(
+                `/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel_delivered`
+            );
             return res.data;
         }
-    })
+    });
 
     const { data: cashOuts = [], refetch: refetchCashOuts } = useQuery({
         queryKey: ['cashOuts'],
@@ -27,34 +26,24 @@ const CompletedDeliveries = () => {
         }
     });
 
-    const getCashOutByParcel = (parcelId) => {
-        return cashOuts.find(c => c.parcelId === parcelId);
-    };
-
-
+    const getCashOutByParcel = (parcelId) =>
+        cashOuts.find(c => c.parcelId === parcelId);
 
     const calculatePayout = (parcel) => {
-        let percentage = 0;
+        let percentage = 0.75;
 
-        if (parcel.senderArea === parcel.receiverArea) {
-            percentage = 0.8;
-        } else if (parcel.senderDistrict === parcel.receiverDistrict) {
-            percentage = 0.75; // little increase
-        } else {
-            percentage = 0.7; // increase for fairness
+        if (parcel.senderDistrict !== parcel.receiverDistrict) {
+            percentage = 0.7;
         }
 
         let payout = parcel.cost * percentage;
 
-        // extra weight bonus
         if (parcel.weight > 3) {
             payout += (parcel.weight - 3) * 20;
         }
 
         return payout;
     };
-
- 
 
     const handleCashOut = async (parcel) => {
         try {
@@ -71,90 +60,68 @@ const CompletedDeliveries = () => {
             });
 
             if (res.data.insertedId) {
-                await refetchCashOuts(); 
+                await refetchCashOuts();
                 Swal.fire({
                     icon: "success",
                     title: "Cash-out Request Sent!",
-                    html: `
-                        <p>Your request is pending approval</p>
-                        <h3 style="color:green; margin-top:10px;">Your amount is ${payout} Tk</h3>
-                    `,
+                    text: `Amount: ${payout} Tk`
                 });
-
                 refetch();
             }
         } catch (err) {
             Swal.fire({
                 icon: "error",
-                title: "Cashout Failed",
-                text: err.response?.data?.message || "Something went wrong",
-                confirmButtonColor: "#ef4444"
+                title: "Failed",
+                text: err.message
             });
         }
     };
 
-   
-
     return (
-        <div>
-            <h1 className='text-4xl'> Completed Delivery : {parcels.length}</h1>
-            <div className="overflow-x-auto">
-                <table className="table">
-                    {/* head */}
-                    <thead>
+        <div className="p-4 md:p-6 ">
+
+            <h1 className="text-lg md:text-3xl font-bold mb-4 ml-6">
+                Completed Deliveries ({parcels.length})
+            </h1>
+
+            {/* ================= TABLE (DESKTOP) ================= */}
+            <div className="hidden md:block overflow-x-auto max-w-7xl mx-auto  rounded-xl shadow ">
+                <table className="table w-full">
+                    <thead className=" ">
                         <tr>
                             <th>#</th>
-                            <th>Parcel Name</th>
-                            <th>Sender Info</th>
-                            <th>Pickup District</th>
-                            <th>Date & Time</th>
+                            <th>Parcel</th>
+                            <th>Sender</th>
+                            <th>District</th>
+                            <th>Date</th>
                             <th>Cost</th>
                             <th>Payout</th>
                             <th>Action</th>
                         </tr>
                     </thead>
+
                     <tbody>
-                        {parcels.map((parcel, i) => <tr key={parcel._id}>
-                            <th>{i + 1}</th>
-                            <td>{parcel.parcelName}</td>
+                        {parcels.map((parcel, i) => (
+                            <tr key={parcel._id}>
+                                <td>{i + 1}</td>
+                                <td>{parcel.parcelName}</td>
+                                <td className="text-sm">{parcel.senderName}</td>
+                                <td className="text-sm">{parcel.senderDistrict}</td>
 
-                            <td>
-                                <div className="flex items-center gap-3">
-                                    <img
-                                        className="w-10 h-10 rounded-full"
-                                        src={parcel.senderPhoto}
-                                        alt=""
-                                    />
-                                    <div>
-                                        <p className="font-bold">{parcel.senderName}</p>
-                                        <p className="text-xs opacity-50">{parcel.senderEmail}</p>
-                                    </div>
-                                </div>
-                            </td>
+                                <td className="text-xs">
+                                    {new Date(parcel.createdAt).toLocaleString("en-BD", {
+                                        dateStyle: "medium",
+                                        timeStyle: "short",
+                                    })}
+                                </td>
 
-                            <td>
-                                <div>
-                                    {parcel.senderRegion}
-                                </div>
-                                <div className='flex gap-1'>
-                                    <div className="font-bold opacity-70">{parcel.senderDistrict} ,</div>
-                                    <div className="text-sm opacity-50">{parcel.senderArea}</div>
-                                </div>
-                            </td>
-                            <td className="text-xs">
-                                {new Date(parcel.createdAt).toLocaleString("en-BD", {
-                                    dateStyle: "medium",
-                                    timeStyle: "short",
-                                })}
-                            </td>
-                            <td>{parcel.cost} Tk</td>
-                            <td>{calculatePayout(parcel)} Tk</td>
+                                <td>{parcel.cost} Tk</td>
+                                <td>{calculatePayout(parcel)} Tk</td>
 
-                            <td>
-                                {
-                                    getCashOutByParcel(parcel._id) ? (
+                                <td>
+                                    {getCashOutByParcel(parcel._id) ? (
                                         <span className="text-green-600 font-semibold">
-                                            Cash Out Applied
+                                            Applied
                                         </span>
                                     ) : (
                                         <button
@@ -163,15 +130,55 @@ const CompletedDeliveries = () => {
                                         >
                                             Cash Out
                                         </button>
-                                    )
-                                }
-                            </td>
-                        </tr>)
-                        }
-
+                                    )}
+                                </td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>
+
+            {/* ================= MOBILE CARDS ================= */}
+            <div className="grid grid-cols-1 gap-4 md:hidden">
+
+                {parcels.map((parcel, i) => (
+                    <div key={parcel._id} className="bg-white border rounded-xl shadow p-4">
+
+                        <div className="flex justify-between">
+                            <h2 className="font-bold">
+                                #{i + 1} {parcel.parcelName}
+                            </h2>
+                            <span className="text-xs text-gray-500">
+                                {new Date(parcel.createdAt).toLocaleDateString()}
+                            </span>
+                        </div>
+
+                        <div className="text-sm mt-2 space-y-1">
+                            <p><b>Sender:</b> {parcel.senderName}</p>
+                            <p><b>Cost:</b> {parcel.cost} Tk</p>
+                            <p><b>Payout:</b> {calculatePayout(parcel)} Tk</p>
+                        </div>
+
+                        <div className="mt-3">
+                            {getCashOutByParcel(parcel._id) ? (
+                                <span className="text-green-600 font-semibold">
+                                    Cash Out Applied
+                                </span>
+                            ) : (
+                                <button
+                                    onClick={() => handleCashOut(parcel)}
+                                    className="w-full btn btn-success btn-sm"
+                                >
+                                    Cash Out
+                                </button>
+                            )}
+                        </div>
+
+                    </div>
+                ))}
+
+            </div>
+
         </div>
     );
 };

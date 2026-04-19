@@ -20,25 +20,6 @@ const AllPaymentHistory = () => {
     const [page, setPage] = useState(1);
     const limit = 10;
 
-    // const { data, refetch } = useQuery({
-    //     queryKey: ['paymentHistory', user?.email, page],
-    //     enabled: !!user?.email,
-    //     queryFn: async () => {
-    //         const url = `/payment-history?page=${page}&limit=${limit}`;
-    //         const res = await axiosPaymentHistory.get(url);
-    //         return res.data;
-    //     }
-    // });
-
-    // const { data, refetch } = useQuery({
-    //     queryKey: ['paymentHistory', user?.email, page, searchText, status],
-    //     enabled: !!user?.email,
-    //     queryFn: async () => {
-    //         const url = `/payment-history?searchText=${searchText}&deliveryStatus=${status}&page=${page}&limit=${limit}`;
-    //         const res = await axiosPaymentHistory.get(url);
-    //         return res.data;
-    //     }
-    // });
 
     const { data, refetch } = useQuery({
         queryKey: ['paymentHistory', user?.email, page, searchText, status],
@@ -102,10 +83,10 @@ const AllPaymentHistory = () => {
     return (
         <div className="p-2 md:p-6">
             <h1 className="text-xl md:text-3xl font-bold mb-4">
-                Payment History : {total}
+               All Payment History : {payments.length}
             </h1>
-            <h1 className="text-xl md:text-3xl font-bold mb-4">
-                Payment History : {payments.length}
+            <h1 className="text-xl md:text-lg opacity-20 font-bold mb-4">
+                Total Records : {total}
             </h1>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">

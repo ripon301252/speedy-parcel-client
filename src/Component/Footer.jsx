@@ -1,82 +1,70 @@
 import React from "react";
+// import logoImg from "../assets/logo.png";
+import { FaXTwitter } from "react-icons/fa6";
+import { CiLinkedin } from "react-icons/ci";
+import { FaFacebookF } from "react-icons/fa";
+import { CiYoutube } from "react-icons/ci";
 import Logo from "./Logo";
-import { FaFacebook, FaGithub, FaLinkedin } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 text-gray-300 mt-10">
-      
-      <div className="max-w-7xl mx-auto px-6 py-12 grid gap-10 md:grid-cols-2 lg:grid-cols-4">
-        
-        {/* Logo + Description */}
-        <div>
-          <Logo />
-          <p className="mt-4 text-sm text-gray-400 leading-relaxed">
-            Fast, secure and reliable parcel delivery system. 
-            We make your logistics simple and efficient.
-          </p>
+    <div className="bg-accent-content py-20 text-white">
+      <div className="lg:ml-0 mx-5">
+        <div className="flex lg:justify-center relative ml-3">
+          
+        <Logo />
+        </div>
+        <p className="lg:text-center pt-5">
+          Enjoy fast, reliable parcel delivery with real-time tracking and zero
+          hassle. From personal packages to <br /> business shipments — we
+          deliver on time, every time.
+        </p>
 
-          {/* Social Icons */}
-          <div className="flex gap-4 mt-5 text-xl">
-            <a className="hover:text-blue-500 transition">
-              <FaFacebook />
+        <ul className="flex lg:flex-row flex-col lg:justify-center lg:gap-6 gap-3 py-10">
+          <li>
+            <a href="" t>Service</a>
+          </li>
+          <li>
+            <a href="">Coverage</a>
+          </li>
+          <li>
+            <a href="">About Us</a>
+          </li>
+          <li>
+            <a href="">Pricing</a>
+          </li>
+          <li>
+            <a href="">Blog</a>
+          </li>
+          <li>
+            <a href="">Contact</a>
+          </li>
+        </ul>
+
+        <ul className="flex lg:justify-center gap-6">
+          <li className="backdrop-blur-lg bg-white/10 p-3 rounded-full animate-pulse">
+            <a className="text-[#3074a6] text-3xl" href="https://www.linkedin.com/" target="_blank">
+              <CiLinkedin />
             </a>
-            <a className="hover:text-blue-400 transition">
-              <FaLinkedin />
+          </li>
+          <li className="backdrop-blur-lg bg-white/10 p-3 rounded-full animate-pulse">
+            <a className="text-black text-3xl" href="https://x.com/" target="_blank">
+              <FaXTwitter />
             </a>
-            <a className="hover:text-gray-100 transition">
-              <FaGithub />
+          </li>
+          <li className="backdrop-blur-lg bg-white/10 p-3 rounded-full animate-pulse">
+            <a className="text-[#1a8ae4] text-3xl" href="https://www.facebook.com/groups/1001798088430659/members" target="_blank">
+              <FaFacebookF />
             </a>
-          </div>
-        </div>
-
-        {/* Services */}
-        <div>
-          <h6 className="text-white font-semibold mb-4">Services</h6>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-amber-400 cursor-pointer">Parcel Delivery</li>
-            <li className="hover:text-amber-400 cursor-pointer">Express Shipping</li>
-            <li className="hover:text-amber-400 cursor-pointer">Tracking System</li>
-            <li className="hover:text-amber-400 cursor-pointer">Cash On Delivery</li>
-          </ul>
-        </div>
-
-        {/* Company */}
-        <div>
-          <h6 className="text-white font-semibold mb-4">Company</h6>
-          <ul className="space-y-2 text-sm">
-            <li className="hover:text-amber-400 cursor-pointer">About Us</li>
-            <li className="hover:text-amber-400 cursor-pointer">Contact</li>
-            <li className="hover:text-amber-400 cursor-pointer">Careers</li>
-            <li className="hover:text-amber-400 cursor-pointer">Blog</li>
-          </ul>
-        </div>
-
-        {/* Newsletter */}
-        <div>
-          <h6 className="text-white font-semibold mb-4">Subscribe</h6>
-          <p className="text-sm text-gray-400 mb-3">
-            Get latest updates and offers.
-          </p>
-
-          <div className="flex items-center bg-gray-800 rounded-full overflow-hidden">
-            <input
-              type="email"
-              placeholder="Enter your email"
-              className="px-4 py-2 bg-transparent outline-none text-sm w-full"
-            />
-            <button className="bg-amber-500 px-4 py-2 text-white text-sm hover:bg-amber-600 transition">
-              Send
-            </button>
-          </div>
-        </div>
+          </li>
+          <li className="backdrop-blur-lg bg-white/10 p-3 rounded-full animate-pulse">
+            <a className="text-[#ff0000] text-3xl" href="https://www.youtube.com/" target="_blank">
+              <CiYoutube />
+            </a>
+          </li>
+        </ul>
       </div>
-
-      {/* Bottom */}
-      <div className="border-t border-gray-700 text-center py-4 text-sm text-gray-400">
-        © {new Date().getFullYear()} All rights reserved — Your Company 🚀
-      </div>
-    </footer>
+    </div>
   );
 };
 

@@ -115,10 +115,10 @@ const RidersCashOutHistory = () => {
         <div>
             <div className="p-2 md:p-6">
                 <h1 className="text-xl md:text-3xl font-bold mb-4">
-                    cashOut History : {cashOuts.length}
+                   All CashOut History : {cashOuts.length}
                 </h1>
-                <h1 className="text-xl md:text-3xl font-bold mb-4">
-                    Total cashOut History : {total}
+                <h1 className="text-xl md:text-lg opacity-20 font-bold mb-4">
+                    Total Records : {total}
                 </h1>
 
                 <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
@@ -235,18 +235,6 @@ const RidersCashOutHistory = () => {
                                     </td>
 
                                     <td>
-                                        {/* <div className="flex justify-start items-center gap-3 whitespace-nowrap">
-                                            <button
-                                                onClick={() => handleCashOutRiderModal(cashOut)}
-                                                className="btn btn-outline btn-square text-blue-500 hover:bg-blue-500 hover:text-gray-800">
-                                                <Eye className='text-xs' />
-                                            </button>
-                                            <button
-                                                onClick={() => handleCashOutDelete(cashOut._id)}
-                                                className="btn btn-outline btn-square text-[#f87171] hover:bg-[#f87171] hover:text-gray-800">
-                                                <IoTrashOutline className='text-lg' />
-                                            </button>
-                                        </div> */}
                                         <div className="flex justify-start items-center gap-3 whitespace-nowrap">
                                             <button
                                                 onClick={() => handleCashOutRiderModal(cashOut)}
@@ -332,7 +320,7 @@ const RidersCashOutHistory = () => {
 
                         <div className="flex items-center gap-3 mb-2">
                             <img
-                                src={cashOut.senderPhoto}
+                                src={cashOut.riderPhoto}
                                 className="w-10 h-10 rounded-lg"
                             />
                             <div>
@@ -357,7 +345,7 @@ const RidersCashOutHistory = () => {
                         </p>
 
                         <p className="text-xs mt-1 text-gray-500">
-                            {new Date(cashOut.paidDate).toLocaleString("en-BD", {
+                            {new Date(cashOut.createdAt).toLocaleString("en-BD", {
                                 dateStyle: "medium",
                                 timeStyle: "short",
                             })}

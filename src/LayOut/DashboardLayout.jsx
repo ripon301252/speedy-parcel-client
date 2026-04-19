@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
-import { BadgeDollarSign, Cuboid, HandHelping, LogOut, Motorbike, User, Users } from "lucide-react";
+import { BadgeDollarSign, ChartArea, Cuboid, HandHelping, LogOut, Motorbike, User, Users } from "lucide-react";
 import useRole from "../Hooks/useRole";
 import { useAuth } from "../Hooks/useAuth";
 import Logo from "../Component/Logo";
@@ -10,10 +10,6 @@ import ThemeToggle from "../Theme/ThemeToggle";
 import { toast } from "react-toastify";
 
 const DashboardLayout = () => {
-  // const activeClass = (path) =>
-  // isActive(path)
-  //   ? "bg-green-100 text-green-600 font-semibold"
-  //   : "hover:bg-base-300";
   const [avatarOpen, setAvatarOpen] = useState(false);
   const avatarRef = useRef();
 
@@ -29,19 +25,11 @@ const DashboardLayout = () => {
     if (location.pathname.includes("all-payment-history")) return "All Payment History";
     if (location.pathname.includes("user-profile")) return "User Profile";
     if (location.pathname.includes("all-parcels")) return "All Parcels";
+    if (location.pathname.includes("charts")) return "Charts";
     return "Dashboard";
   };
 
-  // 🔒 outside click close dropdown
-  // useEffect(() => {
-  //   const handleClickOutside = (e) => {
-  //     if (avatarRef.current && !avatarRef.current.contains(e.target)) {
-  //       setAvatarOpen(false);
-  //     }
-  //   };
-  //   document.addEventListener("mousedown", handleClickOutside);
-  //   return () => document.removeEventListener("mousedown", handleClickOutside);
-  // }, []);
+  
 
   const handleLogout = () => {
     logOut()
@@ -87,25 +75,6 @@ const DashboardLayout = () => {
                 {role}
               </span>
 
-              {/* <div className="flex items-center gap-2">
-                <div className="avatar">
-                  <div className="w-8 rounded-full">
-                    <img
-                      src={
-                        user?.photoURL ||
-                        "https://i.ibb.co/4pDNDk1/avatar.png"
-                      }
-                    />
-                  </div>
-                </div>
-
-                <span className="text-sm font-medium hidden md:block">
-                  {user?.displayName}
-                </span>
-              </div> */}
-
-
-
               {/* Avatar */}
               <div className="relative hidden lg:inline-flex" ref={avatarRef}
 
@@ -143,26 +112,6 @@ const DashboardLayout = () => {
                         </span>
 
                         <hr className="my-2" />
-
-                        {/* <Link
-                          to="/user-profile"
-                          className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
-                        >
-                          Profile
-                        </Link>
-
-                        <Link
-                          to="/dashboard"
-                          className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
-                        >
-                          Dashboard
-                        </Link>
-                        <Link
-                          to="/dashboard/charts"
-                          className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
-                        >
-                          Chart
-                        </Link> */}
 
                         <button
                           onClick={handleLogout}
@@ -302,9 +251,6 @@ const DashboardLayout = () => {
                       Assign Parcels
                     </Link>
                   </li>
-
-
-
                   <li>
                     <Link
                       to="/dashboard/riders-cash-out"
@@ -323,6 +269,16 @@ const DashboardLayout = () => {
                     >
                       <BadgeDollarSign size={18} />
                       All Payment History
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/dashboard/charts"
+                      onClick={closeDrawer}
+                      className="flex gap-2 items-center hover:text-green-300"
+                    >
+                      <ChartArea size={18} />
+                      Chart
                     </Link>
                   </li>
                 </>

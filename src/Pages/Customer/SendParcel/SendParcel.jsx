@@ -164,7 +164,6 @@ const SendParcel = () => {
         });
     }
 
-
     return (
         <div className='py-20 '>
             <h1 className='text-5xl font-bold ml-8 '>Send A Parcel</h1>
@@ -268,33 +267,6 @@ const SendParcel = () => {
                                 <span>{toast(errors.senderPhoneNumber.message)}</span>
                             )}
                         </fieldset>
-                        {/* <fieldset className="fieldset mb-3">
-                            <label className="label">Sender Region</label>
-                            <select {...register('senderRegion')} defaultValue="Pick a Region" className="select input-class">
-                                <option disabled={true} className='bg-white text-gray-800'>Pick a Region</option>
-                                {
-                                    regions.map((r, i) => <option className='bg-white text-gray-800' key={i} value={r}>{r}</option>)
-                                }
-                            </select>
-                        </fieldset>
-                        <fieldset className="fieldset mb-3">
-                            <label className="label">Sender Districts</label>
-                            <select {...register('senderDistrict')} defaultValue="Pick a District" className="select input-class">
-                                <option disabled={true} className='bg-white text-gray-800'>Pick a District</option>
-                                {
-                                    districtsByRegion(senderRegion).map((d, i) => <option className='bg-white text-gray-800' key={i} value={d}>{d}</option>)
-                                }
-                            </select>
-                        </fieldset>
-                        <fieldset className="fieldset mb-3">
-                            <label className="label">Sender Area</label>
-                            <select {...register('senderArea')} defaultValue="Pick a Area" className="select input-class">
-                                <option disabled={true} className='bg-white text-gray-800' >Pick a Area</option>
-                                {
-                                    (senderAreas || []).map((s, i) => (<option className='bg-white text-gray-800' key={i} value={s}>{s}</option>))
-                                }
-                            </select>
-                        </fieldset> */}
                         <fieldset className="fieldset mb-3">
                             <label className="label">Sender Region</label>
                             <select
@@ -387,35 +359,6 @@ const SendParcel = () => {
                                 <span>{toast(errors.receiverPhoneNumber.message)}</span>
                             )}
                         </fieldset>
-                        {/* <fieldset className="fieldset mb-3">
-                            <label className="label">Receiver Region</label>
-                            <select {...register('receiverRegion')} defaultValue="Pick a Region" className="select input-class">
-                                <option disabled={true} className='bg-white text-gray-800'>Pick a Region</option>
-                                {
-                                    regions.map((r, i) => <option className='bg-white text-gray-800' key={i} value={r}>{r}</option>)
-                                }
-
-                            </select>
-                        </fieldset>
-                        <fieldset className="fieldset mb-3">
-                            <label className="label">Receiver Districts</label>
-                            <select {...register('receiverDistrict')} defaultValue="Pick a District" className="select input-class">
-                                <option disabled={true} className='bg-white text-gray-800'>Pick a District</option>
-                                {
-                                    districtsByRegion(receiverRegion).map((d, i) => <option className='bg-white text-gray-800' key={i} value={d}>{d}</option>)
-                                }
-                            </select>
-                        </fieldset>
-                        <fieldset className="fieldset mb-3">
-                            <label className="label">Receiver Area</label>
-                            <select {...register('receiverArea')} defaultValue="Pick a Area" className="select input-class">
-                                <option disabled={true} className='bg-white text-gray-800'>Pick a Area</option>
-                                {
-                                    (receiverAreas || []).map((a, i) => (<option className='bg-white text-gray-800' key={i} value={a}>{a}</option>))
-                                }
-                            </select>
-                        </fieldset> */}
-
                         <fieldset className="fieldset mb-3">
                             <label className="label">Receiver Region</label>
                             <select

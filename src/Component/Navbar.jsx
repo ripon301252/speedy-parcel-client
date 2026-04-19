@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 import { Link, NavLink } from "react-router";
-import { HiMenu, HiX } from "react-icons/hi";
+import { HiMenu, HiOutlineCash, HiX } from "react-icons/hi";
 import { useAuth } from "../Hooks/useAuth";
 import useRole from "../Hooks/useRole";
 import ThemeToggle from "../Theme/ThemeToggle";
@@ -8,7 +8,7 @@ import Logo from "./Logo";
 import { toast } from "react-toastify";
 import { FaBox } from "react-icons/fa";
 import { MdOutlineHome } from "react-icons/md";
-import { Handshake, Info, LogIn, MapPin, Motorbike, Phone, Send } from "lucide-react";
+import { BadgeDollarSign, ChartArea, Cuboid, HandHelping, Handshake, Info, LayoutDashboard, LogIn, LogOut, MapPin, Motorbike, PackageCheck, Phone, Send, UserPen } from "lucide-react";
 
 const Navbar = () => {
     const { user, logOut } = useAuth();
@@ -17,17 +17,6 @@ const Navbar = () => {
     const [menuOpen, setMenuOpen] = useState(false);
     const [avatarOpen, setAvatarOpen] = useState(false);
     const avatarRef = useRef();
-
-    // // 🔒 outside click close dropdown
-    // useEffect(() => {
-    //     const handleClickOutside = (e) => {
-    //         if (avatarRef.current && !avatarRef.current.contains(e.target)) {
-    //             setAvatarOpen(false);
-    //         }
-    //     };
-    //     document.addEventListener("mousedown", handleClickOutside);
-    //     return () => document.removeEventListener("mousedown", handleClickOutside);
-    // }, []);
 
     const handleLogout = () => {
         logOut()
@@ -87,7 +76,7 @@ const Navbar = () => {
                 to="/send-parcel"
                 className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <Send size={18}/>
                 Send Parcel
             </NavLink>
 
@@ -95,14 +84,14 @@ const Navbar = () => {
                 to="/my-parcels"
                 className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <Cuboid size={18} />
                 My Parcels
             </NavLink>
             <NavLink
                 to="/payment-history"
                 className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <BadgeDollarSign size={18} />
                 Payments
             </NavLink>
         </>
@@ -114,21 +103,21 @@ const Navbar = () => {
                 to="/assigned-deliveries"
                 className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <HandHelping size={18} />
                 Assigned
             </NavLink>
             <NavLink
                 to="/completed-deliveries"
                 className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <PackageCheck size={18} />
                 Completed
             </NavLink>
             <NavLink
                 to="/cash-out-history"
                 className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <HiOutlineCash size={18} />
                 Cash Out
             </NavLink>
         </>
@@ -139,17 +128,23 @@ const Navbar = () => {
             <NavLink
                 to="/dashboard" className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <LayoutDashboard size={18} />
                 Dashboard
             </NavLink>
             <NavLink
                 to="/dashboard/charts"
                 className={({ isActive }) => activeLinks(isActive)}
             >
-                <FaBox />
+                <ChartArea size={18} />
                 Chart
             </NavLink>
-            <NavLink to="/dashboard/user-profile" className={({ isActive }) => activeLinks(isActive)}>Profile</NavLink>
+            <NavLink 
+            to="/dashboard/user-profile" 
+            className={({ isActive }) => activeLinks(isActive)}
+            >
+                <UserPen size={18} />
+                Profile
+            </NavLink>
         </>
     );
 
@@ -162,14 +157,14 @@ const Navbar = () => {
     }
 
     return (
-        <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 border-b shadow-sm z-[999]">
-            <div className="max-w-7xl mx-auto px-4 py-2 flex justify-between items-center">
+        <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70 border-b border-gray-800 shadow-sm z-[999]">
+            <div className="max-w-6xl mx-auto px-4 py-2 flex justify-between items-center">
 
                 {/* Logo */}
                 <Logo />
 
                 {/* Desktop Menu */}
-                <div className="hidden md:flex gap-5 items-center">
+                <div className="hidden md:flex gap-3 items-center">
                     {!user && publicLinks}
                     {user && role === "user" && userLinks}
                     {user && role === "rider" && riderLinks}
@@ -215,7 +210,7 @@ const Navbar = () => {
                                 {avatarOpen && (
                                     <div
                                         onClick={(e) => e.stopPropagation()} // inside click safe
-                                        className="absolute right-0 mt-13 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50"
+                                        className="absolute right-0 mt-12 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50"
                                     >
                                         <p className="font-semibold text-gray-800 dark:text-white">
                                             {user?.displayName || "User"}
@@ -232,15 +227,17 @@ const Navbar = () => {
 
                                         <Link
                                             to="/user-profile"
-                                            className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                                            className="flex gap-1 items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                                         >
+                                            <UserPen size={18} />
                                             Profile
                                         </Link>
 
                                         <Link
                                             to="/dashboard"
-                                            className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
+                                            className=" flex gap-1 items-center px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
                                         >
+                                            <LayoutDashboard size={18} />
                                             Dashboard
                                         </Link>
                                         {/* <Link
@@ -252,8 +249,9 @@ const Navbar = () => {
 
                                         <button
                                             onClick={handleLogout}
-                                            className="w-full text-left px-3 py-2 rounded hover:bg-red-100 text-red-500 text-sm"
+                                            className="w-full flex gap-1 items-center text-left px-3 py-2 rounded hover:bg-red-100 text-red-500 text-sm"
                                         >
+                                            <LogOut size={18} />
                                             Logout
                                         </button>
                                     </div>
@@ -308,6 +306,7 @@ const Navbar = () => {
                                     }}
                                     className="btn btn-sm bg-red-500 text-white w-full rounded-lg"
                                 >
+                                    <LogOut size={18} />
                                     Logout
                                 </button>
                             ) : (

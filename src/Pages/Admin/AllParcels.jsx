@@ -80,9 +80,6 @@ const AllParcels = () => {
     }
 
 
-
-
-
     const handlePayment = async (parcel) => {
         if (!user) return toast.error("User not logged in");
 
@@ -169,10 +166,10 @@ const AllParcels = () => {
     return (
         <div className="p-2 md:p-6">
             <h1 className="text-lg md:text-2xl font-bold mb-4">
-                All of my parcels : {parcels.length}
+                All parcels : {parcels.length}
             </h1>
-            <h1 className="text-lg md:text-2xl font-bold mb-4">
-                total parcels : {total}
+            <h1 className="text-lg md:text-lg opacity-20 font-bold mb-4">
+                Total Records : {total}
             </h1>
 
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
@@ -218,8 +215,8 @@ const AllParcels = () => {
 
 
             {/* Desktop Table */}
-            <div className="hidden md:block overflow-x-auto">
-                <table className="table w-full">
+            <div className="hidden md:block overflow-x-auto rounded-xl">
+                <table className="table w-full min-w-[900px]">
                     <thead>
                         <tr>
                             <th>#</th>
@@ -239,18 +236,17 @@ const AllParcels = () => {
                             <tr key={parcel._id} className="hover:bg-base-200">
                                 <th>{i + 1}</th>
                                 <td>
-                                    <div className="flex items-center gap-3">
-                                        <div className="avatar">
-                                            <div className="mask mask-squircle h-14 w-14">
-                                                <img
-                                                    src={parcel.senderPhoto}
-                                                    alt="" />
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <div className="font-bold">{parcel.senderName}</div>
-                                            <div className="text-sm opacity-50">{parcel.senderAddress}</div>
-                                            <div className="text-sm opacity-50">{parcel.senderEmail}</div>
+                                    <div className="flex items-center gap-3 min-w-[220px]">
+                                        <img
+                                            src={parcel.senderPhoto}
+                                            className="w-12 h-12 rounded-full object-cover"
+                                            alt=""
+                                        />
+
+                                        <div className="min-w-0">
+                                            <div className="font-bold truncate">{parcel.senderName}</div>
+                                            <div className="text-xs opacity-60 truncate">{parcel.senderEmail}</div>
+                                            <div className="text-xs opacity-50 truncate">{parcel.senderAddress}</div>
                                         </div>
                                     </div>
                                 </td>
@@ -284,19 +280,18 @@ const AllParcels = () => {
                                 </td>
 
                                 <td>
-                                    <p
-                                        className={`text-center py-0.5 rounded-lg font-medium
+                                    <span
+                                        className={`px-2 py-1 text-xs rounded-full whitespace-nowrap
                                             ${parcel.deliveryStatus === "pending-pickup" && "text-yellow-600 bg-yellow-100"}
                                             ${parcel.deliveryStatus === "driver_assigned" && "text-blue-600 bg-blue-100"}
                                             ${parcel.deliveryStatus === "rider_accepted" && "text-indigo-600 bg-indigo-100"}
                                             ${parcel.deliveryStatus === "rider_rejected" && "text-red-600 bg-red-100"}
                                             ${parcel.deliveryStatus === "parcel_picked_up" && "text-orange-600 bg-orange-100"}
                                             ${parcel.deliveryStatus === "parcel_delivered" && "text-green-600 bg-green-100"}
-                                            ${!parcel.deliveryStatus && "text-red-600 bg-red-100"}
                                         `}
                                     >
                                         {parcel.deliveryStatus || "payment-pending"}
-                                    </p>
+                                    </span>
                                 </td>
 
                                 <td className="flex justify-start items-center gap-3 whitespace-nowrap">

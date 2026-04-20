@@ -18,16 +18,6 @@ const CompletedDeliveries = () => {
         }
     });
 
-    const { data: cashOuts = [], refetch: refetchCashOuts } = useQuery({
-        queryKey: ['cashOuts'],
-        queryFn: async () => {
-            const res = await axiosCompletedDelivery.get(`/cash-out`);
-            return res.data.data;
-        }
-    });
-
-    const getCashOutByParcel = (parcelId) =>
-        cashOuts.find(c => c.parcelId === parcelId);
 
     const calculatePayout = (parcel) => {
         let percentage = 0.75;
@@ -60,7 +50,7 @@ const CompletedDeliveries = () => {
             });
 
             if (res.data.insertedId) {
-                await refetchCashOuts();
+                refetch();;
                 Swal.fire({
                     icon: "success",
                     title: "Cash-out Request Sent!",
@@ -76,6 +66,42 @@ const CompletedDeliveries = () => {
             });
         }
     };
+
+    const handleCompletedDelete = (id) => {
+        console.log("delete", id)
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axiosCompletedDelivery.delete(`/parcels/${id}`)
+                    .then(res => {
+                        if (res.data.deletedCount) {
+                            // refetch the data in the UI after deletion
+                            refetch();
+                            Swal.fire(
+                                "Deleted!",
+                                "Your parcel has been deleted.",
+                                "success"
+                            );
+                        }
+                    })
+                    .catch(err => {
+                        console.log(err.message);
+                        Swal.fire(
+                            "Error!",
+                            "Failed to delete the parcel.",
+                            "error"
+                        );
+                    })
+            }
+        });
+    }
 
     return (
         <div className="p-4 md:p-6 ">
@@ -119,18 +145,22 @@ const CompletedDeliveries = () => {
                                 <td>{calculatePayout(parcel)} Tk</td>
 
                                 <td>
-                                    {getCashOutByParcel(parcel._id) ? (
-                                        <span className="text-green-600 font-semibold">
-                                            Applied
-                                        </span>
-                                    ) : (
+                                    <div className='flex gap-2'>
                                         <button
                                             onClick={() => handleCashOut(parcel)}
-                                            className="btn btn-sm btn-success"
+                                            className=" btn btn-success btn-sm"
                                         >
                                             Cash Out
                                         </button>
-                                    )}
+
+                                        <button
+                                            onClick={() => handleCompletedDelete(parcel._id)}
+                                            className="btn btn-sm">
+                                            Delete
+                                        </button>
+                                    </div>
+
+
                                 </td>
                             </tr>
                         ))}
@@ -160,18 +190,20 @@ const CompletedDeliveries = () => {
                         </div>
 
                         <div className="mt-3">
-                            {getCashOutByParcel(parcel._id) ? (
-                                <span className="text-green-600 font-semibold">
-                                    Cash Out Applied
-                                </span>
-                            ) : (
-                                <button
-                                    onClick={() => handleCashOut(parcel)}
-                                    className="w-full btn btn-success btn-sm"
-                                >
-                                    Cash Out
-                                </button>
-                            )}
+
+                            <button
+                                onClick={() => handleCashOut(parcel)}
+                                className=" btn btn-success btn-sm"
+                            >
+                                Cash Out
+                            </button>
+
+                            <button
+                                onClick={() => handleCompletedDelete(parcel._id)}
+                                className="btn btn-sm">
+                                Delete
+                            </button>
+
                         </div>
 
                     </div>

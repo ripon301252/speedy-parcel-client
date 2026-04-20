@@ -50,9 +50,9 @@ const AssignedDeliveries = () => {
       </h1>
 
       {/* ================= TABLE (DESKTOP) ================= */}
-      <div className="hidden md:block overflow-x-auto max-w-7xl mx-auto bg-white rounded-xl shadow text-gray-800">
+      <div className="hidden md:block overflow-x-auto max-w-7xl mx-auto rounded-xl shadow">
         <table className="table w-full">
-          <thead className="bg-gray-100 text-gray-800">
+          <thead className="">
             <tr>
               <th>#</th>
               <th>Sender</th>
@@ -60,34 +60,99 @@ const AssignedDeliveries = () => {
               <th>Parcel</th>
               <th>Status</th>
               <th>Actions</th>
+              <th>Others Actions</th>
             </tr>
           </thead>
 
           <tbody>
             {parcels.map((parcel, i) => (
               <tr key={parcel._id}>
-                <td>{i + 1}</td>
-                <td className="text-sm">{parcel.senderName}</td>
-                <td className="text-sm">{parcel.receiverName}</td>
+                <th>{i + 1}</th>
+
+                <td>
+                  <div className="flex items-center gap-3">
+                    <div className="avatar">
+                      <div className="mask mask-squircle h-12 w-12">
+                        <img src={parcel.senderPhoto} alt="" />
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="font-bold">{parcel.senderName}</div>
+                      <div className="font-bold">{parcel.senderArea}</div>
+                      <div className="text-sm opacity-50">{parcel.senderEmail}</div>
+                    </div>
+                  </div>
+                </td>
+
+                <td>{parcel.receiverName}</td>
                 <td>{parcel.parcelName}</td>
 
-                <td className="text-xs">
-                  {parcel.deliveryStatus}
-                </td>
+                <td className="text-xs">{parcel.deliveryStatus}</td>
 
-                <td className="flex gap-2">
-                  <button onClick={() => handleDeliveryStatusUpdate(parcel, "rider_accepted")} className="text-green-600">
-                    <MdCheckCircle size={20} />
-                  </button>
+                <th>
+                  <div className='flex gap-3'>
+                    {parcel.deliveryStatus === "driver_assigned" ? (
+                      <>
+                        <div className="relative overflow-visible tooltip tooltip-bottom"
+                          data-tip="Rider Accepted">
+                          <button
+                            onClick={() =>
+                              handleDeliveryStatusUpdate(parcel, "rider_accepted")
+                            }
+                            className="text-green-600 hover:bg-green-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                          >
+                            <MdCheckCircle size={20} />
+                          </button>
+                        </div>
 
-                  <button onClick={() => handleDeliveryStatusUpdate(parcel, "rider_rejected")} className="text-red-600">
-                    <MdCancel size={20} />
-                  </button>
+                        <div className="relative overflow-visible tooltip tooltip-bottom"
+                          data-tip="Rider Rejected">
+                          <button
+                            onClick={() =>
+                              handleDeliveryStatusUpdate(parcel, "rider_rejected")
+                            }
+                            className="text-red-600 hover:bg-red-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                          >
+                            <MdCancel size={20} />
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <span className="text-green-500">Accepted</span>
+                    )}
+                  </div>
+                </th>
 
-                  <button onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_picked_up")} className="text-orange-600">
-                    <MdLocalShipping size={20} />
-                  </button>
-                </td>
+                <th>
+                  <div>
+                    {parcel.deliveryStatus === "parcel_picked_up" ? (
+                      <div className="relative overflow-visible tooltip tooltip-bottom"
+                        data-tip="Rider Delivered">
+                        <button
+                          onClick={() =>
+                            handleDeliveryStatusUpdate(parcel, "parcel_delivered")
+                          }
+                          className="text-green-600 hover:bg-green-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                        >
+                          <MdCheckCircle size={20} />
+                        </button>
+                      </div>
+                    ) : parcel.deliveryStatus === "rider_accepted" ? (
+                      <div className="relative overflow-visible tooltip tooltip-bottom"
+                        data-tip="Rider picked Up">
+                        <button
+                          onClick={() =>
+                            handleDeliveryStatusUpdate(parcel, "parcel_picked_up")
+                          }
+                          className="text-orange-600 hover:bg-orange-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                        >
+                          <MdLocalShipping size={20} />
+                        </button>
+                      </div>
+                    ) : <span className="text-xs text-green-500">Coming action</span>}
+                  </div>
+                </th>
               </tr>
             ))}
           </tbody>
@@ -114,7 +179,6 @@ const AssignedDeliveries = () => {
 
             {/* ACTIONS */}
             <div className="flex justify-between mt-4">
-
               <button onClick={() => handleDeliveryStatusUpdate(parcel, "rider_accepted")} className="text-green-600">
                 Accept
               </button>
@@ -126,14 +190,13 @@ const AssignedDeliveries = () => {
               <button onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_picked_up")} className="text-orange-600">
                 Picked
               </button>
-
+              <button onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_picked_up")} className="text-orange-600">
+                Picked
+              </button>
             </div>
-
           </div>
         ))}
-
       </div>
-
     </div>
   );
 };

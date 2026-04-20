@@ -210,7 +210,7 @@ const Navbar = () => {
                                 {avatarOpen && (
                                     <div
                                         onClick={(e) => e.stopPropagation()} // inside click safe
-                                        className="absolute right-0 mt-12 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50"
+                                        className="absolute right-0 mt-14 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50"
                                     >
                                         <p className="font-semibold text-gray-800 dark:text-white">
                                             {user?.displayName || "User"}

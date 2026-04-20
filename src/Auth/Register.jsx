@@ -142,7 +142,7 @@ const Register = () => {
 
 
     return (
-        <div className='flex lg:flex-row flex-col justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
+        <div className='flex lg:flex-row flex-col justify-center items-center max-w-4xl mx-auto min-h-screen gap-8 py-10'>
 
             {/* Lottie */}
             <div className="flex-1 text-center">

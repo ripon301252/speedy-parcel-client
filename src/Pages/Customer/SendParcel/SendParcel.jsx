@@ -49,6 +49,7 @@ const SendParcel = () => {
 
     const handleSendParcel = (data) => {
         console.log(data)
+        data.riderEmail = user.email;
         const parcelWeight = parseFloat(data.parcelWeight);
         const isDocument = data.parcelType === "document";
         const isSameDistrict = data.senderDistrict === data.receiverDistrict;

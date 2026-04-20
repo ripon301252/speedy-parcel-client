@@ -53,9 +53,9 @@ const Login = () => {
     };
 
     return (
-        <div className='flex lg:flex-row flex-col-reverse justify-center items-center max-w-5xl mx-auto min-h-screen gap-8 py-10'>
+        <div className='flex lg:flex-row flex-col-reverse justify-center items-center max-w-4xl mx-auto min-h-screen gap-8 py-10'>
 
-            <div className='flex-1 flex flex-col justify-center bg-white p-10 rounded-2xl shadow-xl border border-gray-200'>
+            <div className='flex-1 flex flex-col justify-center  bg-white p-10 rounded-2xl shadow-xl border border-gray-200'>
 
                 <h1 className='text-3xl font-bold text-center mb-3 text-gray-800'>
                     Welcome Back

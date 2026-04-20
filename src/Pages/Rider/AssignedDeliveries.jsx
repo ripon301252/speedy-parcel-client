@@ -9,7 +9,17 @@ const AssignedDeliveries = () => {
   const { user } = useAuth();
   const axiosAssignedDelivery = useAxiosSecure();
 
-  const { data: parcels = [], refetch } = useQuery({
+  // const { data: parcels = [], refetch } = useQuery({
+  //   queryKey: ['parcels', user?.email, 'driver_assigned'],
+  //   queryFn: async () => {
+  //     const res = await axiosAssignedDelivery.get(
+  //       `/parcels/rider?riderEmail=${user.email}&deliveryStatus=driver_assigned`
+  //     );
+  //     return res.data;
+  //   }
+  // });
+
+  const { data = {}, refetch } = useQuery({
     queryKey: ['parcels', user?.email, 'driver_assigned'],
     queryFn: async () => {
       const res = await axiosAssignedDelivery.get(
@@ -18,6 +28,8 @@ const AssignedDeliveries = () => {
       return res.data;
     }
   });
+
+  const parcels = Array.isArray(data?.data) ? data.data : [];
 
   const handleDeliveryStatusUpdate = (parcel, status) => {
     const deliveryStatusInfo = {
@@ -179,20 +191,65 @@ const AssignedDeliveries = () => {
 
             {/* ACTIONS */}
             <div className="flex justify-between mt-4">
-              <button onClick={() => handleDeliveryStatusUpdate(parcel, "rider_accepted")} className="text-green-600">
-                Accept
-              </button>
+              <div className='flex gap-3'>
+                {parcel.deliveryStatus === "driver_assigned" ? (
+                  <>
+                    <div className="relative overflow-visible tooltip tooltip-bottom"
+                      data-tip="Rider Accepted">
+                      <button
+                        onClick={() =>
+                          handleDeliveryStatusUpdate(parcel, "rider_accepted")
+                        }
+                        className="text-green-600 hover:bg-green-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                      >
+                        <MdCheckCircle size={20} />
+                      </button>
+                    </div>
 
-              <button onClick={() => handleDeliveryStatusUpdate(parcel, "rider_rejected")} className="text-red-600">
-                Reject
-              </button>
+                    <div className="relative overflow-visible tooltip tooltip-bottom"
+                      data-tip="Rider Rejected">
+                      <button
+                        onClick={() =>
+                          handleDeliveryStatusUpdate(parcel, "rider_rejected")
+                        }
+                        className="text-red-600 hover:bg-red-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                      >
+                        <MdCancel size={20} />
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <span className="text-green-500">Accepted</span>
+                )}
+              </div>
 
-              <button onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_picked_up")} className="text-orange-600">
-                Picked
-              </button>
-              <button onClick={() => handleDeliveryStatusUpdate(parcel, "parcel_picked_up")} className="text-orange-600">
-                Picked
-              </button>
+              <div>
+                {parcel.deliveryStatus === "parcel_picked_up" ? (
+                  <div className="relative overflow-visible tooltip tooltip-bottom"
+                    data-tip="Rider Delivered">
+                    <button
+                      onClick={() =>
+                        handleDeliveryStatusUpdate(parcel, "parcel_delivered")
+                      }
+                      className="text-green-600 hover:bg-green-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                    >
+                      <MdCheckCircle size={20} />
+                    </button>
+                  </div>
+                ) : parcel.deliveryStatus === "rider_accepted" ? (
+                  <div className="relative overflow-visible tooltip tooltip-bottom"
+                    data-tip="Rider picked Up">
+                    <button
+                      onClick={() =>
+                        handleDeliveryStatusUpdate(parcel, "parcel_picked_up")
+                      }
+                      className="text-orange-600 hover:bg-orange-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                    >
+                      <MdLocalShipping size={20} />
+                    </button>
+                  </div>
+                ) : <span className="text-xs text-green-500">Coming action</span>}
+              </div>
             </div>
           </div>
         ))}

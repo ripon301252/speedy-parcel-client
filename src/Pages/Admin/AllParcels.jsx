@@ -20,7 +20,6 @@ const AllParcels = () => {
     const [viewParcel, setViewParcel] = useState(null);
     const [searchText, setSearchText] = useState('');
     const [status, setStatus] = useState('');
-
     const [page, setPage] = useState(1);
     const limit = 10;
 
@@ -172,6 +171,7 @@ const AllParcels = () => {
                 Total Records : {total}
             </h1>
 
+            {/* Search */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">
                 {/* Search */}
                 <div className="w-full sm:w-1/2">

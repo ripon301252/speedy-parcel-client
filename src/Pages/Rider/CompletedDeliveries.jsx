@@ -1,22 +1,38 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../Hooks/useAuth';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Swal from 'sweetalert2';
 
+
 const CompletedDeliveries = () => {
     const { user } = useAuth();
     const axiosCompletedDelivery = useAxiosSecure();
+    const [page, setPage] = useState(1);
+    const limit = 10;
 
-    const { data: parcels = [], refetch } = useQuery({
-        queryKey: ['parcels', user?.email, 'parcel_delivered'],
+    // const { data: parcels =[], refetch } = useQuery({
+    //     queryKey: ['parcels', user?.email, page, 'parcel_delivered'],
+    //     queryFn: async () => {
+    //         const res = await axiosCompletedDelivery.get(
+    //             `/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel_delivered&page=${page}&limit=${limit}`
+    //         );
+    //         return res.data;
+    //     }
+    // });
+
+
+    const { data, refetch } = useQuery({
+        queryKey: ['parcels', user?.email, page, 'parcel_delivered'],
         queryFn: async () => {
             const res = await axiosCompletedDelivery.get(
-                `/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel_delivered`
+                `/parcels/rider?riderEmail=${user.email}&deliveryStatus=parcel_delivered&page=${page}&limit=${limit}`
             );
             return res.data;
         }
     });
+
+    const parcels = data?.data ?? [];
 
 
     const calculatePayout = (parcel) => {
@@ -56,7 +72,7 @@ const CompletedDeliveries = () => {
                     title: "Cash-out Request Sent!",
                     text: `Amount: ${payout} Tk`
                 });
-                refetch();
+
             }
         } catch (err) {
             Swal.fire({
@@ -127,7 +143,7 @@ const CompletedDeliveries = () => {
                     </thead>
 
                     <tbody>
-                        {parcels.map((parcel, i) => (
+                        {Array.isArray(parcels) && parcels.map((parcel, i) => (
                             <tr key={parcel._id}>
                                 <td>{i + 1}</td>
                                 <td>{parcel.parcelName}</td>
@@ -146,30 +162,48 @@ const CompletedDeliveries = () => {
 
                                 <td>
                                     <div className='flex gap-2'>
-                                        <button
-                                            onClick={() => handleCashOut(parcel)}
-                                            className=" btn btn-success btn-sm"
-                                        >
-                                            Cash Out
-                                        </button>
-
-                                        <button
-                                            onClick={() => handleCompletedDelete(parcel._id)}
-                                            className="btn btn-sm">
-                                            Delete
-                                        </button>
+                                        {parcel.status === "pending" ? (
+                                            <button onClick={() => handleCashOut(parcel)} className="btn btn-success btn-sm">
+                                                Cash Out
+                                            </button>
+                                        ) : (
+                                            <button
+                                                onClick={() => handleCompletedDelete(parcel._id)}
+                                                className="btn btn-sm btn-error">
+                                                Delete
+                                            </button>
+                                        )}
                                     </div>
-
-
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
+                {/* pagination */}
+                <div className="flex justify-center gap-3 mt-4">
+                    <button
+                        onClick={() => setPage(page - 1)}
+                        disabled={page === 1}
+                        className="btn btn-sm"
+                    >
+                        Prev
+                    </button>
+
+                    <span className="px-3 py-1 border rounded">
+                        Page {page}
+                    </span>
+
+                    <button
+                        onClick={() => setPage(page + 1)}
+                        className="btn btn-sm"
+                    >
+                        Next
+                    </button>
+                </div>
             </div>
 
             {/* ================= MOBILE CARDS ================= */}
-            <div className="grid grid-cols-1 gap-4 md:hidden">
+            <div className="grid grid-cols-1 gap-4 md:hidden text-gray-800">
 
                 {parcels.map((parcel, i) => (
                     <div key={parcel._id} className="bg-white border rounded-xl shadow p-4">
@@ -189,23 +223,20 @@ const CompletedDeliveries = () => {
                             <p><b>Payout:</b> {calculatePayout(parcel)} Tk</p>
                         </div>
 
-                        <div className="mt-3">
+                        <div className="flex items-center gap-2 mt-3">
 
-                            <button
+                            {parcel.status === "pending" ? (<button
                                 onClick={() => handleCashOut(parcel)}
                                 className=" btn btn-success btn-sm"
                             >
                                 Cash Out
-                            </button>
-
-                            <button
+                            </button>): (<button
                                 onClick={() => handleCompletedDelete(parcel._id)}
-                                className="btn btn-sm">
+                                className="btn btn-sm btn-error">
                                 Delete
-                            </button>
-
+                            </button>)
+                            }
                         </div>
-
                     </div>
                 ))}
 

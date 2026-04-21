@@ -40,12 +40,13 @@ const MyPaymentHistory = () => {
 
 
     return (
-        <div className="p-2 md:p-6 space-y-4">
-            <h1 className="text-xl md:text-3xl font-bold mb-4">
-                Payment History : {payments.length}
+        <div className="space-y-4 lg:max-w-7xl lg:mx-auto lg:py-10 py-5 mx-3">
+            <h1 className="lg:text-5xl text-3xl font-bold mb-4">
+                {/* Payment History : {payments.length} */}
+                Payment History
             </h1>
-            <h1 className="text-xl opacity-20 font-bold mb-4">
-                Total Records : {total}
+            <h1 className="text-base opacity-20 font-bold mb-4">
+                Total Records : ({total})
             </h1>
 
             {/* Filter */}

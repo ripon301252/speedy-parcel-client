@@ -115,7 +115,7 @@ const RidersCashOutHistory = () => {
         <div>
             <div className="p-2 md:p-6">
                 <h1 className="text-xl md:text-3xl font-bold mb-4">
-                   All CashOut History : {cashOuts.length}
+                    All CashOut History : {cashOuts.length}
                 </h1>
                 <h1 className="text-xl md:text-lg opacity-20 font-bold mb-4">
                     Total Records : {total}
@@ -310,7 +310,7 @@ const RidersCashOutHistory = () => {
                                 #{i + 1} {cashOut.parcelName}
                             </h2>
 
-                            <span className={`badge ${cashOut.cashOutStatus === "paid"
+                            <span className={`badge ${cashOut.status === "approved"
                                 ? "badge-success"
                                 : "badge-warning"
                                 }`}>
@@ -357,6 +357,25 @@ const RidersCashOutHistory = () => {
                                 className="btn btn-xs btn-primary">
                                 View
                             </button>
+                            {/* Approve */}
+                            {cashOut.status !== "approved" && (
+                                <button
+                                    onClick={() => handleApproveCashOut(cashOut._id)}
+                                    className="btn btn-xs btn-accent"
+                                >
+                                    Approved
+                                </button>
+                            )}
+
+                            {/* Reject */}
+                            {cashOut.status !== "rejected" && (
+                                <button
+                                    onClick={() => handleRejectCashOut(cashOut._id)}
+                                    className="btn btn-xs btn-warning"
+                                >
+                                    Rejected
+                                </button>
+                            )}
                             <button
                                 onClick={() => handleCashOutDelete(cashOut._id)}
                                 className="btn btn-xs btn-error"

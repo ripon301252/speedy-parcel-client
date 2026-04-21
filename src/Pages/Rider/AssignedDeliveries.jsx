@@ -55,12 +55,18 @@ const AssignedDeliveries = () => {
   };
 
   return (
-    <div className="p-4 md:p-6">
+    <div className="lg:max-w-7xl lg:mx-auto lg:py-10 py-5 mx-3">
 
-      <h1 className="text-lg md:text-2xl font-bold mb-4 ml-6">
-        Assigned Deliveries ({parcels.length})
+      <h1 className="lg:text-5xl text-3xl font-bold mb-4">
+        {/* Assigned Deliveries ({parcels.length}) */}
+        Assigned Deliveries
       </h1>
 
+      <p className="text-base opacity-20 mb-4">
+        Total Records : ({parcels.length})
+      </p>
+
+    
       {/* ================= TABLE (DESKTOP) ================= */}
       <div className="hidden md:block overflow-x-auto max-w-7xl mx-auto rounded-xl shadow">
         <table className="table w-full">
@@ -175,7 +181,7 @@ const AssignedDeliveries = () => {
       <div className="grid grid-cols-1 gap-4 md:hidden">
 
         {parcels.map((parcel, i) => (
-          <div key={parcel._id} className="bg-white shadow rounded-xl p-4 border text-gray-800">
+          <div key={parcel._id} className=" shadow rounded-xl p-4 border">
 
             <div className="flex justify-between">
               <h2 className="font-bold">#{i + 1} {parcel.parcelName}</h2>
@@ -194,27 +200,26 @@ const AssignedDeliveries = () => {
               <div className='flex gap-3'>
                 {parcel.deliveryStatus === "driver_assigned" ? (
                   <>
-                    <div className="relative overflow-visible tooltip tooltip-bottom"
-                      data-tip="Rider Accepted">
+                    <div className="relative overflow-visible tooltip tooltip-bottom">
                       <button
                         onClick={() =>
                           handleDeliveryStatusUpdate(parcel, "rider_accepted")
                         }
-                        className="text-green-600 hover:bg-green-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                        className=" cursor-pointer btn btn-xs btn-accent"
                       >
-                        <MdCheckCircle size={20} />
+                        Accepted
                       </button>
                     </div>
 
-                    <div className="relative overflow-visible tooltip tooltip-bottom"
-                      data-tip="Rider Rejected">
+                    <div className="relative overflow-visible tooltip tooltip-bottom">
                       <button
                         onClick={() =>
                           handleDeliveryStatusUpdate(parcel, "rider_rejected")
                         }
-                        className="text-red-600 hover:bg-red-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                        className="cursor-pointer btn btn-xs btn-error"
                       >
-                        <MdCancel size={20} />
+                        {/* <MdCancel size={20} /> */}
+                        Rejected
                       </button>
                     </div>
                   </>
@@ -225,27 +230,25 @@ const AssignedDeliveries = () => {
 
               <div>
                 {parcel.deliveryStatus === "parcel_picked_up" ? (
-                  <div className="relative overflow-visible tooltip tooltip-bottom"
-                    data-tip="Rider Delivered">
+                  <div className="relative overflow-visible tooltip tooltip-bottom">
                     <button
                       onClick={() =>
                         handleDeliveryStatusUpdate(parcel, "parcel_delivered")
                       }
-                      className="text-green-600 hover:bg-green-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                      className="cursor-pointer btn btn-xs btn-accent"
                     >
-                      <MdCheckCircle size={20} />
+                      Delivered
                     </button>
                   </div>
                 ) : parcel.deliveryStatus === "rider_accepted" ? (
-                  <div className="relative overflow-visible tooltip tooltip-bottom"
-                    data-tip="Rider picked Up">
+                  <div className="relative overflow-visible tooltip tooltip-bottom">
                     <button
                       onClick={() =>
                         handleDeliveryStatusUpdate(parcel, "parcel_picked_up")
                       }
-                      className="text-orange-600 hover:bg-orange-600 hover:text-gray-800 cursor-pointer btn btn-square btn-outline"
+                      className="text-orange-600 hover:bg-orange-600 hover:text-gray-800 cursor-pointer btn btn-xs btn-primary"
                     >
-                      <MdLocalShipping size={20} />
+                      Picked Up
                     </button>
                   </div>
                 ) : <span className="text-xs text-green-500">Coming action</span>}

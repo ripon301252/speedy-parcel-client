@@ -163,12 +163,13 @@ const AllParcels = () => {
     };
 
     return (
-        <div className="p-2 md:p-6">
-            <h1 className="text-lg md:text-2xl font-bold mb-4">
-                All parcels : {parcels.length}
+        <div className="lg:max-w-7xl lg:mx-auto lg:py-10 py-5 mx-3">
+            <h1 className="lg:text-5xl text-3xl font-bold mb-4">
+                {/* All parcels : {parcels.length} */}
+                All parcels
             </h1>
-            <h1 className="text-lg md:text-lg opacity-20 font-bold mb-4">
-                Total Records : {total}
+            <h1 className="text-base opacity-20 mb-4">
+                Total Records : ({total})
             </h1>
 
             {/* Search */}
@@ -288,6 +289,7 @@ const AllParcels = () => {
                                             ${parcel.deliveryStatus === "rider_rejected" && "text-red-600 bg-red-100"}
                                             ${parcel.deliveryStatus === "parcel_picked_up" && "text-orange-600 bg-orange-100"}
                                             ${parcel.deliveryStatus === "parcel_delivered" && "text-green-600 bg-green-100"}
+                                            ${!parcel.deliveryStatus && "text-red-600 bg-red-100"}
                                         `}
                                     >
                                         {parcel.deliveryStatus || "payment-pending"}
@@ -387,6 +389,10 @@ const AllParcels = () => {
                         <p className="text-sm">
                             <b>Cost:</b> {parcel.cost} Tk
                         </p>
+
+                        <Link to={`/parcel-tracking/${parcel.trackingId}`}>
+                            <p>Track Id: <span className='text-green-400'>{parcel.trackingId}</span> </p>
+                        </Link>
 
                         <div className="flex gap-2 mt-3">
                             <button onClick={() => handleViewDetails(parcel)}

@@ -120,10 +120,14 @@ const CompletedDeliveries = () => {
     }
 
     return (
-        <div className="p-4 md:p-6 ">
+        <div className="lg:max-w-7xl lg:mx-auto lg:py-10 py-5 mx-3">
 
-            <h1 className="text-lg md:text-3xl font-bold mb-4 ml-6">
-                Completed Deliveries ({parcels.length})
+            <h1 className="lg:text-5xl text-3xl font-bold mb-4">
+                {/* Completed Deliveries ({parcels.length}) */}
+                Completed Deliveries
+            </h1>
+            <h1 className="text-base opacity-20 mb-4">
+                Total Records: ({parcels.length})
             </h1>
 
             {/* ================= TABLE (DESKTOP) ================= */}
@@ -203,10 +207,10 @@ const CompletedDeliveries = () => {
             </div>
 
             {/* ================= MOBILE CARDS ================= */}
-            <div className="grid grid-cols-1 gap-4 md:hidden text-gray-800">
+            <div className="grid grid-cols-1 gap-4 md:hidden">
 
                 {parcels.map((parcel, i) => (
-                    <div key={parcel._id} className="bg-white border rounded-xl shadow p-4">
+                    <div key={parcel._id} className=" border rounded-xl shadow p-4">
 
                         <div className="flex justify-between">
                             <h2 className="font-bold">

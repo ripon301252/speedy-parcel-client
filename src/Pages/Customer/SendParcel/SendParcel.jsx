@@ -166,8 +166,8 @@ const SendParcel = () => {
     }
 
     return (
-        <div className='py-20 '>
-            <h1 className='lg:text-5xl text-4xl font-bold lg:ml-8 lg:text-left text-center '>Send A Parcel</h1>
+        <div className='lg:py-10 py-5'>
+            <h1 className='lg:text-5xl text-3xl font-bold lg:ml-8 lg:text-left text-center '>Send A Parcel</h1>
             <p className='lg:my-5 text-sm lg:ml-8 lg:text-left text-center mt-3'>Enter your parcel details</p>
             <form onSubmit={handleSubmit(handleSendParcel)} className=' lg:max-w-7xl lg:mx-auto mx-2 lg:text-left text-center'>
                 {/* document */}

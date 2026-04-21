@@ -68,7 +68,7 @@ const Banner = () => {
 
                 {/* Buttons */}
                 <div className="flex flex-col items-center sm:flex-row gap-2 sm:gap-4 justify-center">
-                  <Link to={`/contact`} className="px-5 py-2 sm:px-8 sm:py-3 bg-green-500 hover:bg-green-600 transition rounded-full font-semibold text-sm sm:text-base w-36 ">
+                  <Link to={`/contact`} className="px-5 py-2 sm:px-8 sm:py-3 bg-[#449107] hover:bg-[#56a516] transition rounded-full font-semibold text-sm sm:text-base w-36 ">
                     Contact
                   </Link>
 

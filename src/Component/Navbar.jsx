@@ -44,7 +44,7 @@ const Navbar = () => {
                 className={({ isActive }) => activeLinks(isActive)}
             >
                 <Info size={18} />
-                About
+                About Us
             </NavLink>
             <NavLink
                 to="/contact"
@@ -289,7 +289,7 @@ const Navbar = () => {
 
                         <div className="border-t pt-3 space-y-2">
                             <NavLink to="/rider" className="btn btn-sm w-full bg-green-500 ">Be a Rider</NavLink>
-                            <NavLink to="/dashboard/charts" className="btn btn-sm w-full bg-green-500">Chart</NavLink>
+                            {/* <NavLink to="/dashboard/charts" className="btn btn-sm w-full bg-green-500">Chart</NavLink> */}
                             <Link
                                 to="/dashboard"
                                 onClick={() => setMenuOpen(false)}

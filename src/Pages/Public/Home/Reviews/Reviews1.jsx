@@ -101,7 +101,7 @@ const Reviews1 = ({ toggle }) => {
 
                 {
                     reviews.map((review, index) => (
-                        <SwiperSlide key={index} className='bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-md'>
+                        <SwiperSlide key={index} className='bg-white p-4 md:p-6 rounded-2xl md:rounded-3xl shadow-md border border-gray-200'>
                             <div>
                                 <img src={reviewImg} alt="" />
                             </div>

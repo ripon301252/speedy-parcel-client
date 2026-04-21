@@ -15,7 +15,7 @@ const CashOutHistory = () => {
   const [page, setPage] = useState(1);
   const limit = 10;
 
-  const { data, refetch } = useQuery({
+  const { data } = useQuery({
     queryKey: ['cashOuts', user?.email, status, page],
     queryFn: async () => {
       const url = `/cash-out?email=${user?.email}&status=${status}&page=${page}&limit=${limit}`;
@@ -33,15 +33,15 @@ const CashOutHistory = () => {
   };
 
   return (
-    <div className="p-4 md:p-6">
+    <div className="lg:max-w-7xl lg:mx-auto lg:py-10 py-5 mx-3">
 
       {/* HEADER */}
-      <h1 className="text-lg md:text-3xl font-bold mb-2">
-        Cash Out History ({cashOuts.length})
+      <h1 className="lg:text-5xl text-3xl font-bold mb-2">
+        Cash Out History
       </h1>
 
-      <h2 className="text-sm md:text-lg mb-4 text-gray-600">
-        Total Records: {total}
+      <h2 className="text-base mb-4 opacity-20">
+        Total Records: ({total})
       </h2>
 
       {/* FILTER */}
@@ -155,7 +155,16 @@ const CashOutHistory = () => {
 
             <div className="flex justify-between">
               <h2 className="font-bold">#{i + 1}</h2>
-              <span className="text-xs text-gray-500">
+              <span
+                className={`text-xs font-medium ${cashOut.status === "pending"
+                    ? "text-yellow-500"
+                    : cashOut.status === "approved"
+                      ? "text-green-500"
+                      : cashOut.status === "rejected"
+                        ? "text-red-500"
+                        : "text-gray-500"
+                  }`}
+              >
                 {cashOut.status}
               </span>
             </div>
@@ -182,9 +191,9 @@ const CashOutHistory = () => {
             <div className="mt-3">
               <button
                 onClick={() => handleCashOutRiderModal(cashOut)}
-                className="btn btn-sm w-full"
+                className="btn btn-xs btn-primary"
               >
-                <Eye size={16} /> View
+                View
               </button>
             </div>
 

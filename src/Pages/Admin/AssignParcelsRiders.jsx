@@ -213,7 +213,7 @@ const AssignParcelsRiders = () => {
                                 <div className="flex items-center gap-3">
                                     <img
                                         className="w-12 h-12 rounded-full"
-                                        src={rider.photo}
+                                        src={rider.riderPhoto}
                                         alt=""
                                     />
 

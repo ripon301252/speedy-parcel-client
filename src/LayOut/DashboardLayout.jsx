@@ -293,7 +293,6 @@ const DashboardLayout = () => {
                   </li>
                 </>
               )}
-
               <button
                 onClick={handleLogout}
                 className="flex gap-2 items-center text-left px-3 py-2 rounded hover:bg-red-100 text-red-500 text-sm cursor-pointer"

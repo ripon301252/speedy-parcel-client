@@ -154,9 +154,9 @@ const UserManagement = () => {
 
     return (
         <div className='max-w-6xl mx-auto px-3 sm:px-4 lg:px-6 py-10'>
-            <h1 className='text-2xl sm:text-3xl lg:text-4xl font-bold'>Manage All Users</h1>
+            <h1 className='text-3xl sm:text-3xl lg:text-5xl font-bold'>Manage All Users</h1>
             {/* <h1 className='text-4xl font-bold'>User Control Panel</h1> */}
-            <h1 className='text-sm sm:text-base text-green-500 font-bold mt-'>Total users ({users.length})</h1>
+            {/* <h1 className='text-sm sm:text-base text-green-500 font-bold mt-'>Total users ({users.length})</h1> */}
             <h1 className='text-sm sm:text-base text-green-500 font-bold mt-'>All users ({total})</h1>
             {/* <p>search text : {searchText}</p> */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 items-stretch sm:items-center mt-4 mb-8">

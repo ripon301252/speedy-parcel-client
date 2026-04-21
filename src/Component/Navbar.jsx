@@ -240,16 +240,9 @@ const Navbar = () => {
                                             <LayoutDashboard size={18} />
                                             Dashboard
                                         </Link>
-                                        {/* <Link
-                                            to="/dashboard/charts"
-                                            className="block px-3 py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 text-sm"
-                                        >
-                                            Chart
-                                        </Link> */}
-
                                         <button
                                             onClick={handleLogout}
-                                            className="w-full flex gap-1 items-center text-left px-3 py-2 rounded hover:bg-red-100 text-red-500 text-sm"
+                                            className="w-full flex gap-1 items-center text-left px-3 py-2 rounded hover:bg-red-100 text-red-500 text-sm cursor-pointer"
                                         >
                                             <LogOut size={18} />
                                             Logout

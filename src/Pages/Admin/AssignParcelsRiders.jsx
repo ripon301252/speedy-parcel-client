@@ -2,13 +2,14 @@ import { useQuery } from '@tanstack/react-query';
 import React, { useRef, useState } from 'react';
 import useAxiosSecure from '../../Hooks/useAxiosSecure';
 import Swal from 'sweetalert2';
+import { FaMotorcycle } from 'react-icons/fa';
 
 const AssignParcelsRiders = () => {
     const [selectedParcel, setSelectedParcel] = useState(null);
     const axiosAssignRider = useAxiosSecure();
     const riderModalRef = useRef();
 
-    const { data, refetch : parcelsRefetch} = useQuery({
+    const { data, refetch: parcelsRefetch } = useQuery({
         queryKey: ["parcels", "pending-pickup"],
         queryFn: async () => {
             const res = await axiosAssignRider.get('/parcels?deliveryStatus=pending-pickup');
@@ -20,7 +21,7 @@ const AssignParcelsRiders = () => {
 
 
 
-    const { data: ridersData , isLoading: ridersLoading } = useQuery({
+    const { data: ridersData, isLoading: ridersLoading } = useQuery({
         queryKey: ['riders', selectedParcel?.senderDistrict, selectedParcel?.senderArea, 'available'],
         enabled: !!selectedParcel,
         queryFn: async () => {
@@ -31,7 +32,7 @@ const AssignParcelsRiders = () => {
         }
     })
 
-     const riders = ridersData?.data ?? [];
+    const riders = ridersData?.data ?? [];
 
 
 
@@ -122,11 +123,17 @@ const AssignParcelsRiders = () => {
                                 </div>
                             </td>
 
-                            <td>
-                                <button
-                                    onClick={() => handleAssignRiderModal(parcel)}
-                                    className='btn btn-sm'>Find Rider</button>
-                            </td>
+                            <th>
+                                <div  className="relative overflow-visible tooltip tooltip-bottom"
+                                            data-tip="Find Rider">
+                                    <button
+                                        onClick={() => handleAssignRiderModal(parcel)}
+                                        className="btn btn-sm btn-square btn-outline text-green-500 hover:bg-green-500 hover:text-gray-800"
+                                    >
+                                        {/* Find Rider */}<FaMotorcycle className='text-base' />
+                                    </button>
+                                </div>
+                            </th>
                         </tr>)
                         }
 

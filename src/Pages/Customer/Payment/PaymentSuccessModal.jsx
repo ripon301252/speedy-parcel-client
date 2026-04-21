@@ -28,32 +28,52 @@ const PaymentSuccessModal = () => {
     }, [sessionId, axiosPayment]);
 
     return (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm px-4">
-            <div className="bg-white shadow-lg rounded-xl max-w-md w-full p-6 sm:p-10 text-center relative">
-                <CheckCircleIcon className="w-16 h-16 text-green-500 mx-auto mb-4 animate-bounce" />
-                <h2 className="text-3xl sm:text-4xl font-bold text-gray-800 mb-2">Payment Successful!</h2>
-                <p className="text-gray-600 mb-6">
-                    Thank you for your payment. Your transaction has been completed successfully.
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 backdrop-blur-sm px-3 sm:px-6">
+
+            <div className="bg-white dark:bg-gray-900 shadow-2xl rounded-2xl w-full max-w-sm sm:max-w-md p-5 sm:p-8 text-center relative">
+
+                {/* Icon */}
+                <CheckCircleIcon className="w-14 h-14 sm:w-16 sm:h-16 text-green-500 mx-auto mb-4 animate-bounce" />
+
+                {/* Title */}
+                <h2 className="text-2xl sm:text-3xl font-bold text-gray-800 dark:text-white mb-2">
+                    Payment Successful!
+                </h2>
+
+                {/* Description */}
+                <p className="text-sm sm:text-base text-gray-600 dark:text-gray-300 mb-5">
+                    Your transaction has been completed successfully.
                 </p>
 
-                <div className="bg-gray-50 rounded-lg p-4 mb-6">
-                    <p className="text-gray-700"><span className="font-semibold">Transaction ID:</span> {paymentInfo.transactionId || 'Loading...'}</p>
-                    <p className="text-gray-700"><span className="font-semibold">Tracking ID:</span> {paymentInfo.trackingId || 'Loading...'}</p>
+                {/* Info Box */}
+                <div className="bg-gray-50 dark:bg-gray-800 rounded-xl p-3 sm:p-4 mb-5 text-left">
+                    <p className="text-gray-700 dark:text-gray-200 text-xs sm:text-sm break-all">
+                        <span className="font-semibold">Transaction ID:</span>{" "}
+                        {paymentInfo.transactionId || "Loading..."}
+                    </p>
+
+                    <p className="text-gray-700 dark:text-gray-200 text-xs sm:text-sm break-all mt-1">
+                        <span className="font-semibold">Tracking ID:</span>{" "}
+                        {paymentInfo.trackingId || "Loading..."}
+                    </p>
                 </div>
 
-                <div className='flex gap-4'>
-                    <Link to="/my-parcels" className=' block'>
-                        <button className=" w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-lg transition-all duration-300 shadow-md hover:shadow-lg">
+                {/* Buttons */}
+                <div className="flex flex-col sm:flex-row gap-3">
+
+                    <Link to="/my-parcels" className="w-full">
+                        <button className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2.5 rounded-lg transition shadow-md">
                             Go To My Parcels
                         </button>
                     </Link>
 
                     <button
-                        onClick={() => navigate('/my-parcels')}
-                        className=" bg-gray-200 hover:bg-red-500 hover:text-white text-gray-700 font-semibold py-2 px-16 rounded-lg transition-all duration-300"
+                        onClick={() => navigate("/my-parcels")}
+                        className="w-full sm:w-auto bg-gray-200 hover:bg-red-500 hover:text-white text-gray-700 font-semibold py-2.5 px-6 rounded-lg transition"
                     >
                         Cancel
                     </button>
+
                 </div>
             </div>
         </div>

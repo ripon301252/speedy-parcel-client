@@ -1,5 +1,10 @@
 import React from "react";
+import deliveryVanImg from "../../assets/delivery-van.png";
 import serviceImg from "../../assets/service.png";
+import riderImg from "../../assets/delivery4.png";
+import runningGiftImg from "../../assets/running.gif";
+import deliveryPngImg from "../../assets/delivery.png";
+import hubImg from "../../assets/hub.png";
 
 const OurServices = () => {
   return (
@@ -18,10 +23,10 @@ const OurServices = () => {
       <div>
         <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 gap-7 mt-7">
           <div
-            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl hover:bg-[#caeb66] text-center flex flex-col items-center"
+            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl text-center flex flex-col items-center"
           >
             <div>
-              <img src={serviceImg} alt="" />
+              <img className="w-14" src={deliveryVanImg} alt="" />
             </div>
             <h3 className="text-xl font-bold my-4">Express  & Standard Delivery</h3>
             <p>
@@ -31,10 +36,10 @@ const OurServices = () => {
           </div>
 
           <div
-            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl hover:bg-[#caeb66] text-center flex flex-col items-center"
+            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl text-center flex flex-col items-center"
           >
             <div>
-              <img src={serviceImg} alt="" />
+              <img className="w-11" src={serviceImg} alt="" />
             </div>
             <h3 className="text-xl font-bold my-4">Nationwide Delivery</h3>
             <p>
@@ -44,10 +49,10 @@ const OurServices = () => {
           </div>
 
           <div
-            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl hover:bg-[#caeb66] text-center flex flex-col items-center"
+            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl text-center flex flex-col items-center"
           >
             <div>
-              <img src={serviceImg} alt="" />
+              <img className="w-11" src={riderImg} alt="" />
             </div>
             <h3 className="text-xl font-bold my-4">Fulfillment Solution</h3>
             <p>
@@ -62,10 +67,10 @@ const OurServices = () => {
         <div className="grid md:grid-cols-3 lg:grid-cols-3 grid-cols-1 gap-7 mt-7">
             
           <div
-            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl hover:bg-[#caeb66] text-center flex flex-col items-center"
+            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl text-center flex flex-col items-center"
           >
             <div>
-              <img src={serviceImg} alt="" />
+              <img className="w-11" src={runningGiftImg} alt="" />
             </div>
             <h3 className="text-xl font-bold my-4">Booking Pick & Drop</h3>
             <p>
@@ -75,10 +80,10 @@ const OurServices = () => {
           </div>
 
           <div
-            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl hover:bg-[#caeb66] text-center flex flex-col items-center"
+            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl text-center flex flex-col items-center"
           >
             <div>
-              <img src={serviceImg} alt="" />
+              <img className="w-14" src={deliveryPngImg} alt="" />
             </div>
             <h3 className="text-xl font-bold my-4">Cash On Delivery</h3>
             <p>
@@ -88,10 +93,10 @@ const OurServices = () => {
           </div>
 
           <div
-            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl hover:bg-[#caeb66] text-center flex flex-col items-center"
+            className="bg-white border-1 border-gray-300 p-10 rounded-2xl transition-all duration-300 hover:scale-105 hover:-translate-y-2 hover:shadow-xl text-center flex flex-col items-center"
           >
             <div>
-              <img src={serviceImg} alt="" />
+              <img className="w-14" src={hubImg} alt="" />
             </div>
             <h3 className="text-xl font-bold my-4">Delivery Hub</h3>
             <p>

@@ -134,7 +134,7 @@ const DashboardLayout = () => {
           </nav>
 
           {/* HEADER CARD */}
-          <div className="p-4">
+          <div className="lg:p-4 p-1">
             <div className="bg-base-200 rounded-xl p-4 shadow flex justify-between items-center">
 
               <div>
@@ -157,7 +157,7 @@ const DashboardLayout = () => {
           </div>
 
           {/* PAGE CONTENT */}
-          <div className="p-4">
+          <div className="lg:p-4 p-1">
             <Outlet />
           </div>
 

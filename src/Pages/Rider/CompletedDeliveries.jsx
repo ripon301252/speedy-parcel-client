@@ -140,6 +140,7 @@ const CompletedDeliveries = () => {
                             <th>Sender</th>
                             <th>District</th>
                             <th>Date</th>
+                            <th>Delivery Status</th>
                             <th>Cost</th>
                             <th>Payout</th>
                             <th>Action</th>
@@ -161,6 +162,21 @@ const CompletedDeliveries = () => {
                                     })}
                                 </td>
 
+                                <td>
+                                    <span
+                                        className={`px-2 py-1 text-xs rounded-full whitespace-nowrap
+                                            ${parcel.deliveryStatus === "pending-pickup" && "text-yellow-600 bg-yellow-100"}
+                                            ${parcel.deliveryStatus === "driver_assigned" && "text-blue-600 bg-blue-100"}
+                                            ${parcel.deliveryStatus === "rider_accepted" && "text-indigo-600 bg-indigo-100"}
+                                            ${parcel.deliveryStatus === "rider_rejected" && "text-red-600 bg-red-100"}
+                                            ${parcel.deliveryStatus === "parcel_picked_up" && "text-orange-600 bg-orange-100"}
+                                            ${parcel.deliveryStatus === "parcel_delivered" && "text-green-600 bg-green-100"}
+                                            ${!parcel.deliveryStatus && "text-red-600 bg-red-100"}
+                                        `}
+                                    >
+                                        {parcel.deliveryStatus || "payment-pending"}
+                                    </span>
+                                </td>
                                 <td>{parcel.cost} Tk</td>
                                 <td>{calculatePayout(parcel)} Tk</td>
 

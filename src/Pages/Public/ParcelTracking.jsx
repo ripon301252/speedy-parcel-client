@@ -11,10 +11,22 @@ const ParcelTracking = () => {
     const { data: trackings = [], isLoading } = useQuery({
         queryKey: ["tracking", trackingId],
         queryFn: async () => {
-            const res = await axiosParcelTracking.get(`/trackings/${trackingId}/logs`)
+            const res = await axiosParcelTracking.get(
+                `/trackings/${trackingId}/logs`
+            );
             return res.data;
         }
-    })
+    });
+
+    // ✅ REMOVE DUPLICATES (status + createdAt based unique)
+    const uniqueTrackings = Array.from(
+        new Map(
+            trackings.map(item => [
+                item.status + item.createdAt,
+                item
+            ])
+        ).values()
+    );
 
     if (isLoading) {
         return (
@@ -26,6 +38,7 @@ const ParcelTracking = () => {
 
     return (
         <div className="max-w-4xl mx-auto px-4 py-6">
+
             {/* Header */}
             <div className="bg-gradient-to-r from-green-600 to-emerald-500 text-white p-5 rounded-2xl shadow-lg mb-6">
                 <h1 className="text-xl md:text-2xl font-bold">
@@ -35,15 +48,16 @@ const ParcelTracking = () => {
                     Tracking ID: {trackingId}
                 </p>
                 <p className="text-sm mt-1">
-                    Total Updates: {trackings.length}
+                    Total Updates: {uniqueTrackings.length}
                 </p>
             </div>
 
             {/* Timeline */}
             <div className="relative border-l-2 border-green-400 ml-3">
-                {trackings.map((log, index) => (
+
+                {uniqueTrackings.map((log, index) => (
                     <motion.div
-                        key={log._id}
+                        key={log._id || index}
                         initial={{ opacity: 0, x: -20 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
@@ -70,7 +84,7 @@ const ParcelTracking = () => {
             </div>
 
             {/* Empty State */}
-            {trackings.length === 0 && (
+            {uniqueTrackings.length === 0 && (
                 <div className="text-center mt-10 text-gray-500">
                     No tracking updates found.
                 </div>

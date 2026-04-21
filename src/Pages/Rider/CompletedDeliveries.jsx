@@ -166,17 +166,19 @@ const CompletedDeliveries = () => {
 
                                 <td>
                                     <div className='flex gap-2'>
-                                        {parcel.status === "pending" ? (
-                                            <button onClick={() => handleCashOut(parcel)} className="btn btn-success btn-sm">
-                                                Cash Out
-                                            </button>
-                                        ) : (
-                                            <button
-                                                onClick={() => handleCompletedDelete(parcel._id)}
-                                                className="btn btn-sm btn-error">
-                                                Delete
-                                            </button>
-                                        )}
+                                        <button
+                                            onClick={() => handleCashOut(parcel)}
+                                            className="btn btn-success btn-xs"
+                                        >
+                                            Cash Out
+                                        </button>
+
+                                        <button
+                                            onClick={() => handleCompletedDelete(parcel._id)}
+                                            className="btn btn-xs btn-error"
+                                        >
+                                            Delete
+                                        </button>
                                     </div>
                                 </td>
                             </tr>
@@ -229,17 +231,21 @@ const CompletedDeliveries = () => {
 
                         <div className="flex items-center gap-2 mt-3">
 
-                            {parcel.status === "pending" ? (<button
+
+                            <button
                                 onClick={() => handleCashOut(parcel)}
-                                className=" btn btn-success btn-sm"
+                                className="btn btn-success btn-xs"
                             >
                                 Cash Out
-                            </button>): (<button
+                            </button>
+
+                            <button
                                 onClick={() => handleCompletedDelete(parcel._id)}
-                                className="btn btn-sm btn-error">
+                                className="btn btn-xs btn-error"
+                            >
                                 Delete
-                            </button>)
-                            }
+                            </button>
+
                         </div>
                     </div>
                 ))}

@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link, Outlet, useLocation } from "react-router";
-import { BadgeDollarSign, ChartArea, Cuboid, HandHelping, LogOut, Motorbike, User, Users } from "lucide-react";
+import { AudioLines, BadgeDollarSign, ChartArea, Cuboid, HandHelping, LogOut, Motorbike, User, Users } from "lucide-react";
 import useRole from "../Hooks/useRole";
 import { useAuth } from "../Hooks/useAuth";
 import Logo from "../Component/Logo";
@@ -279,6 +279,16 @@ const DashboardLayout = () => {
                     >
                       <ChartArea size={18} />
                       Chart
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/dashboard/all-trackingId"
+                      onClick={closeDrawer}
+                      className="flex gap-2 items-center hover:text-green-300"
+                    >
+                      <AudioLines size={18} /> 
+                      Tracking Id
                     </Link>
                   </li>
                 </>

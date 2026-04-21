@@ -3,10 +3,7 @@ import Root from "../LayOut/Root";
 import Home from "../Pages/Public/Home/Home";
 import Contact from "../Pages/Public/Contact/Contact";
 import PlaceOrder from "../Pages/Customer/SendParcel/SendParcel";
-import TrackDelivery from "../Pages/Rider/TrackDelivery/TrackDelivery";
 // import Payment from "../Pages/Customer/Payment/Payment";
-import AcceptDeliveryRequest from "../Pages/Admin/AcceptDeliveryRequest/AcceptDeliveryRequest";
-import DeliveryStatus from "../Pages/Admin/DeliveryStatus/DeliveryStatus";
 import Login from "../Auth/Login";
 import Register from "../Auth/Register";
 import ForgotPassword from "../Auth/ForgotPassword";
@@ -40,6 +37,7 @@ import Story from "../Pages/Public/AboutUs/Story"
 import Mission from "../Pages/Public/AboutUs/Mission"
 import Success from "../Pages/Public/AboutUs/Success"
 import TeamOthers from "../Pages/Public/AboutUs/TeamOthers"
+import AllTrackingId from "../Pages/Admin/AllTrackingId";
 
 
 
@@ -122,11 +120,6 @@ export const router = createBrowserRouter([
                 path: "/payment-history",
                 element: <PaymentHistory></PaymentHistory>
             },
-            // {
-            //     path: "/track-delivery",
-            //     element: <TrackDelivery></TrackDelivery>
-            // },
-
             // only rider route
             {
                 path: "/rider",
@@ -161,44 +154,7 @@ export const router = createBrowserRouter([
                             <CashOutHistory></CashOutHistory>
                         </RiderRoute>
                     </PrivateRoute>
-
             },
-            // {
-            //     path: "/Accept-delivery-request",
-            //     element: <AcceptDeliveryRequest></AcceptDeliveryRequest>
-            // },
-            // {
-            //     path: "/Update-delivery-status",
-            //     element: <DeliveryStatus></DeliveryStatus>
-            // },
-            // {
-            //     path: "/View-earnings",
-            //     element: <Contact></Contact>
-            // },
-            // {
-            //     path: "/Dashboard-analytics",
-            //     element: <Contact></Contact>
-            // },
-            // {
-            //     path: "/Manage-users",
-            //     element: <Contact></Contact>
-            // },
-            // {
-            //     path: "/Manage-deliveries",
-            //     element: <Contact></Contact>
-            // },
-            // {
-            //     path: "/Manage-orders",
-            //     element: <Contact></Contact>
-            // },
-            // {
-            //     path: "/Assign-riders",
-            //     element: <Contact></Contact>
-            // },
-            // {
-            //     path: "/View-reports",
-            //     element: <Contact></Contact>
-            // },
 
         ]
     },
@@ -274,6 +230,12 @@ export const router = createBrowserRouter([
                 path: "Charts",
                 element: <AdminRoute>
                     <Charts></Charts>
+                </AdminRoute>
+            },
+            {
+                path: "all-trackingId",
+                element: <AdminRoute>
+                    <AllTrackingId></AllTrackingId>
                 </AdminRoute>
             },
         ]

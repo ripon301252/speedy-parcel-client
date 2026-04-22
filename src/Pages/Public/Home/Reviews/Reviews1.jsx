@@ -16,7 +16,7 @@ const Reviews1 = ({ toggle }) => {
     useEffect(() => {
         const loadReviews = async () => {
             try {
-                const res = await fetch('http://localhost:3000/reviews');
+                const res = await fetch('https://speedy-parcel-server-1.onrender.com/reviews');
                 const data = await res.json();
                 setReviews(data);
                 // console.log(data)

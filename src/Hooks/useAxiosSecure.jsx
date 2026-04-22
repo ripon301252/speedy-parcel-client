@@ -4,13 +4,13 @@ import { useAuth } from "./useAuth";
 import { useNavigate } from "react-router";
 
 const axiosSecure = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: "https://speedy-parcel-server-1.onrender.com",
 });
 
 
 
 const useAxiosSecure = () => {
-    const {user, logOut} = useAuth();
+    const { user, logOut } = useAuth();
     const navigate = useNavigate();
     useEffect(() => {
         // request interceptor
@@ -20,14 +20,14 @@ const useAxiosSecure = () => {
         })
 
         // response interceptor
-        const resInterceptor = axiosSecure.interceptors.response.use((response)=> {
+        const resInterceptor = axiosSecure.interceptors.response.use((response) => {
             return response;
-        }, (error)=>{
+        }, (error) => {
             console.log(error);
 
             const statusCode = error.status;
-            if(statusCode === 401){
-                logOut().then(()=>{ 
+            if (statusCode === 401) {
+                logOut().then(() => {
                     navigate('/login')
                 })
             }

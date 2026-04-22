@@ -52,7 +52,7 @@ const ReviewModal = ({ closeModal }) => {
         };
 
         try {
-            const res = await fetch('http://localhost:3000/reviews', {
+            const res = await fetch('https://speedy-parcel-server-1.onrender.com/reviews', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

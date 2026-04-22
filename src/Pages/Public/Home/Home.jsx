@@ -10,7 +10,7 @@ import FAQ from './FAQ/FAQ';
 import OurServices from '../OurServices';
 
 
-const reviewPromise = fetch('http://localhost:3000/reviews')
+const reviewPromise = fetch('https://speedy-parcel-server-1.onrender.com/reviews')
     .then(res => res.json())
     .catch(err => console.log(err.message));
 

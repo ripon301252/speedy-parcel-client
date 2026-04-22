@@ -1,13 +1,31 @@
-import React, { useRef } from "react";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import markerIcon2x from "leaflet/dist/images/marker-icon-2x.png";
+import markerIcon from "leaflet/dist/images/marker-icon.png";
+import markerShadow from "leaflet/dist/images/marker-shadow.png";
+import React, { useEffect, useRef } from "react";
+import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
 import { useLoaderData } from "react-router";
 import { toast } from "react-toastify";
+import L from "leaflet";
+
+
+
+
 
 const Coverage = () => {
   const position = [23.685, 90.3563];
   const serviceCenters = useLoaderData();
   const mapRef = useRef();
+
+  useEffect(() => {
+    delete L.Icon.Default.prototype._getIconUrl;
+
+    L.Icon.Default.mergeOptions({
+      iconRetinaUrl: markerIcon2x,
+      iconUrl: markerIcon,
+      shadowUrl: markerShadow,
+    });
+  }, []);
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -29,7 +47,7 @@ const Coverage = () => {
       {/* Header */}
       <div className="text-center mb-12">
         <h1 className="text-3xl md:text-4xl font-extrabold ">
-           We are available in 68 Districts
+          We are available in 68 Districts
         </h1>
         <p className=" mt-2 text-sm md:text-base">
           Search your district to check service coverage
@@ -78,7 +96,7 @@ const Coverage = () => {
           />
 
           {serviceCenters.map((center, index) => (
-            <Marker key={index} position={[center.latitude, center.longitude]}>
+            <Marker key={center._id || index} position={[center.latitude, center.longitude]}>
               <Popup>
                 <div className="text-sm">
                   <p className="font-semibold text-green-600">
@@ -86,7 +104,7 @@ const Coverage = () => {
                   </p>
                   <p className="mt-1">
                     <span className="font-bold text-orange-500">Service Area: </span>
-                    <span className="text-sm text-green-800">{center.covered_area.join(", ")}</span> 
+                    <span className="text-sm text-green-800">{center.covered_area.join(", ")}</span>
                   </p>
                 </div>
               </Popup>

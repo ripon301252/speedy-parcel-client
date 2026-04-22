@@ -38,6 +38,7 @@ import Mission from "../Pages/Public/AboutUs/Mission"
 import Success from "../Pages/Public/AboutUs/Success"
 import TeamOthers from "../Pages/Public/AboutUs/TeamOthers"
 import AllTrackingId from "../Pages/Admin/AllTrackingId";
+import AllReview from "../Pages/Admin/AllReview";
 
 
 
@@ -236,6 +237,12 @@ export const router = createBrowserRouter([
                 path: "all-trackingId",
                 element: <AdminRoute>
                     <AllTrackingId></AllTrackingId>
+                </AdminRoute>
+            },
+            {
+                path: "all-reviews",
+                element: <AdminRoute>
+                    <AllReview></AllReview>
                 </AdminRoute>
             },
         ]

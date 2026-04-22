@@ -68,10 +68,10 @@ const Brand = ({ toggle }) => {
             </Swiper>
 
             {/* Divider */}
-            <div className="border border-dashed border-gray-300 w-full my-12 md:my-16"></div>
+            <div className="border border-dashed border-gray-300 w-full my-12 md:my-16 "></div>
 
             {/* Card 1 */}
-            <div className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5">
+            <div className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5 text-gray-800">
                 <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
 
                     <img src={brand8} alt="" className="w-24 md:w-32" />
@@ -93,7 +93,7 @@ const Brand = ({ toggle }) => {
 
 
             {/* Card 2 */}
-            <div className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5">
+            <div className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5 text-gray-800">
                 <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
 
                     <img src={brand9} alt="" className="w-24 md:w-32" />
@@ -112,7 +112,7 @@ const Brand = ({ toggle }) => {
             </div>
 
             {/* Card 3 */}
-            <div className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5">
+            <div className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5 text-gray-800">
                 <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
 
                     <img src={brand10} alt="" className="w-24 md:w-28" />

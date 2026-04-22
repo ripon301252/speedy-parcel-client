@@ -57,8 +57,8 @@ const VideoGuide = ({ toggle }) => {
                             className="w-full h-full"
                             src={
                                 activeTab === 'user'
-                                    ? "https://www.youtube.com/embed/h9GaDIXCt3s"
-                                    : "https://www.youtube.com/embed/GmrIjuEeoz4"
+                                    ? "https://www.youtube.com/embed/VI-hUfnWm5g"
+                                    : "https://www.youtube.com/embed/Ra_qME1lxiY"
                             }
                             title="Guide Video"
                             allowFullScreen

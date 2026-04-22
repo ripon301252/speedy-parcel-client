@@ -5,6 +5,7 @@ import { useAuth } from '../../Hooks/useAuth';
 import { useLoaderData } from 'react-router';
 import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
+import riderImg from '../../assets/agent-pending.png'
 
 const Rider = () => {
     const { user } = useAuth();
@@ -59,7 +60,7 @@ const Rider = () => {
 
             <form onSubmit={handleSubmit(handleRiderApplication)} className=' max-w-7xl mx-auto'>
                 {/* two column */}
-                <div className='grid grid-cols-1 md:grid-cols-2 gap-12'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
                     {/* Rider Details */}
                     <div>
                         <h4 className='text-2xl font-semibold mb-5'>Rider Details</h4>
@@ -184,7 +185,7 @@ const Rider = () => {
 
                     {/* Rider banner img */}
                     <div>
-                        <img src="" alt="" />
+                        <img className='h-[900px]' src={riderImg} alt="" />
                     </div>
                 </div>
                 <div className='flex my-5'>

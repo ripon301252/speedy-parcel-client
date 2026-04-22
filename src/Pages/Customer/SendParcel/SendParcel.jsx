@@ -32,7 +32,7 @@ const SendParcel = () => {
     const districtsByRegion = region => {
         const regionDistricts = serviceCenter.filter(c => c.region === region);
         const districts = regionDistricts.map(d => d.district);
-        return districts;              
+        return districts;
     }
 
     const areaByDistrict = (region, district) => {
@@ -203,7 +203,7 @@ const SendParcel = () => {
                         <input type="text" {...register('parcelName', { required: "parcel name is required" })}
                             className="input input-class" placeholder="Parcel Name" />
                         {errors.parcelName && (
-                            <span>{toast(errors.parcelName.message)}</span>
+                            <span className="text-xs text-orange-400">{errors.parcelName.message}</span>
                         )}
                     </fieldset>
                     <fieldset className="fieldset">
@@ -219,7 +219,7 @@ const SendParcel = () => {
                         />
                         {
                             parcelType === "document" && (
-                                <p className="text-xs text-gray-400">Weight not required for documents</p>
+                                <p className="text-xs text-orange-400">Weight not required for documents</p>
                             )
                         }
                     </fieldset>
@@ -257,7 +257,7 @@ const SendParcel = () => {
                             <input type="text" {...register('senderAddress', { required: "Sender Address is required" })}
                                 className="input input-class" placeholder="Sender Address" />
                             {errors.senderAddress && (
-                                <span>{toast(errors.senderAddress.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.senderAddress.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -265,7 +265,7 @@ const SendParcel = () => {
                             <input type="text" {...register('senderPhoneNumber', { required: "Sender Phone Number is required" })}
                                 className="input input-class" placeholder="Sender Phone Number " />
                             {errors.senderPhoneNumber && (
-                                <span>{toast(errors.senderPhoneNumber.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.senderPhoneNumber.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -281,7 +281,7 @@ const SendParcel = () => {
                                 ))}
                             </select>
                             {errors.senderRegion && (
-                                <span>{toast(errors.senderRegion.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.senderRegion.message}</span>
                             )}
                         </fieldset>
 
@@ -298,7 +298,7 @@ const SendParcel = () => {
                                 ))}
                             </select>
                             {errors.senderDistrict && (
-                                <span>{toast(errors.senderDistrict.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.senderDistrict.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -314,7 +314,7 @@ const SendParcel = () => {
                                 ))}
                             </select>
                             {errors.senderArea && (
-                                <span>{toast(errors.senderArea.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.senderArea.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -333,7 +333,7 @@ const SendParcel = () => {
                             <input type="text" {...register('receiverName', { required: "Receiver Name is Required" })}
                                 className="input input-class" placeholder="Receiver Name" />
                             {errors.receiverName && (
-                                <span>{toast(errors.receiverName.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.receiverName.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -341,7 +341,7 @@ const SendParcel = () => {
                             <input type="text" {...register('receiverEmail', { required: "Receiver Email is Required" })}
                                 className="input input-class" placeholder="Receiver Email" />
                             {errors.receiverEmail && (
-                                <span>{toast(errors.receiverEmail.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.receiverEmail.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -349,7 +349,7 @@ const SendParcel = () => {
                             <input type="text" {...register('receiverAddress', { required: "Receiver Address is Required" })}
                                 className="input input-class" placeholder="Receiver Address" />
                             {errors.receiverAddress && (
-                                <span>{toast(errors.receiverAddress.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.receiverAddress.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -357,7 +357,7 @@ const SendParcel = () => {
                             <input type="text" {...register('receiverPhoneNumber', { required: "Receiver Phone Number is Required" })}
                                 className="input input-class" placeholder="Receiver Phone Number " />
                             {errors.receiverPhoneNumber && (
-                                <span>{toast(errors.receiverPhoneNumber.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.receiverPhoneNumber.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -373,7 +373,7 @@ const SendParcel = () => {
                                 ))}
                             </select>
                             {errors.receiverRegion && (
-                                <span>{toast(errors.receiverRegion.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.receiverRegion.message}</span>
                             )}
                         </fieldset>
 
@@ -390,7 +390,7 @@ const SendParcel = () => {
                                 ))}
                             </select>
                             {errors.receiverDistrict && (
-                                <span>{toast(errors.receiverDistrict.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.receiverDistrict.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">
@@ -406,7 +406,7 @@ const SendParcel = () => {
                                 ))}
                             </select>
                             {errors.receiverArea && (
-                                <span>{toast(errors.receiverArea.message)}</span>
+                                <span className="text-xs text-orange-400">{errors.receiverArea.message}</span>
                             )}
                         </fieldset>
                         <fieldset className="fieldset mb-3">

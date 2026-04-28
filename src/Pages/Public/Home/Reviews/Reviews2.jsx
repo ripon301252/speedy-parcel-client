@@ -9,6 +9,7 @@ import { UserStar, Power } from 'lucide-react';
 
 const Reviews2 = ({ reviewPromise, toggle }) => {
     const reviews = use(reviewPromise)
+    console.log(reviews);
     const [isOpen, setIsOpen] = useState(false);
 
     return (

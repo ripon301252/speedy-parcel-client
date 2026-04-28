@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Link, Outlet, useLocation } from "react-router";
+import { Link, NavLink, Outlet, useLocation } from "react-router";
 import { AudioLines, BadgeDollarSign, ChartArea, Cuboid, HandHelping, LogOut, Motorbike, User, Users, UserStar } from "lucide-react";
 import useRole from "../Hooks/useRole";
 import { useAuth } from "../Hooks/useAuth";
@@ -29,6 +29,13 @@ const DashboardLayout = () => {
     return "Dashboard";
   };
 
+    const activeLinks = (isActive) =>
+    `px-3 py-2 text-sm font-medium flex items-center gap-1 transition-all duration-300 ${
+      isActive
+        ? "text-gray-800 text-xs rounded-lg text-green-500"
+        : "text-xs hover:text-green-500 rounded-lg"
+    }`;
+
   
 
   const handleLogout = () => {
@@ -55,7 +62,7 @@ const DashboardLayout = () => {
         <div className="drawer-content">
 
           {/* TOP NAVBAR */}
-          <nav className="navbar bg-base-200 shadow-md sticky top-0 z-10 px-4">
+          <nav className="navbar bg-base-200 shadow-md sticky top-0 z-10 ">
 
             {/* MOBILE MENU BUTTON */}
             <label
@@ -67,7 +74,7 @@ const DashboardLayout = () => {
 
             <h1 className="text-sm font-bold ml-2">{getTitle()}</h1>
 
-            <div className="ml-auto flex items-center gap-3">
+            <div className="ml-auto flex items-center gap-3 px-4">
 
               <ThemeToggle />
 
@@ -182,14 +189,14 @@ const DashboardLayout = () => {
 
               {/* HOME */}
               <li>
-                <Link
+                <NavLink
                   to="/"
                   onClick={closeDrawer}
-                  className="flex gap-2 items-center hover:text-green-300"
+                  className={({ isActive }) => activeLinks(isActive)}
                 >
                   <MdOutlineHome size={18} />
                   Home
-                </Link>
+                </NavLink>
               </li>
 
               {/* ADMIN MENU */}
@@ -198,108 +205,108 @@ const DashboardLayout = () => {
                   <li className="menu-title">Admin Panel</li>
 
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/user-profile"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <User size={18} />
                       User Profile
-                    </Link>
+                    </NavLink>
                   </li>
 
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/user-management"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <Users size={18} />
                       User Management
-                    </Link>
+                    </NavLink>
                   </li>
 
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/all-parcels"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <Cuboid size={18} />
                       All parcels
-                    </Link>
+                    </NavLink>
                   </li>
 
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/approve-rider"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <Motorbike size={18} />
                       Approve Riders
-                    </Link>
+                    </NavLink>
                   </li>
 
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/assign-rider"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <HandHelping size={18} />
                       Assign Parcels
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/riders-cash-out"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <HiOutlineCash size={18} />
                       Riders Cash Out
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/all-payment-history"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <BadgeDollarSign size={18} />
                       All Payment History
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/charts"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <ChartArea size={18} />
                       Chart
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/all-trackingId"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <AudioLines size={18} /> 
                       Tracking Id
-                    </Link>
+                    </NavLink>
                   </li>
                   <li>
-                    <Link
+                    <NavLink
                       to="/dashboard/all-reviews"
                       onClick={closeDrawer}
-                      className="flex gap-2 items-center hover:text-green-300"
+                      className={({ isActive }) => activeLinks(isActive)}
                     >
                       <UserStar size={18} /> 
                       All Reviews
-                    </Link>
+                    </NavLink>
                   </li>
                 </>
               )}

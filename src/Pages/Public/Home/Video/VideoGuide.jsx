@@ -57,7 +57,7 @@ const VideoGuide = ({ toggle }) => {
                             className="w-full h-full"
                             src={
                                 activeTab === 'user'
-                                    ? "https://www.youtube.com/embed/11HwePrJIAc"
+                                    ? "https://www.youtube.com/embed/UpRFYRe6sEw" 
                                     : "https://www.youtube.com/embed/hvjCGZbBuR8" 
                             }
                             title="Guide Video"

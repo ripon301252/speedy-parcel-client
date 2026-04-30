@@ -117,10 +117,10 @@ const MyParcelsAndPayment = () => {
     //     }
     // };
 
-    // const handleViewDetails = (parcel) => {
-    //     setViewParcel(parcel);
-    //     setModalType("view");
-    // };
+    const handleViewDetails = (parcel) => {
+        setViewParcel(parcel);
+        setModalType("view");
+    };
 
     return (
         <div className="lg:max-w-7xl lg:mx-auto mx-3 lg:py-10 py-5">

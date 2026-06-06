@@ -325,7 +325,7 @@ const MyParcelsAndPayment = () => {
             <p className="flex items-center py-1 gap-1 text-sm rounded-lg">
               {/* Static label */}
               <b>Status:</b>
-
+              
               {/* Dynamic colored status */}
               <span
                 className={`capitalize font-medium

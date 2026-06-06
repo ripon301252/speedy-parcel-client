@@ -82,38 +82,38 @@ const MyParcelsAndPayment = () => {
     }
   };
 
-  const handleOtpVerify = async (enteredOtp) => {
-    try {
-      const res = await axiosPublic.post("/verify-otp", {
-        email: user.email,
-        otp: Number(enteredOtp),
-      });
+  // const handleOtpVerify = async (enteredOtp) => {
+  //   try {
+  //     const res = await axiosPublic.post("/verify-otp", {
+  //       email: user.email,
+  //       otp: Number(enteredOtp),
+  //     });
 
-      if (res.data.success) {
-        toast("OTP Verified");
-        await handlePayment(selectedParcel);
-      }
-    } catch (err) {
-      toast(err.response?.data?.message || "OTP verification failed");
-    } finally {
-      setModalType(null); // close modal
-      setPayingParcelId(null); // stop loading
-    }
-  };
+  //     if (res.data.success) {
+  //       toast("OTP Verified");
+  //       await handlePayment(selectedParcel);
+  //     }
+  //   } catch (err) {
+  //     toast(err.response?.data?.message || "OTP verification failed");
+  //   } finally {
+  //     setModalType(null); // close modal
+  //     setPayingParcelId(null); // stop loading
+  //   }
+  // };
 
-  const handlePayClick = async (parcel) => {
-    setSelectedParcel(parcel);
-    setPayingParcelId(parcel._id); // start loading for this parcel
+  // const handlePayClick = async (parcel) => {
+  //   setSelectedParcel(parcel);
+  //   setPayingParcelId(parcel._id); // start loading for this parcel
 
-    try {
-      // Send OTP
-      await axiosPublic.post("/send-otp", { email: user.email });
-      setModalType("OTP"); // open OTP modal
-    } catch (err) {
-      toast.error(err.response?.data?.message || "Failed to send OTP");
-      setPayingParcelId(null); // stop loading if error
-    }
-  };
+  //   try {
+  //     // Send OTP
+  //     await axiosPublic.post("/send-otp", { email: user.email });
+  //     setModalType("OTP"); // open OTP modal
+  //   } catch (err) {
+  //     toast.error(err.response?.data?.message || "Failed to send OTP");
+  //     setPayingParcelId(null); // stop loading if error
+  //   }
+  // };
 
   const handleViewDetails = (parcel) => {
     setViewParcel(parcel);
@@ -203,8 +203,8 @@ const MyParcelsAndPayment = () => {
                     <span className="text-green-500 font-semibold">Paid</span>
                   ) : (
                     <button
-                      onClick={() => handlePayClick(parcel)}
-                      // onClick={() => handlePayment(parcel)}
+                      // onClick={() => handlePayClick(parcel)}
+                      onClick={() => handlePayment(parcel)}
                       className="btn btn-xs btn-accent"
                       disabled={payingParcelId === parcel._id}
                     >
@@ -295,8 +295,8 @@ const MyParcelsAndPayment = () => {
                 <span className="text-green-500 font-semibold">Paid</span>
               ) : (
                 <button
-                  onClick={() => handlePayClick(parcel)}
-                  // onClick={() => handlePayment(parcel)}
+                  // onClick={() => handlePayClick(parcel)}
+                  onClick={() => handlePayment(parcel)}
                   className="btn btn-xs btn-accent"
                   disabled={payingParcelId === parcel._id}
                 >
@@ -371,7 +371,7 @@ const MyParcelsAndPayment = () => {
         ))}
       </div>
 
-      {modalType === "OTP" && (
+      {/* {modalType === "OTP" && (
         <ModalOTP
           onClose={() => {
             setModalType(null);
@@ -379,7 +379,7 @@ const MyParcelsAndPayment = () => {
           }}
           onVerify={handleOtpVerify}
         />
-      )}
+      )} */}
 
       {modalType === "view" && (
         <ViewDetails

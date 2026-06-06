@@ -22,7 +22,7 @@ const Footer = () => {
 
         <ul className="flex lg:flex-row flex-col lg:justify-center lg:gap-6 gap-3 py-10">
           <li>
-            <a href="" t>Service</a>
+            <a href="">Service</a>
           </li>
           <li>
             <a href="">Coverage</a>

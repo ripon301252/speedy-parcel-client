@@ -171,7 +171,7 @@ const Navbar = () => {
 
   return (
     <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70  border-b border-gray-800 shadow-sm z-[999]">
-      <div className="max-w-7xl lg:mx-auto py-4 flex justify-between items-center  mx-3">
+      <div className="max-w-7xl lg:mx-auto py-4 flex justify-between items-center mx-3">
         {/* Logo */}
         <Logo />
 
@@ -213,6 +213,8 @@ const Navbar = () => {
                   alt="avatar"
                   className="w-10 h-10 rounded-full border-2 border-amber-400 cursor-pointer object-cover"
                 />
+
+
 
                 {avatarOpen && (
                   <div

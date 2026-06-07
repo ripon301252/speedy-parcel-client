@@ -26,7 +26,7 @@ const Banner = () => {
   ];
 
   return (
-    <div className="mb-8 md:mb-12">
+    <div className="mb-8 md:mb-12 md:-mt-24">
       <Carousel
         autoPlay
         infiniteLoop
@@ -51,7 +51,7 @@ const Banner = () => {
             </video>
 
             {/* Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent"></div>
+            <div className="absolute inset-0 bg-gradient-to-t from-green-900/70 via-green-800/40 to-transparent"></div>
 
             {/* Content */}
             <div className="absolute inset-0 flex flex-col justify-end sm:justify-center items-center text-center px-4 pb-8 sm:pb-0">

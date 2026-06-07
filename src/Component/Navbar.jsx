@@ -170,8 +170,8 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur bg-white/70 dark:bg-gray-900/70  border-b border-gray-800 shadow-sm z-[999]">
-      <div className="max-w-7xl lg:mx-auto py-4 flex justify-between items-center mx-3">
+    <nav className="sticky top-0 z-50 backdrop-blur bg-white dark:bg-gradient-to-r from-[#03373d] via-[#012226] to-[#03373d] shadow-sm z-[999] max-w-6xl mx-auto py-1 md:mt-2 md:rounded-2xl">
+      <div className="max-w-5xl lg:mx-auto py-4 flex justify-between items-center mx-3">
         {/* Logo */}
         <Logo />
 

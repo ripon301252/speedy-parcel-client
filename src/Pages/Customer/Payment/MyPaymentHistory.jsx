@@ -40,7 +40,7 @@ const MyPaymentHistory = () => {
 
 
     return (
-        <div className="space-y-4 lg:max-w-7xl lg:mx-auto lg:py-10 py-5 mx-3">
+        <div className="space-y-4 lg:max-w-6xl lg:mx-auto lg:py-10 py-5 mx-3">
             <h1 className="lg:text-5xl text-3xl font-bold mb-4">
                 {/* Payment History : {payments.length} */}
                 Payment History

@@ -5,7 +5,7 @@ import { Link } from "react-router";
 
 const FAQ = () => {
   return (
-    <div className="mx-4 sm:mx-8 md:mx-16 lg:mx-20 my-10 sm:my-16 md:my-20">
+    <div className="max-w-6xl mx-auto my-10 sm:my-16 md:my-20">
       <h1 className="text-2xl sm:text-3xl md:text-4xl text-center font-bold">
         Frequently Asked Question (FAQ)
       </h1>

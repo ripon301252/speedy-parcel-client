@@ -170,7 +170,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="sticky top-0 z-50 backdrop-blur bg-white dark:bg-gradient-to-r from-[#03373d] via-[#012226] to-[#03373d] shadow-sm z-[999] max-w-6xl mx-auto py-1 md:mt-2 md:rounded-2xl">
+    <nav className="sticky top-0 backdrop-blur bg-white dark:bg-gradient-to-r from-[#03373d] via-[#012226] to-[#03373d] shadow-sm z-[999] max-w-6xl mx-auto py-1 md:mt-2 md:rounded-2xl">
       <div className="max-w-5xl lg:mx-auto py-4 flex justify-between items-center mx-3">
         {/* Logo */}
         <Logo />
@@ -214,12 +214,10 @@ const Navbar = () => {
                   className="w-10 h-10 rounded-full border-2 border-amber-400 cursor-pointer object-cover"
                 />
 
-
-
                 {avatarOpen && (
                   <div
                     onClick={(e) => e.stopPropagation()} // inside click safe
-                    className="absolute right-0 mt-14 w-52 bg-white dark:bg-gray-800 shadow-xl rounded-xl p-3 z-50"
+                    className="absolute -right-16 mt-15 w-52 bg-white dark:bg-[#03373d] shadow-xl rounded-xl p-3 z-50"
                   >
                     <p className="font-semibold text-gray-800 dark:text-white">
                       {user?.displayName || "User"}

@@ -9,7 +9,7 @@ import hubImg from "../../assets/hub.png";
 const OurServices = () => {
   return (
     
-    <div className="md:py-20 max-w-7xl mx-auto md:px-20 bg-[#03373d] md:rounded-3xl rounded-lg md:my-10 px-5 py-5 text-gray-800">
+    <div className="md:py-20 max-w-6xl mx-auto md:px-20 bg-[#03373d] md:rounded-3xl rounded-lg md:my-10 px-5 py-5 text-gray-800">
       <h3 className="text-4xl mb-3 font-bold text-center text-white">
         Our Services
       </h3>

@@ -58,12 +58,12 @@ const Rider = () => {
     return (
         <div>
 
-            <form onSubmit={handleSubmit(handleRiderApplication)} className=' max-w-7xl mx-auto'>
+            <form onSubmit={handleSubmit(handleRiderApplication)} className=' max-w-6xl mx-auto mt-14'>
                 {/* two column */}
                 <div className='grid grid-cols-1 md:grid-cols-2 gap-12 items-center'>
                     {/* Rider Details */}
                     <div>
-                        <h4 className='text-2xl font-semibold mb-5'>Rider Details</h4>
+                        <h4 className='text-5xl font-semibold mb-5'>Rider Details</h4>
                         <fieldset className="fieldset mb-3">
                             <label className="label">Rider Name</label>
                             <input type="text" {...register('riderName')}

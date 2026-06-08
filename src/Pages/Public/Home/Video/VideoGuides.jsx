@@ -49,7 +49,7 @@ const VideoGuide = ({ toggle }) => {
             </div>
 
             {/* Video */}
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-6xl mx-auto">
                 <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-xl">
 
                     {/* Responsive video container */}
@@ -77,7 +77,7 @@ const VideoGuide = ({ toggle }) => {
             </div>
 
             {/* Steps */}
-            <div className="mt-8 md:mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 text-center max-w-5xl mx-auto">
+            <div className="mt-8 md:mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 text-center max-w-6xl mx-auto">
                 {(activeTab === 'user'
                     ? ['Create Account', 'Send Parcel', 'Make Payment', 'Track Parcel', 'Give Review']
                     : ['Login', 'View Parcels', 'Accept Delivery', 'Pickup Parcel', 'Deliver']

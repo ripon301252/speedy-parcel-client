@@ -3,7 +3,7 @@ import { NavLink, Outlet } from "react-router";
 
 const AboutUs = () => {
   return (
-    <div className="max-w-7xl mx-auto bg-white border border-gray-300 rounded-2xl my-6 md:my-12 p-6 md:p-16">
+    <div className="max-w-6xl mx-auto bg-white border border-gray-300 rounded-2xl my-6 md:my-12 p-6 md:p-16">
 
       {/* Heading */}
       <h1 className="text-3xl md:text-5xl text-gray-800 font-bold">

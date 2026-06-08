@@ -31,7 +31,7 @@ const Contact = () => {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
 
-      <div className="w-full max-w-3xl bg-white shadow-2xl rounded-3xl overflow-hidden">
+      <div className="w-full max-w-6xl bg-white shadow-2xl rounded-3xl overflow-hidden">
 
         {/* HEADER */}
         <div className="bg-gradient-to-r from-green-500 to-emerald-600 p-8 text-center text-white">

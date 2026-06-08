@@ -18,42 +18,43 @@ const logos = [brand2, brand3, brand1, brand4, brand5, brand6, brand7];
 
 const Brands = ({ toggle }) => {
   return (
-    <div className="max-w-7xl mx-auto md:px-6 py-6 md:py-10">
+    <div className="">
+      <div className="max-w-6xl mx-auto md:px-6 py-6 md:py-10 bg-gray-900 rounded-2xl">
+        {/* Header */}
+        <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-6  p-4 rounded-lg">
+          <h3 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold text-white">
+            We've helped thousands of sales teams
+          </h3>
 
-      {/* Header */}
-      <div className="flex flex-col md:flex-row justify-center items-center gap-3 mb-6">
-        <h3 className="text-center text-2xl md:text-3xl lg:text-4xl font-bold">
-          We've helped thousands of sales teams
-        </h3>
+          <button
+            onClick={toggle}
+            className="bg-green-500 text-gray-800 hover:scale-105 transition-transform p-2 rounded-lg"
+          >
+            <Power size={16} />
+          </button>
+        </div>
 
-        <button
-          onClick={toggle}
-          className="bg-green-500 text-gray-800 hover:scale-105 transition-transform p-2 rounded-lg"
+        {/* Marquee */}
+        <Marquee
+          direction="right"
+          speed={25}
+          pauseOnHover={true}
+          gradient={false}
         >
-          <Power size={16} />
-        </button>
+          <div className="flex items-center gap-10 md:gap-16">
+            {logos.map((logo, i) => (
+              <img
+                src={logo}
+                alt=""
+                className="max-h-full max-w-[120px] object-contain opacity-80 hover:opacity-100 transition"
+              />
+            ))}
+          </div>
+        </Marquee>
       </div>
 
-      {/* Marquee */}
-      <Marquee
-        direction="right"
-        speed={25}
-        pauseOnHover={true}
-        gradient={false}
-      >
-        <div className="flex items-center gap-10 md:gap-16 ">
-          {logos.map((logo, i) => (
-            <img 
-            src={logo} 
-            alt="" 
-            className="max-h-full max-w-[120px] object-contain opacity-80 hover:opacity-100 transition"
-        />
-          ))}
-        </div>
-      </Marquee>
-
       {/* Divider */}
-      <div className="border border-dashed border-gray-300 w-full my-12 md:my-16"></div>
+      <div className="border border-dashed border-gray-300 w-full my-12 md:my-16 max-w-6xl mx-auto"></div>
 
       {/* Card Component */}
       {[
@@ -75,10 +76,9 @@ const Brands = ({ toggle }) => {
       ].map((item, index) => (
         <div
           key={index}
-          className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5"
+          className="bg-white border border-gray-300 rounded-2xl p-5 md:p-8 mt-5 max-w-6xl mx-auto"
         >
           <div className="flex flex-col md:flex-row items-center gap-6 md:gap-12">
-
             {/* Image */}
             <img
               src={item.img}
@@ -94,9 +94,7 @@ const Brands = ({ toggle }) => {
               <h1 className="font-bold text-xl md:text-2xl mb-2">
                 {item.title}
               </h1>
-              <p className="text-sm md:text-base text-gray-600">
-                {item.desc}
-              </p>
+              <p className="text-sm md:text-base text-gray-600">{item.desc}</p>
             </div>
           </div>
         </div>

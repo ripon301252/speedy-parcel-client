@@ -49,7 +49,7 @@ const VideoGuide = ({ toggle }) => {
             </div>
 
             {/* Video Card */}
-            <div className="max-w-5xl mx-auto">
+            <div className="max-w-6xl mx-auto">
                 <div className="rounded-2xl md:rounded-3xl overflow-hidden shadow-xl hover:scale-[1.01] transition">
 
                     <div className="w-full aspect-video">
@@ -69,7 +69,7 @@ const VideoGuide = ({ toggle }) => {
             </div>
 
             {/* Steps */}
-            <div className="mt-10 md:mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 text-center max-w-5xl mx-auto">
+            <div className="mt-10 md:mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 md:gap-4 text-center max-w-6xl mx-auto">
                 {activeTab === 'user' ? (
                     <>
                         <div className="p-3 md:p-4 bg-white text-gray-800 rounded-xl shadow text-sm md:text-base">Create Account</div>

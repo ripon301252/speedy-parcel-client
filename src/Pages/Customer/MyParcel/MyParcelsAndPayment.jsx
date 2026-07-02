@@ -219,14 +219,14 @@ const MyParcelsAndPayment = () => {
 
                 <td>
                   <p
-                    className={`text-center py-0.5 rounded-lg font-medium
-                        ${parcel.deliveryStatus === "pending-pickup" && "text-yellow-600 bg-yellow-100"}
-                        ${parcel.deliveryStatus === "driver_assigned" && "text-blue-600 bg-blue-100"}
-                        ${parcel.deliveryStatus === "rider_accepted" && "text-indigo-600 bg-indigo-100"}
-                        ${parcel.deliveryStatus === "rider_rejected" && "text-red-600 bg-red-100"}
-                        ${parcel.deliveryStatus === "parcel_picked_up" && "text-orange-600 bg-orange-100"}
-                        ${parcel.deliveryStatus === "parcel_delivered" && "text-green-600 bg-green-100"}
-                        ${!parcel.deliveryStatus && "text-red-600 bg-red-100"}
+                    className={`text-center py-0.5 rounded-lg font-medium 
+                      ${parcel.deliveryStatus === "pending-pickup" && "text-amber-700 bg-amber-100"}
+                      ${parcel.deliveryStatus === "driver_assigned" && "text-sky-700 bg-sky-100"}
+                      ${parcel.deliveryStatus === "rider_accepted" && "text-violet-700 bg-violet-100"}
+                      ${parcel.deliveryStatus === "rider_rejected" && "text-rose-700 bg-rose-100"}
+                      ${parcel.deliveryStatus === "parcel_picked_up" && "text-orange-700 bg-orange-100"}
+                      ${parcel.deliveryStatus === "parcel_delivered" && "text-emerald-700 bg-emerald-100 px-2"}
+                      ${(!parcel.deliveryStatus || parcel.deliveryStatus === "payment-pending") && "text-slate-700 bg-slate-100 text-[13px]"}
                     `}
                   >
                     {parcel.deliveryStatus || "payment-pending"}
@@ -325,7 +325,7 @@ const MyParcelsAndPayment = () => {
             <p className="flex items-center py-1 gap-1 text-sm rounded-lg">
               {/* Static label */}
               <b>Status:</b>
-              
+
               {/* Dynamic colored status */}
               <span
                 className={`capitalize font-medium
